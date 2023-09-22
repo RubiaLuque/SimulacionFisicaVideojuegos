@@ -8,6 +8,8 @@
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
 
+#include "Particle.h"
+
 #include <iostream>
 
 std::string display_text = "This is a test";
@@ -30,8 +32,11 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
+//partícula practica 1
+Particle* particle;
 
 // Initialize physics engine
+//Codigo de inicializacion
 void initPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
@@ -42,8 +47,10 @@ void initPhysics(bool interactive)
 	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate(PVD_HOST, 5425, 10);
 	gPvd->connect(*transport,PxPvdInstrumentationFlag::eALL);
 
+	//metodo que crea la fisica del motor
 	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(),true,gPvd);
 
+	//material con coeficientes de rozamiento estatico, dinamico y elasticidad
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
@@ -54,22 +61,30 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
-	}
+
+	//particula - PRACTICA 1
+	particle = new Particle(PxVec3(1.0, 1.0, 1.0), PxVec3(1.0, 0, 0), PxVec3(0, 0, 0), 10.0, );
+}
 
 
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
 // t: time passed since last call in milliseconds
+
+//Aqui se hacen las actualizaciones del mundo en el que se trabaja
+//Llamadas a actualizacion de escenas
 void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+	particle->update(t);
 }
 
 // Function to clean data
 // Add custom code to the begining of the function
+//Se limpia la memoria usada
 void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
@@ -78,17 +93,20 @@ void cleanupPhysics(bool interactive)
 	gScene->release();
 	gDispatcher->release();
 	// -----------------------------------------------------
-	gPhysics->release();	
+	gPhysics->release();
 	PxPvdTransport* transport = gPvd->getTransport();
 	gPvd->release();
 	transport->release();
-	
+
 	gFoundation->release();
-	}
+
+	delete particle;
+}
 
 // Function called when a key is pressed
 void keyPress(unsigned char key, const PxTransform& camera)
-{
+{//la camara tambien se mueve con teclas que estan reservadas para ello
+
 	PX_UNUSED(camera);
 
 	switch(toupper(key))

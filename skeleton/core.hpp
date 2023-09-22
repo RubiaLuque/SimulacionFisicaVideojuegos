@@ -12,6 +12,7 @@
 
 using namespace Snippets;
 
+//tipos definidos para vectores de 3 y 4 dimensiones
 typedef physx::PxVec3 Vector3;
 typedef physx::PxVec4 Vector4;
 
