@@ -5,8 +5,10 @@
 #include <vector>
 
 #include "core.hpp"
+#include "Render/Camera.h"
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
+#include "SceneManager.h"
 
 #include "Particle.h"
 
@@ -31,9 +33,12 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
+SceneManager* manager;
 
 //partícula practica 1
 Particle* particle;
+//vector de proyectiles
+std::vector<Particle*> projectiles;
 
 // Initialize physics engine
 //Codigo de inicializacion
@@ -44,7 +49,7 @@ void initPhysics(bool interactive)
 	gFoundation = PxCreateFoundation(PX_FOUNDATION_VERSION, gAllocator, gErrorCallback);
 
 	gPvd = PxCreatePvd(*gFoundation);
-	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate(PVD_HOST, 5425, 10);
+	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate(PVD_HOST, 5425.0, 10.0);
 	gPvd->connect(*transport,PxPvdInstrumentationFlag::eALL);
 
 	//metodo que crea la fisica del motor
@@ -63,7 +68,9 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	//particula - PRACTICA 1
-	particle = new Particle(PxVec3(1.0, 1.0, 1.0), PxVec3(0.0, 5.0, 0.0), PxVec3(0.0, 6.0, 0.0), 1.0);
+	//particle = new Particle(PxVec3(1.0, 1.0, 1.0), PxVec3(0.0, 5.0, 0.0), PxVec3(0.0, 6.0, 0.0), 1.0, 0.998);
+
+	manager = new SceneManager();
 }
 
 
@@ -79,7 +86,9 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	particle->update(t);
+	//particle->update(t); --> actualiza la particula inicial
+	
+	manager->update(t);
 }
 
 // Function to clean data
@@ -100,7 +109,9 @@ void cleanupPhysics(bool interactive)
 
 	gFoundation->release();
 
-	delete particle;
+	//delete particle; --> para eliminar la particula inicial
+
+	delete manager;
 }
 
 // Function called when a key is pressed
@@ -113,8 +124,22 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	//case 'B': break;
 	//case ' ':	break;
-	case ' ':
+	case '1': //cast a fireball
 	{
+		manager->addProjectile(FIREBALL);
+		break;
+	}
+	case '2': //shoot a lightgun
+	{
+		manager->addProjectile(LIGHTGUN);
+		break;
+	}
+	case '3': {
+		manager->addProjectile(GUN);
+		break;
+	}
+	case '4': {
+		manager->addProjectile(CANNON);
 		break;
 	}
 	default:
