@@ -63,7 +63,7 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	//particula - PRACTICA 1
-	particle = new Particle(PxVec3(1.0, 1.0, 1.0), PxVec3(1.0, 0, 0), PxVec3(0, 0, 0), 10.0, );
+	particle = new Particle(PxVec3(1.0, 1.0, 1.0), PxVec3(0.0, 5.0, 0.0), PxVec3(0, 0, 0), 1.0);
 }
 
 
