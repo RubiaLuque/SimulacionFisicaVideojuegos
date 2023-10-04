@@ -6,6 +6,7 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double radius, double 
 	this->pos = pos;
 	this->acc = acc;
 	transform = PxTransform(pos.x, pos.y, pos.z);
+
 	physx::PxShape* sphere = CreateShape(PxSphereGeometry(radius));
 	if(type == FIREBALL)
 		renderItem = new RenderItem(sphere, &transform, Vector4(255.0, 140.0, 0.0, 1.0));
@@ -13,14 +14,16 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double radius, double 
 		renderItem = new RenderItem(sphere, &transform, Vector4(0.0, 0.0, 255.0, 1.0));
 	else if(type == GUN)
 		renderItem = new RenderItem(sphere, &transform, Vector4(128, 128, 128, 1.0));
-	else
+	else //cannon
 		renderItem = new RenderItem(sphere, &transform, Vector4(70, 130, 180, 1.0));
 
+	//se registra en la lista de elementos a renderizar
 	RegisterRenderItem(renderItem);
 	this->vel = vel;
 }
 
 Particle::~Particle() {
+	//se eliminan de la lista de elementos a renderizar
 	DeregisterRenderItem(renderItem);
 }
 

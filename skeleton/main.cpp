@@ -36,9 +36,7 @@ ContactReportCallback gContactReportCallback;
 SceneManager* manager;
 
 //partícula practica 1
-Particle* particle;
-//vector de proyectiles
-std::vector<Particle*> projectiles;
+//Particle* particle; -->Descomentar para usar una sola particula en MRU
 
 // Initialize physics engine
 //Codigo de inicializacion

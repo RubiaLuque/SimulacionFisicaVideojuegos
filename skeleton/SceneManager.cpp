@@ -8,8 +8,11 @@ SceneManager::~SceneManager() {
 	delete cam;
 
 	for (int i = 0; i < projectiles.size(); ++i) {
-		delete projectiles.at(i);
-		projectiles.at(i) = nullptr;
+		if (projectiles.at(i) != nullptr) {
+			delete projectiles.at(i);
+			projectiles.at(i) = nullptr;
+
+		}
 	}
 	delete[]& projectiles;
 }
@@ -20,7 +23,7 @@ void SceneManager::addProjectile(PROJECTILE_TYPE type) {
 
 	if (type == FIREBALL) {
 		vel *= 10;
-		const Vector3 acc = { 0.0, -0.6, 0.0 };
+		const Vector3 acc = { 0.0, -0.6, 0.0 }; //muy poca gravedad porque se quiere simular que flota un poco
 		projectiles.push_back(new Particle(pos, vel, acc, 3.0, 0.888, FIREBALL));
 	}
 	else if (type == LIGHTGUN)
@@ -31,13 +34,13 @@ void SceneManager::addProjectile(PROJECTILE_TYPE type) {
 	}
 	else if (type == GUN) {
 		vel *= 20;
-		const Vector3 acc = { 0.0, -1.0, 0.0 };
+		const Vector3 acc = { 0.0, -1.0, 0.0 }; //poco efecto de la gravedad
 		projectiles.push_back(new Particle(pos, vel, acc, 1.0, 0.998, GUN));
 	}
 	else //cannon
 	{
 		vel *= 18;
-		const Vector3 acc = { 0.0, -5.0, 0.0 };
+		const Vector3 acc = { 0.0, -5.0, 0.0 }; //bastante efecto de gravedad
 		projectiles.push_back(new Particle(pos, vel, acc, 5.0, 0.998, CANNON));
 	}
 
@@ -52,7 +55,7 @@ void SceneManager::update(double t) {
 			setAlive(projectiles.at(i), false);
 
 			projectiles.erase(remove_if(projectiles.begin(), projectiles.end(),
-				[](Particle* p) {
+				[](Particle* p) noexcept {
 					if (p->alive) return false;
 					else { //si no esta vivo, se elimina
 						delete p;
