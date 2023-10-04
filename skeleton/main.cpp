@@ -124,21 +124,21 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	//case 'B': break;
 	//case ' ':	break;
-	case '1': //cast a fireball
+	case '1': //casts a fireball
 	{
 		manager->addProjectile(FIREBALL);
 		break;
 	}
-	case '2': //shoot a lightgun
+	case '2': //shoots a lightgun
 	{
 		manager->addProjectile(LIGHTGUN);
 		break;
 	}
-	case '3': {
+	case '3': { //shoots a bullet
 		manager->addProjectile(GUN);
 		break;
 	}
-	case '4': {
+	case '4': { //fires a cannon
 		manager->addProjectile(CANNON);
 		break;
 	}
