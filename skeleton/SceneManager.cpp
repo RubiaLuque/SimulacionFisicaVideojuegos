@@ -48,10 +48,18 @@ void SceneManager::update(double t) {
 	for (int i = 0; i < projectiles.size(); ++i) {
 		projectiles.at(i)->limit_time += t;
 		if (projectiles.at(i)->limit_time > LIMIT_ON_SCREEN) {
-			auto it = projectiles.begin() + i; //iterador
-			projectiles.erase(it);
-			
-			
+			//se marca como no vivo
+			setAlive(projectiles.at(i), false);
+
+			projectiles.erase(remove_if(projectiles.begin(), projectiles.end(),
+				[](Particle* p) {
+					if (p->alive) return false;
+					else { //si no esta vivo, se elimina
+						delete p;
+						return true;
+					}
+				}), projectiles.end()
+					);
 		}
 	}
 
@@ -60,3 +68,5 @@ void SceneManager::update(double t) {
 		projectiles.at(i)->update(t);
 	}
 }
+
+

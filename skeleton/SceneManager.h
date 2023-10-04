@@ -10,7 +10,7 @@ class SceneManager
 private:
 	vector<Particle*> projectiles;
 	Camera* cam;
-	double LIMIT_ON_SCREEN = 6.0;
+	double LIMIT_ON_SCREEN = 20.0;
 
 public:
 	SceneManager() noexcept;
@@ -20,5 +20,7 @@ public:
 	void addProjectile(PROJECTILE_TYPE type);
 
 	void update(double t);
+
+	inline void setAlive(Particle* e, bool alive) { e->alive = alive; }
 };
 
