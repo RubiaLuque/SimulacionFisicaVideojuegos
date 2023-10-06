@@ -25,6 +25,7 @@ public:
 	~Particle();
 
 	void update(double t);
+	virtual Particle* clone() const;
 
 };
 

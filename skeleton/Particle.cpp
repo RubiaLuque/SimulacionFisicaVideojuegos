@@ -33,3 +33,9 @@ void Particle::update(double t) {
 	pos = pos + vel * t; 
 	transform.p.x = pos.x; transform.p.y = pos.y; transform.p.z = pos.z;
 }
+
+Particle* Particle::clone() const
+{
+
+	return nullptr;
+}
