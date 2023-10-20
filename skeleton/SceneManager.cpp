@@ -2,19 +2,21 @@
 
 SceneManager::SceneManager() noexcept {
 	cam = GetCamera();
+	sys = new ParticleSystem();
+	particleSys = true;
 }
 
 SceneManager::~SceneManager() {
 	delete cam;
 
-	for (int i = 0; i < projectiles.size(); ++i) {
-		if (projectiles.at(i) != nullptr) {
-			delete projectiles.at(i);
-			projectiles.at(i) = nullptr;
+	for (int i = 0; i < particles.size(); ++i) {
+		if (particles.at(i) != nullptr) {
+			delete particles.at(i);
+			particles.at(i) = nullptr;
 
 		}
 	}
-	delete[]& projectiles;
+	delete[]& particles;
 }
 
 void SceneManager::addProjectile(PROJECTILE_TYPE type) {
@@ -24,51 +26,59 @@ void SceneManager::addProjectile(PROJECTILE_TYPE type) {
 	if (type == FIREBALL) {
 		vel *= 10;
 		const Vector3 acc = { 0.0, -0.6, 0.0 }; //muy poca gravedad porque se quiere simular que flota un poco
-		projectiles.push_back(new Particle(pos, vel, acc, 3.0, 0.888, FIREBALL));
+		particles.push_back(new Particle(pos, vel, acc, 3.0, 0.888, FIREBALL));
 	}
 	else if (type == LIGHTGUN)
 	{
 		vel *= 25;
 		Vector3 acc = { 0.0, 0.0, 0.0 }; //no tiene efecto gravedad
-		projectiles.push_back(new Particle(pos, vel, acc, 1.0, 0.998, LIGHTGUN));
+		particles.push_back(new Particle(pos, vel, acc, 1.0, 0.998, LIGHTGUN));
 	}
 	else if (type == GUN) {
 		vel *= 20;
 		const Vector3 acc = { 0.0, -1.0, 0.0 }; //poco efecto de la gravedad
-		projectiles.push_back(new Particle(pos, vel, acc, 1.0, 0.998, GUN));
+		particles.push_back(new Particle(pos, vel, acc, 1.0, 0.998, GUN));
 	}
 	else //cannon
 	{
 		vel *= 18;
 		const Vector3 acc = { 0.0, -5.0, 0.0 }; //bastante efecto de gravedad
-		projectiles.push_back(new Particle(pos, vel, acc, 5.0, 0.998, CANNON));
+		particles.push_back(new Particle(pos, vel, acc, 5.0, 0.998, CANNON));
 	}
 
 }
 
+
+
 void SceneManager::update(double t) {
-	//eliminar aquellas que lleven mas tiempo del necesario en pantalla
-	for (int i = 0; i < projectiles.size(); ++i) {
-		projectiles.at(i)->limit_time += t;
-		if (projectiles.at(i)->limit_time > LIMIT_ON_SCREEN) {
-			//se marca como no vivo
-			setAlive(projectiles.at(i), false);
+	if (!particleSys) {
+		//eliminar aquellas que lleven mas tiempo del necesario en pantalla
+		for (int i = 0; i < particles.size(); ++i) {
+			particles.at(i)->limit_time += t;
+			if (particles.at(i)->limit_time > LIMIT_ON_SCREEN) {
+				//se marca como no vivo
+				setAlive(particles.at(i), false);
 
-			projectiles.erase(remove_if(projectiles.begin(), projectiles.end(),
-				[](Particle* p) noexcept {
-					if (p->alive) return false;
-					else { //si no esta vivo, se elimina
-						delete p;
-						return true;
-					}
-				}), projectiles.end()
-					);
+				particles.erase(remove_if(particles.begin(), particles.end(),
+					[](Particle* p) noexcept {
+						if (p->alive) return false;
+						else { //si no esta vivo, se elimina
+							delete p;
+							return true;
+						}
+					}), particles.end()
+						);
+			}
 		}
-	}
 
-	//se hace update de todas las demas
-	for (int i = 0; i < projectiles.size(); ++i) {
-		projectiles.at(i)->update(t);
+		//se hace update de todas las demas
+		for (int i = 0; i < particles.size(); ++i) {
+			particles.at(i)->update(t);
+		}
+
+	}
+	else {
+		sys->update(t);
 	}
 }
 

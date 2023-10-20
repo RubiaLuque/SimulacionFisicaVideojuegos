@@ -1,19 +1,22 @@
 #pragma once
 #include "Render/Camera.h"
 #include "Particle.h"
+#include "ParticleSystem.h"
 #include <vector>
 
 using namespace std;
+
+static const double LIMIT_ON_SCREEN = 20.0;
 
 class SceneManager
 {
 private:
 	//vector de proyectiles
-	vector<Particle*> projectiles;
+	vector<Particle*> particles;
 	//referencia a la camara
 	Camera* cam;
-	//tiempo limite en pantalla (comun a todas las particulas)
-	double LIMIT_ON_SCREEN = 20.0;
+	ParticleSystem* sys;
+	bool particleSys;
 
 public:
 	SceneManager() noexcept;

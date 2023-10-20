@@ -5,7 +5,7 @@
 using namespace physx;
 
 static enum PROJECTILE_TYPE {
-	FIREBALL, LIGHTGUN, GUN, CANNON
+	FIREBALL, LIGHTGUN, GUN, CANNON, GENERATION
 };
 
 class Particle

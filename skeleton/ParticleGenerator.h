@@ -2,13 +2,14 @@
 #include "core.hpp"
 #include <list>
 #include "Particle.h"
-
+#include "Firework.h"
+#include <cmath>
+#include <random>
 using namespace std;
 
 class ParticleGenerator
 {
 private:
-	string name;
 	Vector3 meanPos, meanVel;
 	double generationProb;
 	int numParticles;
