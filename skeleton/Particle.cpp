@@ -39,15 +39,13 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double dumping, Data::
 	physx::PxShape* sphereNiebla = CreateShape(PxSphereGeometry(0.5));
 
 	if (type == Data::FUENTE)
-		renderItem = new RenderItem(sphereFuente, &transform, Vector4(0.0, 191.0, 255.0, 1.0));
+		renderItem = new RenderItem(sphereFuente, &transform, Vector4(0.0, 191.0, 255.0, 0.9));
 	else if (type == Data::LLUVIA)
-		renderItem = new RenderItem(shapeLluvia, &transform, Vector4(65.0, 105.0, 225.0, 1.0));
+		renderItem = new RenderItem(shapeLluvia, &transform, Vector4(65.0, 105.0, 225.0, 0.9));
 	else if (type == Data::NIEVE)
-		renderItem = new RenderItem(sphereNieve, &transform, Vector4(211, 211, 211, 1.0));
-	else if (type == Data::NIEBLA)
-		renderItem = new RenderItem(sphereNiebla, &transform, Vector4(128, 128, 128, 1.0));
-	else
-		renderItem = new RenderItem(sphereFuente, &transform, Vector4(0.0, 191.0, 255.0, 1.0));
+		renderItem = new RenderItem(sphereNieve, &transform, Vector4(211, 211, 211, 0.9));
+	else //NIEBLA
+		renderItem = new RenderItem(sphereNiebla, &transform, Vector4(128, 128, 128, 0.9));
 	
 
 	this->vel = vel;

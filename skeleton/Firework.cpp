@@ -20,7 +20,7 @@ void Firework::shootParticle()
 
 }
 
-list<Particle*> Firework::explode(Particle* p)
+list<Particle*> Firework::explode()
 {
 
     return list<Particle*>();

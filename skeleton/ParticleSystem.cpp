@@ -1,5 +1,6 @@
 #include "ParticleSystem.h"
-
+#include "UniformParticleGenerator.h"
+#include "GaussianParticleGenerator.h"
 
 ParticleSystem::ParticleSystem(Data::GENERATORS g)
 {

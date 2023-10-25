@@ -12,7 +12,7 @@ private:
 	Vector3 acc;
 	Vector3 pos;
 	PxTransform transform;
-	RenderItem* renderItem;
+	RenderItem* renderItem = nullptr;
 	double dumping; //limita la velocidad para que no se dispare por errores numericos
 
 public:

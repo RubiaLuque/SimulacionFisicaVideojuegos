@@ -5,8 +5,6 @@
 #include "Data.h"
 #include "ParticleGenerator.h"
 #include "Particle.h"
-#include "UniformParticleGenerator.h"
-#include "GaussianParticleGenerator.h"
 
 using namespace std;
 //Esta clase almacena las particulas creadas y las destruye a su debido tiempo
