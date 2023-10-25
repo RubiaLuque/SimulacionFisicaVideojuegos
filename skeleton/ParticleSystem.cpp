@@ -1,5 +1,4 @@
 #include "ParticleSystem.h"
-#include "SceneManager.h"
 
 
 ParticleSystem::ParticleSystem(Data::GENERATORS g)
@@ -45,7 +44,7 @@ void ParticleSystem::update(double t) {
 	//eliminar aquellas que lleven mas tiempo del necesario en pantalla
 	for (auto it = particles.begin(); it != particles.end(); ++it) {
 		(*it)->limit_time += t;
-		if ((*it)->limit_time > LIMIT_ON_SCREEN) {
+		if ((*it)->limit_time > Data::LIMIT_ON_SCREEN) {
 			//se marca como no vivo
 			setAlive((*it), false);
 

@@ -2,17 +2,20 @@
 #include <list>
 #include "core.hpp"
 #include "Particle.h"
+
 using namespace std;
 
-class Firework : public Particle
+class Firework
 {
 private:
 	//almacena las particulas generadas
 	list<Particle*> gens;
 
 public:
+	Firework();
+	~Firework();
 	int update(double t);
-	virtual Particle* clone() const;
-	list<Particle*> explode();
+	void shootParticle();
+	list<Particle*> explode(Particle* p);
 };
 

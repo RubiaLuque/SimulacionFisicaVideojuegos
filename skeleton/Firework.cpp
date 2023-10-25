@@ -1,16 +1,26 @@
 #include "Firework.h"
 
+Firework::Firework()
+{
+
+}
+
+Firework::~Firework()
+{
+}
+
 int Firework::update(double t)
 {
+
     return 0;
 }
 
-Particle* Firework::clone() const
+void Firework::shootParticle()
 {
-    return nullptr;
+
 }
 
-list<Particle*> Firework::explode()
+list<Particle*> Firework::explode(Particle* p)
 {
 
     return list<Particle*>();

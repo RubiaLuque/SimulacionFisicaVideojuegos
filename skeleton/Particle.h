@@ -20,7 +20,7 @@ public:
 	double limit_time = 0; //tiempo que lleva en pantalla
 	Particle(Vector3 pos, Vector3 vel, Vector3 acc, double radius, double dumping, Data::PROJECTILE_TYPE type);
 	Particle(Vector3 pos, Vector3 vel, Vector3 acc, double dumping, Data::GENERATORS type);
-	~Particle();
+	virtual ~Particle();
 
 	void update(double t);
 

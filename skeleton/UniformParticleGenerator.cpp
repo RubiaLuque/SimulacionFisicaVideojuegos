@@ -1,6 +1,7 @@
 #include "UniformParticleGenerator.h"
 
-UniformParticleGenerator::UniformParticleGenerator(Vector3 meanPos, Vector3 meanVel, Vector3 posWidth, Vector3 velWidth, Data::GENERATORS g)
+UniformParticleGenerator::UniformParticleGenerator(Vector3 meanPos, Vector3 meanVel, Vector3 posWidth, 
+	Vector3 velWidth, Data::GENERATORS g) : ParticleGenerator()
 {
 	//de donde se parte
 	this->meanPos = meanPos;

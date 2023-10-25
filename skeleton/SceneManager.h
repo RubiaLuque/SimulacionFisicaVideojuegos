@@ -23,7 +23,7 @@ private:
 public:
 	SceneManager();
 
-	~SceneManager();
+	virtual ~SceneManager();
 
 	//añade proyectiles al vector
 	void addProjectile(PROJECTILE_TYPE type);

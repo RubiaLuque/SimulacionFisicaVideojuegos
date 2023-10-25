@@ -1,6 +1,7 @@
 #include "GaussianParticleGenerator.h"
 
-GaussianParticleGenerator::GaussianParticleGenerator(Vector3 meanPos, Vector3 meanVel, Vector3 stdDevPos, Vector3 stdDevVel, Data::GENERATORS g)
+GaussianParticleGenerator::GaussianParticleGenerator(Vector3 meanPos, Vector3 meanVel, 
+	Vector3 stdDevPos, Vector3 stdDevVel, Data::GENERATORS g) : ParticleGenerator()
 {
 	std::random_device rd{};
 	std::mt19937 gen{rd()};
@@ -17,7 +18,7 @@ GaussianParticleGenerator::GaussianParticleGenerator(Vector3 meanPos, Vector3 me
 
 GaussianParticleGenerator::~GaussianParticleGenerator()
 {
-
+	delete model;
 }
 
 list<Particle*> GaussianParticleGenerator::generateParticles()

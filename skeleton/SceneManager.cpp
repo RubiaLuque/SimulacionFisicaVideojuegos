@@ -56,7 +56,7 @@ void SceneManager::update(double t) {
 		//eliminar aquellas que lleven mas tiempo del necesario en pantalla
 		for (int i = 0; i < particles.size(); ++i) {
 			particles.at(i)->limit_time += t;
-			if (particles.at(i)->limit_time > LIMIT_ON_SCREEN) {
+			if (particles.at(i)->limit_time > Data::LIMIT_ON_SCREEN) {
 				//se marca como no vivo
 				setAlive(particles.at(i), false);
 

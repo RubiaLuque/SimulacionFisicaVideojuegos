@@ -12,12 +12,9 @@ class ParticleGenerator
 {
 protected:
 	Vector3 meanPos, meanVel;
-	double generationProb;
 	Particle* model;
 
 public:
-	void setParticle(Particle* model);
-
+	virtual ~ParticleGenerator() {};
 	virtual list<Particle* > generateParticles() = 0; //esto hace que la clase sea abstracta
 };
-

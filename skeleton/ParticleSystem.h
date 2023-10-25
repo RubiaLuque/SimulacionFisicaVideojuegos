@@ -24,7 +24,7 @@ private:
 
 public:
 	ParticleSystem(Data::GENERATORS gen);
-	~ParticleSystem();
+	virtual ~ParticleSystem();
 	void update(double t);
 	void shootFirework(int type);
 	void onParticleDeath(Particle* p);
