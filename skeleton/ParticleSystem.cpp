@@ -1,17 +1,45 @@
 #include "ParticleSystem.h"
 #include "SceneManager.h"
 
-ParticleSystem::ParticleSystem()
+
+ParticleSystem::ParticleSystem(Data::GENERATORS g)
 {
 	particles = std::list<Particle*>{};
+	gens = std::vector<ParticleGenerator*>{};
 	elapsedTime = 0;
+	this->g = g;
+
+	//FUENTE
+	UniformParticleGenerator* fuente = new UniformParticleGenerator({ 0,0,0 }, { 0, 20,0 }, {1, 10, 1}, { 5,10,5 }, Data::FUENTE);
+	gens.push_back(fuente);
+
+	//LLUVIA
+	UniformParticleGenerator* lluvia = new UniformParticleGenerator({ 0, 50,0 }, { 0, 0, 0 }, { 3, 3, 30 }, { 1, 5, 1 }, Data::LLUVIA);
+	gens.push_back(lluvia);
+
+	//NIEVE
+	GaussianParticleGenerator* nieve = new GaussianParticleGenerator({ 0,50,0 }, { 1,1,1 }, { 50, 50, 50 }, { 5, 5, 5 }, Data::NIEVE);
+	gens.push_back(nieve);
+
+	//NIEBLA
+	GaussianParticleGenerator* niebla = new GaussianParticleGenerator({ 0,40,0 }, { 1,1,1 }, { 50, 50, 50 }, { 1, 5, 1 }, Data::NIEBLA);
+	gens.push_back(niebla);
+}
+
+ParticleSystem::~ParticleSystem()
+{
+	delete[] & gens;
+	delete[] & particles;
 }
 
 void ParticleSystem::update(double t) {
-	elapsedTime += t;
-	if (elapsedTime >= NEW_PARTICLE_TIME) {
-		particles.push_back(new Particle({ 0,0,0 }, { 20,30,0 }, { 0, -9.8, 0 }, 1.0, 0.988, GENERATION));
-		elapsedTime = 0;
+
+	
+	auto aux = gens.at(g)->generateParticles();
+
+	elapsedTime = 0;
+	for (auto it = aux.begin(); it != aux.end(); ++it) {
+		particles.push_back(*it);
 	}
 
 	//eliminar aquellas que lleven mas tiempo del necesario en pantalla

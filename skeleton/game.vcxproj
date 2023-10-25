@@ -269,6 +269,7 @@
   <ItemGroup>
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
+    <ClInclude Include="Data.h" />
     <ClInclude Include="Firework.h" />
     <ClInclude Include="GaussianParticleGenerator.h" />
     <ClInclude Include="Particle.h" />

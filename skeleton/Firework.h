@@ -4,7 +4,7 @@
 #include "Particle.h"
 using namespace std;
 
-class Firework
+class Firework : public Particle
 {
 private:
 	//almacena las particulas generadas

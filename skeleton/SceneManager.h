@@ -3,10 +3,12 @@
 #include "Particle.h"
 #include "ParticleSystem.h"
 #include <vector>
+#include "Data.h"
 
 using namespace std;
+using namespace Data;
 
-static const double LIMIT_ON_SCREEN = 20.0;
+static const double LIMIT_ON_SCREEN = 4.0;
 
 class SceneManager
 {
@@ -19,7 +21,7 @@ private:
 	bool particleSys;
 
 public:
-	SceneManager() noexcept;
+	SceneManager();
 
 	~SceneManager();
 

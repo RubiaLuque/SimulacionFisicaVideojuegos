@@ -2,22 +2,28 @@
 
 #include <vector>
 #include "core.hpp"
+#include "Data.h"
 #include "ParticleGenerator.h"
 #include "Particle.h"
+#include "UniformParticleGenerator.h"
+#include "GaussianParticleGenerator.h"
 
 using namespace std;
-const double NEW_PARTICLE_TIME = 0.1;
 //Esta clase almacena las particulas creadas y las destruye a su debido tiempo
 class ParticleSystem
 {
 private:
-	vector<Firework*> fireworks_pool;
-	ParticleGenerator* firework_gen;
+	//lista de particulas
+	vector<ParticleGenerator*> gens;
+	Data::GENERATORS g;
+
+	//vector<Firework*> fireworks_pool;
+	
 	list<Particle*> particles;
 	double elapsedTime;
 
 public:
-	ParticleSystem();
+	ParticleSystem(Data::GENERATORS gen);
 	~ParticleSystem();
 	void update(double t);
 	void shootFirework(int type);
@@ -25,6 +31,6 @@ public:
 	void generateFireworkSystem();
 
 	//cambia la propiedad alive de las particulas 
-	inline void setAlive(Particle* p, bool alive) { p->alive = alive; }
+	inline void setAlive(Particle* p, bool alive) noexcept { p->alive = alive; }
 };
 

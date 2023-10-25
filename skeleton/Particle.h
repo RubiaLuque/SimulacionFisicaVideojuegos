@@ -1,12 +1,9 @@
 #pragma once
 #include "RenderUtils.hpp"
 #include "core.hpp"
+#include "Data.h"
 
 using namespace physx;
-
-static enum PROJECTILE_TYPE {
-	FIREBALL, LIGHTGUN, GUN, CANNON, GENERATION
-};
 
 class Particle
 {
@@ -21,11 +18,11 @@ private:
 public:
 	bool alive = true;
 	double limit_time = 0; //tiempo que lleva en pantalla
-	Particle(Vector3 pos, Vector3 vel, Vector3 acc, double radius, double dumping, PROJECTILE_TYPE type);
+	Particle(Vector3 pos, Vector3 vel, Vector3 acc, double radius, double dumping, Data::PROJECTILE_TYPE type);
+	Particle(Vector3 pos, Vector3 vel, Vector3 acc, double dumping, Data::GENERATORS type);
 	~Particle();
 
 	void update(double t);
-	virtual Particle* clone() const;
 
 };
 

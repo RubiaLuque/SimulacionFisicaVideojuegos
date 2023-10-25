@@ -35,6 +35,7 @@
     <ClInclude Include="UniformParticleGenerator.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Firework.h" />
+    <ClInclude Include="Data.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

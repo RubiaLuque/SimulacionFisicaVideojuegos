@@ -5,14 +5,14 @@
 #include "Firework.h"
 #include <cmath>
 #include <random>
+#include "Data.h"
 using namespace std;
 
 class ParticleGenerator
 {
-private:
+protected:
 	Vector3 meanPos, meanVel;
 	double generationProb;
-	int numParticles;
 	Particle* model;
 
 public:

@@ -1,13 +1,12 @@
 #include "SceneManager.h"
 
-SceneManager::SceneManager() noexcept {
+SceneManager::SceneManager() {
 	cam = GetCamera();
-	sys = new ParticleSystem();
+	sys = new ParticleSystem(Data::NIEBLA);
 	particleSys = true;
 }
 
 SceneManager::~SceneManager() {
-	delete cam;
 
 	for (int i = 0; i < particles.size(); ++i) {
 		if (particles.at(i) != nullptr) {
@@ -17,6 +16,8 @@ SceneManager::~SceneManager() {
 		}
 	}
 	delete[]& particles;
+	delete cam;
+	delete sys;
 }
 
 void SceneManager::addProjectile(PROJECTILE_TYPE type) {

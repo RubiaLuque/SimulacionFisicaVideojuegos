@@ -1,20 +1,49 @@
 #include "UniformParticleGenerator.h"
 
-UniformParticleGenerator::UniformParticleGenerator()
+UniformParticleGenerator::UniformParticleGenerator(Vector3 meanPos, Vector3 meanVel, Vector3 posWidth, Vector3 velWidth, Data::GENERATORS g)
 {
+	//de donde se parte
+	this->meanPos = meanPos;
+	this->meanVel = meanVel;
+
+	//tipo de generador
+	this->g = g;
+
+	//distribucion
 	std::random_device rd;  
 	std::mt19937 gen(rd()); 
-	std::uniform_real_distribution<> dis(1.0, 2.0);
-	
+	dis = std::uniform_real_distribution<float> (1.0, 2.0);
+	model = new Particle(meanPos, meanVel, { 0, -9.8, 0 }, 0.988, g);
+
+	this->posWidth = posWidth;
+	this->velWidth = velWidth;
 }
 
 UniformParticleGenerator::~UniformParticleGenerator()
 {
+	delete model;
 }
 
-list<Particle*> UniformParticleGenerator::generateParticle()
+list<Particle*> UniformParticleGenerator::generateParticles()
 {
+	
+	list<Particle*> list{};
+	for (int i = 0; i < Data::TAM_LIST; ++i) {
+		Vector3 auxPos = meanPos;
+		auxPos.x += dis(gen) * posWidth.x;
+		auxPos.y += dis(gen) * posWidth.y;
+		auxPos.z += dis(gen) * posWidth.z;
 
+		Vector3 auxVel = meanVel;
+		auxVel.x += dis(gen) * velWidth.x;
+		auxVel.y += dis(gen) * velWidth.y;
+		auxVel.z += dis(gen) * velWidth.z;
 
-	return list<Particle*>();
+		auto p = new Particle(auxPos, auxVel, {0, -9.8, 0}, 0.988, g);
+		
+		list.push_back(p);
+	}
+	
+
+	return list;
 }
