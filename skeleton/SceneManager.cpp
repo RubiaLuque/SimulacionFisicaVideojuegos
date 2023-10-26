@@ -4,8 +4,7 @@ SceneManager::SceneManager() {
 	cam = GetCamera();
 	sys = new ParticleSystem(Data::NIEBLA);
 	particleSys = false;
-	firework = new Firework();
-	fire = true;
+	fire = false;
 }
 
 SceneManager::~SceneManager() {
@@ -91,7 +90,8 @@ void SceneManager::update(double t) {
 
 void SceneManager::addFirework()
 {
-	std::cout << 'f';
+	firework = new Firework();
+	fire = true;
 	firework->shootParticle();
 }
 
