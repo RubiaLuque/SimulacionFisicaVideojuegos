@@ -4,11 +4,10 @@
 #include "ParticleSystem.h"
 #include <vector>
 #include "Data.h"
+#include "Firework.h"
 
 using namespace std;
 using namespace Data;
-
-static const double LIMIT_ON_SCREEN = 4.0;
 
 class SceneManager
 {
@@ -18,7 +17,9 @@ private:
 	//referencia a la camara
 	Camera* cam;
 	ParticleSystem* sys;
+	Firework* firework;
 	bool particleSys;
+	bool fire;
 
 public:
 	SceneManager();
@@ -27,7 +28,7 @@ public:
 
 	//añade proyectiles al vector
 	void addProjectile(PROJECTILE_TYPE type);
-
+	void addFirework();
 	void update(double t);
 
 	//cambia la propiedad alive de las particulas 

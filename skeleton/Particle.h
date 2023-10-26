@@ -20,8 +20,11 @@ public:
 	double limit_time = 0; //tiempo que lleva en pantalla
 	Particle(Vector3 pos, Vector3 vel, Vector3 acc, double radius, double dumping, Data::PROJECTILE_TYPE type);
 	Particle(Vector3 pos, Vector3 vel, Vector3 acc, double dumping, Data::GENERATORS type);
+	Particle(Vector3 pos, Vector3 vel, Vector3 acc, Vector4 color, float radius, double dumping, Data::GENERATORS type);
 	virtual ~Particle();
 
+	Vector3 getVel() { return vel; }
+	Vector3 getPos() { return pos; }
 	void update(double t);
 
 };

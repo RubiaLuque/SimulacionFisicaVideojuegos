@@ -18,7 +18,6 @@ GaussianParticleGenerator::GaussianParticleGenerator(Vector3 meanPos, Vector3 me
 
 GaussianParticleGenerator::~GaussianParticleGenerator()
 {
-	delete model;
 }
 
 list<Particle*> GaussianParticleGenerator::generateParticles()
@@ -35,13 +34,16 @@ list<Particle*> GaussianParticleGenerator::generateParticles()
 		auxVel.y += d(gen) * stdDevVel.y;
 		auxVel.z += d(gen) * stdDevVel.z;
 
+		
+		if (g == Data::NIEBLA) {
+			auto p = new Particle(auxPos, auxVel, { 0, -2.6, 0 }, 0.988, g);
+			list.push_back(p);
+		}
+		else {
+			auto p = new Particle(auxPos, auxVel, { 0, -9.8, 0 }, 0.988, g);
+			list.push_back(p);
+		}
 
-		if (g == Data::NIEBLA)
-			model = new Particle(auxPos, auxVel, { 0, -2.6, 0 }, 0.988, g);
-		else
-			model = new Particle(auxPos, auxVel, { 0, -9.8, 0 }, 0.988, g);
-
-		list.push_back(model);
 	}
 
 

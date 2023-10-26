@@ -3,9 +3,7 @@
 #include "core.hpp"
 #include "Particle.h"
 #include "Data.h"
-#include "ParticleGenerator.h"
-//#include "UniformParticleGenerator.h"
-//#include "GaussianParticleGenerator.h"
+#include <random>
 
 using namespace std;
 class UniformParticleGenerator;
@@ -15,24 +13,25 @@ class Firework
 {
 private:
 	//almacena las particulas generadas
-	list<Particle*> gens;
+	vector<Particle*> particles;
 	UniformParticleGenerator* unif;
 	GaussianParticleGenerator* normal;
+	Particle* initP;
 
+	std::mt19937 gen;
+	std::uniform_real_distribution<double> dis{0, 1};
+	std::uniform_int_distribution<int> numParticulas{3, 10};
 	//posicion y velocidad base de la particula inicial
 	Vector3 iniPos = { 0,0,0 };
-	Vector3 iniVel = { 1, 20, 1 };
-
-	//repertorio de particulas base
-	Particle* p1;
-	Particle* p2;
-	Particle* p3;
+	Vector3 iniVel = { 1, 40, 1 };
+	float elapsedTime = 0;
 
 public:
 	Firework();
 	virtual ~Firework();
 	int update(double t);
 	void shootParticle();
-	list<Particle*> explode();
+	list<Particle*> explode(Particle* p);
+	inline void setAlive(Particle* p, bool alive) { p->alive = alive; };
 };
 

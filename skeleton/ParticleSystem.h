@@ -1,5 +1,5 @@
 #pragma once
-
+#include <iostream>
 #include <vector>
 #include "core.hpp"
 #include "Data.h"
@@ -24,9 +24,7 @@ public:
 	ParticleSystem(Data::GENERATORS gen);
 	virtual ~ParticleSystem();
 	void update(double t);
-	void shootFirework(int type);
-	void onParticleDeath(Particle* p);
-	void generateFireworkSystem();
+	
 
 	//cambia la propiedad alive de las particulas 
 	inline void setAlive(Particle* p, bool alive) noexcept { p->alive = alive; }

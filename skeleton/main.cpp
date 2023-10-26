@@ -140,8 +140,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		manager->addProjectile(CANNON);
 		break;
 	}
-	case 'f': { //fireworks
-
+	case 'F': { //fireworks
+		manager->addFirework();
 		break;
 	}
 	default:

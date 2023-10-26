@@ -3,7 +3,9 @@
 SceneManager::SceneManager() {
 	cam = GetCamera();
 	sys = new ParticleSystem(Data::NIEBLA);
-	particleSys = true;
+	particleSys = false;
+	firework = new Firework();
+	fire = true;
 }
 
 SceneManager::~SceneManager() {
@@ -15,7 +17,7 @@ SceneManager::~SceneManager() {
 
 		}
 	}
-	delete[]& particles;
+	
 	delete cam;
 	delete sys;
 }
@@ -52,7 +54,7 @@ void SceneManager::addProjectile(PROJECTILE_TYPE type) {
 
 
 void SceneManager::update(double t) {
-	if (!particleSys) {
+	if (!particleSys && !fire) {
 		//eliminar aquellas que lleven mas tiempo del necesario en pantalla
 		for (int i = 0; i < particles.size(); ++i) {
 			particles.at(i)->limit_time += t;
@@ -78,9 +80,19 @@ void SceneManager::update(double t) {
 		}
 
 	}
-	else {
+	else if(particleSys && !fire) {
 		sys->update(t);
 	}
+
+	else if(fire && !particleSys) {
+		firework->update(t);
+	}
+}
+
+void SceneManager::addFirework()
+{
+	std::cout << 'f';
+	firework->shootParticle();
 }
 
 

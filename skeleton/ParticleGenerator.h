@@ -12,7 +12,6 @@ class ParticleGenerator
 {
 protected:
 	Vector3 meanPos, meanVel;
-	Particle* model;
 
 public:
 	virtual ~ParticleGenerator() {};

@@ -28,8 +28,22 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g)
 
 ParticleSystem::~ParticleSystem()
 {
-	delete[] & gens;
-	delete[] & particles;
+	//destruir uno a uno
+	for (auto it = gens.begin(); it != gens.end(); ++it) {
+		if (*it != nullptr) {
+			delete* it;
+			*it = nullptr;
+		}
+	}
+	gens.clear();
+
+	for (auto it = particles.begin(); it != particles.end(); ++it) {
+		if (*it != nullptr) {
+			delete* it;
+			*it = nullptr;
+		}
+	}
+	particles.clear();
 }
 
 void ParticleSystem::update(double t) {
@@ -67,16 +81,4 @@ void ParticleSystem::update(double t) {
 	}
 
 	
-}
-
-void ParticleSystem::shootFirework(int type)
-{
-}
-
-void ParticleSystem::onParticleDeath(Particle* p)
-{
-}
-
-void ParticleSystem::generateFireworkSystem()
-{
 }

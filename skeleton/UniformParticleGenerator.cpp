@@ -14,7 +14,6 @@ UniformParticleGenerator::UniformParticleGenerator(Vector3 meanPos, Vector3 mean
 	std::random_device rd;  
 	std::mt19937 gen(rd()); 
 	dis = std::uniform_real_distribution<float> (1.0, 2.0);
-	model = new Particle(meanPos, meanVel, { 0, -9.8, 0 }, 0.988, g);
 
 	this->posWidth = posWidth;
 	this->velWidth = velWidth;
@@ -22,7 +21,6 @@ UniformParticleGenerator::UniformParticleGenerator(Vector3 meanPos, Vector3 mean
 
 UniformParticleGenerator::~UniformParticleGenerator()
 {
-	delete model;
 }
 
 list<Particle*> UniformParticleGenerator::generateParticles()
