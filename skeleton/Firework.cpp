@@ -5,7 +5,7 @@
 
 Firework::Firework()
 {
-    particles = vector<Particle*>{};
+    particles = vector<Particle*>();
     elapsedTime = 0;
 }
 
@@ -30,15 +30,14 @@ int Firework::update(double t)
         //tiempo de vida de la particula inicial
         if (elapsedTime <= Data::FIREWORK_INIT_DEATH) {
             initP->update(t);
-            isDead = true;
             return 0;
-        } 
+        }
         //la particula inicial exlota cuando acaba su tiempo de vida
-        if(isDead){
+        else{
             auto aux = explode(initP);
             particles.clear();
-            for (auto it = aux.begin(); it != aux.end(); ++it) {
-                particles.push_back(*it);
+            for (int i = 0; i < aux.size(); ++i) {
+                particles.push_back(aux.at(i));
             }
         }
 
@@ -51,8 +50,8 @@ int Firework::update(double t)
                 //Se hace explotar
                 auto aux = explode(particles.at(i));
                 //se añaden las nuevas particulas al vector de particulas de firework
-                for (auto it = aux.begin(); it != aux.end(); ++it) {
-                    particles.push_back(*it);
+                for (int j = 0; j < aux.size(); ++j) {
+                    particles.push_back(aux.at(j));
                 }
             }
         }
@@ -124,9 +123,9 @@ void Firework::shootParticle()
     particles.push_back(initP);
 }
 
-list<Particle*> Firework::explode(Particle* p)
+vector<Particle*> Firework::explode(Particle* p)
 {
-    list<Particle*> aux;
+    vector<Particle*> aux;
     Vector3 pos = p->getPos();
     Vector3 vel = p->getVel();
 
@@ -134,9 +133,9 @@ list<Particle*> Firework::explode(Particle* p)
     for (int i = 0; i <= n; ++i) {
         Vector3 auxVel, color;
 
-        auxVel.x = velD(gen) + vel.x;
-        auxVel.y = velD(gen) + vel.y;
-        auxVel.z = velD(gen) + vel.z;
+        auxVel.x = velD(gen2) * vel.x;
+        auxVel.y = velD(gen2) * vel.y;
+        auxVel.z = velD(gen2) * vel.z;
 
         color.x = dis(gen);
         color.y = dis(gen);
