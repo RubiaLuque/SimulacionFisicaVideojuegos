@@ -10,15 +10,15 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g)
 	this->g = g;
 
 	//FUENTE
-	UniformParticleGenerator* fuente = new UniformParticleGenerator({ 0,0,0 }, { 0, 20,0 }, {1, 10, 1}, { 5,10,5 }, Data::FUENTE);
+	UniformParticleGenerator* fuente = new UniformParticleGenerator({ 0,-10,0 }, { 0, 20,0 }, {1, 10, 1}, { 5,10,5 }, Data::FUENTE);
 	gens.push_back(fuente);
 
 	//LLUVIA
-	UniformParticleGenerator* lluvia = new UniformParticleGenerator({ 0, 50,0 }, { 0, 0, 0 }, { 3, 3, 30 }, { 1, 5, 1 }, Data::LLUVIA);
+	UniformParticleGenerator* lluvia = new UniformParticleGenerator({ 0, 50,0 }, { 0, 0, 0 }, { 30, 3, 30 }, { 1, 5, 1 }, Data::LLUVIA);
 	gens.push_back(lluvia);
 
 	//NIEVE
-	GaussianParticleGenerator* nieve = new GaussianParticleGenerator({ 0,50,0 }, { 1,1,1 }, { 50, 50, 50 }, { 5, 5, 5 }, Data::NIEVE);
+	GaussianParticleGenerator* nieve = new GaussianParticleGenerator({ 0,70,0 }, { 0,1,0 }, { 50, 5,  50}, { 5, 5, 5 }, Data::NIEVE);
 	gens.push_back(nieve);
 
 	//NIEBLA

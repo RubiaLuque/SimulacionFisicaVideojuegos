@@ -32,7 +32,7 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double dumping, Data::
 	transform = PxTransform(pos.x, pos.y, pos.z);
 
 	physx::PxShape* sphereFuente = CreateShape(PxSphereGeometry(2));
-	physx::PxShape* shapeLluvia = CreateShape(PxCapsuleGeometry(0.3, 1));
+	physx::PxShape* shapeLluvia = CreateShape(PxCapsuleGeometry(0.1, 0.3));
 	physx::PxShape* sphereNieve = CreateShape(PxSphereGeometry(1));
 	physx::PxShape* sphereNiebla = CreateShape(PxSphereGeometry(0.5));
 	this->vel = vel;
@@ -40,7 +40,7 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double dumping, Data::
 	if (type == Data::FUENTE)
 		renderItem = new RenderItem(sphereFuente, &transform, Vector4(0.0, 191.0, 255.0, 1.0));
 	else if (type == Data::LLUVIA)
-		renderItem = new RenderItem(shapeLluvia, &transform, Vector4(65.0, 105.0, 225.0, 1.0));
+		renderItem = new RenderItem(shapeLluvia, &transform, Vector4(0.2, 0.3, 1.0, 1.0));
 	else if (type == Data::NIEVE)
 		renderItem = new RenderItem(sphereNieve, &transform, Vector4(0.9, 0.9, 0.9, 1.0));
 	else if (type == Data::NIEBLA)

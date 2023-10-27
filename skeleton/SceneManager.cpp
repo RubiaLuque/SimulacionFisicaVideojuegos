@@ -3,7 +3,7 @@
 SceneManager::SceneManager() {
 	cam = GetCamera();
 	sys = new ParticleSystem(Data::NIEBLA);
-	particleSys = false;
+	particleSys = true;
 	fire = false;
 }
 
