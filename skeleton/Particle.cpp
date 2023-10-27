@@ -38,13 +38,13 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double dumping, Data::
 	this->vel = vel;
 
 	if (type == Data::FUENTE)
-		renderItem = new RenderItem(sphereFuente, &transform, Vector4(0.0, 191.0, 255.0, 0.9));
+		renderItem = new RenderItem(sphereFuente, &transform, Vector4(0.0, 191.0, 255.0, 1.0));
 	else if (type == Data::LLUVIA)
-		renderItem = new RenderItem(shapeLluvia, &transform, Vector4(65.0, 105.0, 225.0, 0.9));
+		renderItem = new RenderItem(shapeLluvia, &transform, Vector4(65.0, 105.0, 225.0, 1.0));
 	else if (type == Data::NIEVE)
-		renderItem = new RenderItem(sphereNieve, &transform, Vector4(0.9, 0.9, 0.9, 0.9));
+		renderItem = new RenderItem(sphereNieve, &transform, Vector4(0.9, 0.9, 0.9, 1.0));
 	else if (type == Data::NIEBLA)
-		renderItem = new RenderItem(sphereNiebla, &transform, Vector4(0.5, 0.5, 0.5, 0.9));
+		renderItem = new RenderItem(sphereNiebla, &transform, Vector4(0.5, 0.5, 0.5, 1.0));
 
 }
 
