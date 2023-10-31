@@ -7,6 +7,7 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double radius, double 
 	this->acc = acc;
 	transform = PxTransform(pos.x, pos.y, pos.z);
 	this->vel = vel;
+	this->radius = radius;
 
 	physx::PxShape* sphere = CreateShape(PxSphereGeometry(radius)); 
 	physx::PxShape* sphere1 = CreateShape(PxSphereGeometry(0.3));
@@ -31,10 +32,10 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double dumping, Data::
 	this->acc = acc;
 	transform = PxTransform(pos.x, pos.y, pos.z);
 
-	physx::PxShape* sphereFuente = CreateShape(PxSphereGeometry(2));
+	physx::PxShape* sphereFuente = CreateShape(PxSphereGeometry(0.5));
 	physx::PxShape* shapeLluvia = CreateShape(PxCapsuleGeometry(0.1, 0.3));
 	physx::PxShape* sphereNieve = CreateShape(PxSphereGeometry(1));
-	physx::PxShape* sphereNiebla = CreateShape(PxSphereGeometry(0.5));
+	physx::PxShape* sphereNiebla = CreateShape(PxSphereGeometry(0.3));
 	this->vel = vel;
 
 	if (type == Data::FUENTE)
@@ -56,7 +57,8 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, Vector4 color, float r
 	this->acc = acc;
 	transform = PxTransform(pos.x, pos.y, pos.z);
 	this->vel = vel;
-	
+	this->radius = radius;
+
 	physx::PxShape* firework = CreateShape(PxSphereGeometry(radius));
 	if (Data::FIREWORK)
 		renderItem = new RenderItem(firework, &transform, color);

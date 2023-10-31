@@ -10,7 +10,7 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g)
 	this->g = g;
 
 	//FUENTE
-	UniformParticleGenerator* fuente = new UniformParticleGenerator({ 0,-10,0 }, { 0, 20,0 }, {1, 10, 1}, { 5,10,5 }, Data::FUENTE);
+	UniformParticleGenerator* fuente = new UniformParticleGenerator({ 0,-10,0 }, { 0, 20,0 }, {1, 10, 1}, { 10,10,10 }, Data::FUENTE);
 	gens.push_back(fuente);
 
 	//LLUVIA

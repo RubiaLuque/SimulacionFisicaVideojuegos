@@ -14,6 +14,7 @@ private:
 	PxTransform transform;
 	RenderItem* renderItem = nullptr;
 	double dumping; //limita la velocidad para que no se dispare por errores numericos
+	double radius;
 
 public:
 	bool alive = true;
@@ -25,6 +26,7 @@ public:
 
 	Vector3 getVel() { return vel; }
 	Vector3 getPos() { return pos; }
+	double getRadius() { return radius; }
 	void update(double t);
 
 };

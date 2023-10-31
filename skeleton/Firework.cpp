@@ -25,26 +25,25 @@ Firework::~Firework()
 int Firework::update(double t)
 {
     //mientras dure el tiempo de vida del firework
-    while (elapsedTime <= Data::FIREWORK_DEATH) {
+    if (elapsedTime <= Data::FIREWORK_DEATH) {
         elapsedTime += t;
         //tiempo de vida de la particula inicial
         if (elapsedTime <= Data::FIREWORK_INIT_DEATH) {
             initP->update(t);
             return 0;
         }
-        //la particula inicial exlota cuando acaba su tiempo de vida
-        else{
-            auto aux = explode(initP);
-            particles.clear();
-            for (int i = 0; i < aux.size(); ++i) {
-                particles.push_back(aux.at(i));
-            }
-        }
 
         //las particulas creadas explotan si han superado su tiempo
         for (int i = 0; i < particles.size(); ++i) {
             particles.at(i)->limit_time += t;
-            if (particles.at(i)->limit_time >= Data::FIREWORK_P_DEATH) {
+            if(particles.at(i) == initP && initP->limit_time >= Data::FIREWORK_INIT_DEATH) {
+                setAlive(initP, false);
+                auto aux = explode(initP);
+                for (int j = 0; j < aux.size(); ++j) {
+                    particles.push_back(aux.at(j));
+                }
+            }
+            else if (particles.at(i)->limit_time >= Data::FIREWORK_P_DEATH) {
                 //se marca como no vivo
                 setAlive(particles.at(i), false);
                 //Se hace explotar
@@ -128,23 +127,25 @@ vector<Particle*> Firework::explode(Particle* p)
     vector<Particle*> aux;
     Vector3 pos = p->getPos();
     Vector3 vel = p->getVel();
+    double radius = p->getRadius();
 
     int n = numParticulas(gen);
+
     for (int i = 0; i <= n; ++i) {
         Vector3 auxVel, color;
 
-        auxVel.x = velD(gen2) * vel.x;
-        auxVel.y = velD(gen2) * vel.y;
-        auxVel.z = velD(gen2) * vel.z;
+        auxVel.x = (velD(gen2)) * vel.x;
+        auxVel.y = (velD(gen2)) * vel.y;
+        auxVel.z = (velD(gen2)) * vel.z;
 
         color.x = dis(gen);
         color.y = dis(gen);
         color.z = dis(gen);
         
-        auto p = new Particle(pos, auxVel, { 0, -9.8, 0 }, { color, 1.0 }, 1, 0.998, 
+        auto p = new Particle(pos, auxVel, { 0, -9.8, 0 }, { color, 1.0 }, radius/2.0, 0.998, 
             Data::FIREWORK);
         aux.push_back(p);
     }
-
+    std::cout << n << ' ';
     return aux;
 }
