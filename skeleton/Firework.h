@@ -20,12 +20,12 @@ private:
 	std::uniform_real_distribution<double> dis{0, 1};
 
 	std::mt19937 gen2;
-	std::uniform_real_distribution<double> velD{-2, 8};
-	std::uniform_int_distribution<int> numParticulas{3, 8};
+	std::uniform_real_distribution<double> velD{-1, 10};
+	std::uniform_int_distribution<int> numParticulas{3, 6};
 
 	//posicion y velocidad base de la particula inicial
 	Vector3 iniPos = { 0,0,0 };
-	Vector3 iniVel = { 0.3, 10, 0.3};
+	Vector3 iniVel = { 0.3, 13, 0.3};
 	double elapsedTime;
 
 public:
