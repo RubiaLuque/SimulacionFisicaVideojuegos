@@ -25,7 +25,7 @@ private:
 
 	//posicion y velocidad base de la particula inicial
 	Vector3 iniPos = { 0,0,0 };
-	Vector3 iniVel = { 0.3, 13, 0.3};
+	Vector3 iniVel = { 0.5, 13, 0.5};
 	double elapsedTime;
 
 public:
