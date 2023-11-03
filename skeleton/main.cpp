@@ -35,6 +35,8 @@ PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 SceneManager* manager;
 
+float timeKey = 0;
+bool keyPressed = false;
 //partícula practica 1
 //Particle* particle; -->Descomentar para usar una sola particula en MRU
 
@@ -87,6 +89,13 @@ void stepPhysics(bool interactive, double t)
 	//particle->update(t); --> actualiza la particula inicial
 	
 	manager->update(t);
+	if (keyPressed) {
+		timeKey += t;
+		if (timeKey > Data::MAX_TIME_KEY) {
+			keyPressed = false;
+			timeKey = 0;
+		}
+	}
 }
 
 // Function to clean data
@@ -124,29 +133,45 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case ' ':	break;
 	case '1': //casts a fireball
 	{
-		manager->addProjectile(FIREBALL);
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->addProjectile(FIREBALL);
+			timeKey = 0;
+		}
 		break;
 	}
 	case '2': //shoots a lightgun
 	{
-		manager->addProjectile(LIGHTGUN);
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->addProjectile(LIGHTGUN);
+			timeKey = 0;
+		}
 		break;
 	}
 	case '3': { //shoots a bullet
-		manager->addProjectile(GUN);
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->addProjectile(GUN);
+			timeKey = 0;
+		}
 		break;
 	}
 	case '4': { //fires a cannon
-		manager->addProjectile(CANNON);
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->addProjectile(CANNON);
+			timeKey = 0;
+		}
 		break;
 	}
 	case 'F': { //fireworks
-		manager->addFirework();
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->addFirework();
+			timeKey = 0;
+		}
 		break;
 	}
 	default:
 		break;
 	}
+	keyPressed = true;
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)

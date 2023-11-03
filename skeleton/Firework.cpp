@@ -77,27 +77,29 @@ int Firework::update(double t)
             particles.at(i)->update(t);
         }
     }
-
-    //se hace update de las particulas que queden tras finalizar el tiempo del firework
-    for (int i = 0; i < particles.size(); ++i) {
-        particles.at(i)->update(t);
-    }
-
-    //Se van eliminando el resto
-    for (int i = 0; i < particles.size(); ++i) {
-        particles.at(i)->limit_time += t;
-        if (particles.at(i)->limit_time >= Data::FIREWORK_P_DEATH) {
-            //Se elimina la particula que ha explotado
-            particles.erase(remove_if(particles.begin(), particles.end(),
-                [](Particle* p) noexcept {
-                    if (p->alive) return false;
-                    else { //si no esta vivo, se elimina
-                        delete p;
-                        return true;
-                    }
-                }), particles.end()
-                    );
+    else {
+        //se hace update de las particulas que queden tras finalizar el tiempo del firework
+        for (int i = 0; i < particles.size(); ++i) {
+            particles.at(i)->update(t);
         }
+
+        //Se van eliminando el resto
+        for (int i = 0; i < particles.size(); ++i) {
+            particles.at(i)->limit_time += t;
+            if (particles.at(i)->limit_time >= Data::FIREWORK_P_DEATH) {
+                //Se elimina la particula que ha explotado
+                particles.erase(remove_if(particles.begin(), particles.end(),
+                    [](Particle* p) noexcept {
+                        if (p->alive) return false;
+                        else { //si no esta vivo, se elimina
+                            delete p;
+                            return true;
+                        }
+                    }), particles.end()
+                        );
+            }
+        }
+
     }
 
     return 0;

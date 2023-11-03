@@ -1,6 +1,8 @@
 #pragma once
 
 namespace Data {
+	static const float MAX_TIME_KEY = 2.0;
+
 	static const float LIMIT_ON_SCREEN= 4.0;
 	static const int TAM_LIST = 5;
 	static const float FIREWORK_DEATH = 5.0; //tiempo de muerte de todo el firework
