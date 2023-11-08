@@ -27,54 +27,46 @@ int Firework::update(double t)
     //mientras dure el tiempo de vida del firework
     if (elapsedTime <= Data::FIREWORK_DEATH) {
         elapsedTime += t;
-        //tiempo de vida de la particula inicial
-        if (elapsedTime <= Data::FIREWORK_INIT_DEATH) {
-            initP->update(t);
-            return 0;
-        }
 
         //las particulas creadas explotan si han superado su tiempo
         for (int i = 0; i < particles.size(); ++i) {
             particles.at(i)->limit_time += t;
-            if(particles.at(i) == initP && initP->limit_time >= Data::FIREWORK_INIT_DEATH) {
-                setAlive(initP, false);
-                auto aux = explode(initP);
-                for (int j = 0; j < aux.size(); ++j) {
-                    particles.push_back(aux.at(j));
-                }
-            }
-            else if (particles.at(i)->limit_time >= Data::FIREWORK_P_DEATH) {
-                //se marca como no vivo
+            particles.at(i)->update(t);
+            if(particles.at(i)->limit_time>=_life_time) {
+                cout << particles.at(i)->limit_time << ' ';
                 setAlive(particles.at(i), false);
-                //Se hace explotar
                 auto aux = explode(particles.at(i));
-                //se añaden las nuevas particulas al vector de particulas de firework
                 for (int j = 0; j < aux.size(); ++j) {
                     particles.push_back(aux.at(j));
                 }
             }
+            //else if (particles.at(i)->limit_time >= Data::FIREWORK_P_DEATH) {
+            //    //se marca como no vivo
+            //    setAlive(particles.at(i), false);
+            //    //Se hace explotar
+            //    auto aux = explode(particles.at(i));
+            //    //se añaden las nuevas particulas al vector de particulas de firework
+            //    for (int j = 0; j < aux.size(); ++j) {
+            //        particles.push_back(aux.at(j));
+            //    }
+            //}
         }
 
         //se borran las particulas mas antiguas
         for (int i = 0; i < particles.size(); ++i) {
-            particles.at(i)->limit_time += t;
-            if (particles.at(i)->limit_time >= Data::FIREWORK_P_DEATH) {
-                //Se elimina la particula que ha explotado
-                particles.erase(remove_if(particles.begin(), particles.end(),
-                    [](Particle* p) noexcept {
-                        if (p->alive) return false;
-                        else { //si no esta vivo, se elimina
-                            delete p;
-                            return true;
-                        }
-                    }), particles.end()
-                        );
-            }
-        }
 
-        //se hace update de todas las demas
-        for (int i = 0; i < particles.size(); ++i) {
-            particles.at(i)->update(t);
+
+            //Se elimina la particula que ha explotado
+            particles.erase(remove_if(particles.begin(), particles.end(),
+                [](Particle* p) noexcept {
+                    if (p->alive) return false;
+                    else { //si no esta vivo, se elimina
+                        delete p;
+                        return true;
+                    }
+                }), particles.end()
+                    );
+
         }
     }
     else {
@@ -112,9 +104,9 @@ void Firework::shootParticle()
     auxPos.y = dis(gen) * iniPos.y;
     auxPos.z = dis(gen) * iniPos.z;
 
-    auxVel.x = velD(gen) * iniVel.x;
-    auxVel.y = velD(gen) * iniVel.y;
-    auxVel.z = velD(gen) * iniVel.z;
+    auxVel.x = iniVel.x;
+    auxVel.y = iniVel.y;
+    auxVel.z = iniVel.z;
     
     color.x = dis(gen);
     color.y = dis(gen);
@@ -128,17 +120,16 @@ vector<Particle*> Firework::explode(Particle* p)
 {
     vector<Particle*> aux;
     Vector3 pos = p->getPos();
-    Vector3 vel = p->getVel();
     double radius = p->getRadius();
 
     int n = numParticulas(gen);
 
-    for (int i = 0; i <= n; ++i) {
+    for (int i = 0; i < n; ++i) {
         Vector3 auxVel, color;
 
-        auxVel.x = (velD(gen2)) * vel.x;
-        auxVel.y = (velD(gen2)) * vel.y;
-        auxVel.z = (velD(gen2)) * vel.z;
+        auxVel.x = (velD(gen2)) * 5;
+        auxVel.y = (velD(gen2)*5) + 10;
+        auxVel.z = (velD(gen2)) * 5;
 
         color.x = dis(gen);
         color.y = dis(gen);
@@ -148,6 +139,6 @@ vector<Particle*> Firework::explode(Particle* p)
             Data::FIREWORK);
         aux.push_back(p);
     }
-    std::cout << n << ' ';
+    //std::cout << n << ' ';
     return aux;
 }
