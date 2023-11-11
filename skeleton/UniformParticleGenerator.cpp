@@ -1,4 +1,5 @@
 #include "UniformParticleGenerator.h"
+#include "GravityForceGenerator.h"
 
 UniformParticleGenerator::UniformParticleGenerator(Vector3 meanPos, Vector3 meanVel, Vector3 posWidth, 
 	Vector3 velWidth, Data::GENERATORS g) : ParticleGenerator()
@@ -26,6 +27,8 @@ UniformParticleGenerator::~UniformParticleGenerator()
 list<Particle*> UniformParticleGenerator::generateParticles()
 {
 	
+	GravityForceGenerator* gr = new GravityForceGenerator();
+
 	list<Particle*> list{};
 	for (int i = 0; i < Data::TAM_LIST; ++i) {
 		Vector3 auxPos = meanPos;
@@ -38,8 +41,8 @@ list<Particle*> UniformParticleGenerator::generateParticles()
 		auxVel.y += dis(gen) * velWidth.y;
 		auxVel.z += dis(gen) * velWidth.z;
 
-		auto p = new Particle(auxPos, auxVel, {0, -9.8, 0}, 0.988, g);
-		
+		auto p = new Particle(auxPos, auxVel, 1.0, 0.988, g);
+		gr->applyForce(p);
 		list.push_back(p);
 	}
 	

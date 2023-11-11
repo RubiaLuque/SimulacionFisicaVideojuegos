@@ -3,6 +3,7 @@
 #include "core.hpp"
 #include "Particle.h"
 #include "Data.h"
+#include "GravityForceGenerator.h"
 #include <random>
 
 using namespace std;
@@ -12,6 +13,8 @@ class GaussianParticleGenerator;
 class Firework
 {
 private:
+	GravityForceGenerator* gr = new GravityForceGenerator();
+
 	//almacena las particulas generadas
 	vector<Particle*> particles;
 	Particle* initP;

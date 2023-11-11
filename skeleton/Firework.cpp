@@ -40,16 +40,6 @@ int Firework::update(double t)
                     particles.push_back(aux.at(j));
                 }
             }
-            //else if (particles.at(i)->limit_time >= Data::FIREWORK_P_DEATH) {
-            //    //se marca como no vivo
-            //    setAlive(particles.at(i), false);
-            //    //Se hace explotar
-            //    auto aux = explode(particles.at(i));
-            //    //se añaden las nuevas particulas al vector de particulas de firework
-            //    for (int j = 0; j < aux.size(); ++j) {
-            //        particles.push_back(aux.at(j));
-            //    }
-            //}
         }
 
         //se borran las particulas mas antiguas
@@ -112,7 +102,8 @@ void Firework::shootParticle()
     color.y = dis(gen);
     color.z = dis(gen);
 
-    initP = new Particle(auxPos, auxVel, {0, -9.8, 0}, { color, 1.0 }, 1, 0.998, Data::FIREWORK);
+    initP = new Particle(auxPos, auxVel, 1.0, { color, 1.0 }, 1, 0.998, Data::FIREWORK);
+    gr->applyForce(initP);
     particles.push_back(initP);
 }
 
@@ -135,8 +126,9 @@ vector<Particle*> Firework::explode(Particle* p)
         color.y = dis(gen);
         color.z = dis(gen);
         
-        auto p = new Particle(pos, auxVel, { 0, -9.8, 0 }, { color, 1.0 }, radius/2.0, 0.998, 
+        auto p = new Particle(pos, auxVel, 1.0, { color, 1.0 }, radius/2.0, 0.998, 
             Data::FIREWORK);
+        gr->applyForce(p);
         aux.push_back(p);
     }
     //std::cout << n << ' ';

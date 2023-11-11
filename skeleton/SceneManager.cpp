@@ -46,7 +46,7 @@ void SceneManager::addProjectile(PROJECTILE_TYPE type) {
 	else if (type == GUN) {
 		vel *= 20;
 		//const Vector3 acc = { 0.0, -1.0, 0.0 }; //poco efecto de la gravedad -> P1
-		auto p = new Particle(pos, vel, 0.01, 1.0, 0.998, GUN);
+		auto p = new Particle(pos, vel, 0.1, 1.0, 0.998, GUN);
 		g->applyForce(p);
 		particles.push_back(p);
 	}
@@ -54,7 +54,7 @@ void SceneManager::addProjectile(PROJECTILE_TYPE type) {
 	{
 		vel *= 18;
 		//const Vector3 acc = { 0.0, -5.0, 0.0 }; //bastante efecto de gravedad -> P1
-		auto p = new Particle(pos, vel, 5.0, 5.0, 0.998, CANNON);
+		auto p = new Particle(pos, vel, 3.0, 5.0, 0.998, CANNON);
 		g->applyForce(p);
 		particles.push_back(p);
 	}

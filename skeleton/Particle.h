@@ -15,7 +15,7 @@ private:
 	RenderItem* renderItem = nullptr;
 	double dumping; //limita la velocidad para que no se dispare por errores numericos
 	double radius;
-	double mass = 1;
+	double mass = 1.0;
 
 public:
 	bool alive = true;
@@ -30,7 +30,7 @@ public:
 	double getRadius() noexcept { return radius; }
 	double getMass() noexcept { return mass; }
 
-	Vector3 setAcc(Vector3 acc) { this->acc = acc; }
+	void setAcc(Vector3 acc) { this->acc = acc; }
 
 	void update(double t);
 
