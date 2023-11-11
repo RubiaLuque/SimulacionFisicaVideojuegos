@@ -7,6 +7,7 @@ public:
 	ForceGenerator() noexcept {};
 	virtual ~ForceGenerator() {};
 	virtual void applyForce(Particle* p) = 0;
+	virtual void removeForce(Particle* p) = 0;
 
 };
 

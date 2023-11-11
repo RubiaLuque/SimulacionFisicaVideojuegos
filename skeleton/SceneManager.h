@@ -16,7 +16,7 @@ private:
 	vector<Particle*> particles;
 	//referencia a la camara
 	Camera* cam;
-	ParticleSystem* sys;
+	vector<ParticleSystem*> sys;
 	Firework* firework;
 	bool particleSys;
 	bool fire;
@@ -28,6 +28,7 @@ public:
 
 	//añade proyectiles al vector
 	void addProjectile(PROJECTILE_TYPE type);
+	void addParticleSystem(GENERATORS gen);
 	void addFirework();
 	void update(double t);
 

@@ -13,5 +13,6 @@ public:
 	GravityForceGenerator() : ForceGenerator() {};
 	virtual ~GravityForceGenerator() {};
 	void applyForce(Particle* p);
+	void removeForce(Particle* p) {};
 };
 

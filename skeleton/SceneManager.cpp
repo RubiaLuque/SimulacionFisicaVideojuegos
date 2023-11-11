@@ -3,7 +3,6 @@
 
 SceneManager::SceneManager() {
 	cam = GetCamera();
-	sys = new ParticleSystem(Data::NIEBLA);
 	particleSys = false;
 	fire = false;
 }
@@ -19,7 +18,28 @@ SceneManager::~SceneManager() {
 	}
 	
 	delete cam;
-	delete sys;
+
+	for (int i = 0; i < sys.size(); ++i) {
+		if (sys.at(i) != nullptr) {
+			delete sys.at(i);
+			sys.at(i) = nullptr;
+		}
+	}
+}
+
+void SceneManager::addParticleSystem(GENERATORS gen) {
+	if (gen == FUENTE) {
+		sys.push_back(new ParticleSystem(FUENTE));
+	}
+	if (gen == LLUVIA) {
+		sys.push_back(new ParticleSystem(LLUVIA));
+	}
+	if (gen == NIEVE) {
+		sys.push_back(new ParticleSystem(NIEVE));
+	}
+	else { //NIEBLA
+		sys.push_back(new ParticleSystem(NIEBLA));
+	}
 }
 
 void SceneManager::addProjectile(PROJECTILE_TYPE type) {
@@ -62,41 +82,38 @@ void SceneManager::addProjectile(PROJECTILE_TYPE type) {
 }
 
 
-
 void SceneManager::update(double t) {
-	if (!particleSys && !fire) {
-		//eliminar aquellas que lleven mas tiempo del necesario en pantalla
-		for (int i = 0; i < particles.size(); ++i) {
-			particles.at(i)->limit_time += t;
-			if (particles.at(i)->limit_time > Data::LIMIT_ON_SCREEN) {
-				//se marca como no vivo
-				setAlive(particles.at(i), false);
 
-				particles.erase(remove_if(particles.begin(), particles.end(),
-					[](Particle* p) noexcept {
-						if (p->alive) return false;
-						else { //si no esta vivo, se elimina
-							delete p;
-							return true;
-						}
-					}), particles.end()
-						);
-			}
+	//eliminar aquellas que lleven mas tiempo del necesario en pantalla
+	for (int i = 0; i < particles.size(); ++i) {
+		particles.at(i)->limit_time += t;
+		if (particles.at(i)->limit_time > Data::LIMIT_ON_SCREEN) {
+			//se marca como no vivo
+			setAlive(particles.at(i), false);
+
+			particles.erase(remove_if(particles.begin(), particles.end(),
+				[](Particle* p) noexcept {
+					if (p->alive) return false;
+					else { //si no esta vivo, se elimina
+						delete p;
+						return true;
+					}
+				}), particles.end()
+					);
 		}
-
-		//se hace update de todas las demas
-		for (int i = 0; i < particles.size(); ++i) {
-			particles.at(i)->update(t);
-		}
-
-	}
-	else if(particleSys && !fire) {
-		sys->update(t);
 	}
 
-	else if(fire && !particleSys) {
-		firework->update(t);
+	//se hace update de todas las demas
+	for (int i = 0; i < particles.size(); ++i) {
+		particles.at(i)->update(t);
 	}
+
+	//Se hace update de los sistemas de particulas
+	for (int i = 0; i < sys.size(); ++i) {
+		sys.at(i)->update(t);
+	}
+
+	if (fire) firework->update(t);
 }
 
 void SceneManager::addFirework()

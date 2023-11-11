@@ -12,13 +12,26 @@
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="ParticleGenerator.cpp" />
-    <ClCompile Include="GaussianParticleGenerator.cpp" />
-    <ClCompile Include="UniformParticleGenerator.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
-    <ClCompile Include="Firework.cpp" />
-    <ClCompile Include="ForceGenerator.cpp" />
-    <ClCompile Include="GravityForceGenerator.cpp" />
+    <ClCompile Include="ForceGenerator.cpp">
+      <Filter>ForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityForceGenerator.cpp">
+      <Filter>ForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="GaussianParticleGenerator.cpp">
+      <Filter>ParticleGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleGenerator.cpp">
+      <Filter>ParticleGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="UniformParticleGenerator.cpp">
+      <Filter>ParticleGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="Firework.cpp">
+      <Filter>ParticleGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="WindForceGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -32,18 +45,37 @@
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="ParticleGenerator.h" />
-    <ClInclude Include="GaussianParticleGenerator.h" />
-    <ClInclude Include="UniformParticleGenerator.h" />
     <ClInclude Include="ParticleSystem.h" />
-    <ClInclude Include="Firework.h" />
     <ClInclude Include="Data.h" />
-    <ClInclude Include="ForceGenerator.h" />
-    <ClInclude Include="GravityForceGenerator.h" />
+    <ClInclude Include="ForceGenerator.h">
+      <Filter>ForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityForceGenerator.h">
+      <Filter>ForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="GaussianParticleGenerator.h">
+      <Filter>ParticleGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleGenerator.h">
+      <Filter>ParticleGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="UniformParticleGenerator.h">
+      <Filter>ParticleGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="Firework.h">
+      <Filter>ParticleGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="WindForceGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
       <UniqueIdentifier>{d04b4f9f-5a69-465e-8070-25c6d0bcd3c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ForceGenerators">
+      <UniqueIdentifier>{18d107fb-d8ca-42ff-901c-87315efa6ae3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ParticleGenerators">
+      <UniqueIdentifier>{fd3d3d39-c20a-4ad4-95cd-8a3e7b123e1c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

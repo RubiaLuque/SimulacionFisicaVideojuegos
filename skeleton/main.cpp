@@ -168,6 +168,30 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		}
 		break;
 	}
+	case '5': {
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->addParticleSystem(FUENTE);
+			timeKey = 0;
+		}
+	}
+	case '6': {
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->addParticleSystem(LLUVIA);
+			timeKey = 0;
+		}
+	}
+	case '7': {
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->addParticleSystem(NIEVE);
+			timeKey = 0;
+		}
+	}
+	case '8': {
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->addParticleSystem(NIEBLA);
+			timeKey = 0;
+		}
+	}
 	default:
 		break;
 	}
