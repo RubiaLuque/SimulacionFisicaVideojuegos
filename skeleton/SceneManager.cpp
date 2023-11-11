@@ -1,4 +1,5 @@
 #include "SceneManager.h"
+#include "GravityForceGenerator.h"
 
 SceneManager::SceneManager() {
 	cam = GetCamera();
@@ -25,27 +26,37 @@ void SceneManager::addProjectile(PROJECTILE_TYPE type) {
 	Vector3 vel = cam->getDir();
 	const Vector3 pos = cam->getEye();
 
+	GravityForceGenerator* g = new GravityForceGenerator();
+
 	if (type == FIREBALL) {
 		vel *= 10;
-		const Vector3 acc = { 0.0, -0.6, 0.0 }; //muy poca gravedad porque se quiere simular que flota un poco
-		particles.push_back(new Particle(pos, vel, acc, 3.0, 0.888, FIREBALL));
+		//const Vector3 acc = { 0.0, -0.6, 0.0 }; //muy poca gravedad porque se quiere simular que flota un poco -> P1
+		auto p = new Particle(pos, vel, 0.0001, 3.0, 0.888, FIREBALL);
+		g->applyForce(p);
+		particles.push_back(p);
 	}
 	else if (type == LIGHTGUN)
 	{
 		vel *= 25;
-		Vector3 acc = { 0.0, 0.0, 0.0 }; //no tiene efecto gravedad
-		particles.push_back(new Particle(pos, vel, acc, 1.0, 0.998, LIGHTGUN));
+		//Vector3 acc = { 0.0, 0.0, 0.0 }; //no tiene efecto gravedad -> P1
+		auto p = new Particle(pos, vel, 0.0, 1.0, 0.998, LIGHTGUN);
+		g->applyForce(p);
+		particles.push_back(p);
 	}
 	else if (type == GUN) {
 		vel *= 20;
-		const Vector3 acc = { 0.0, -1.0, 0.0 }; //poco efecto de la gravedad
-		particles.push_back(new Particle(pos, vel, acc, 1.0, 0.998, GUN));
+		//const Vector3 acc = { 0.0, -1.0, 0.0 }; //poco efecto de la gravedad -> P1
+		auto p = new Particle(pos, vel, 0.01, 1.0, 0.998, GUN);
+		g->applyForce(p);
+		particles.push_back(p);
 	}
 	else //cannon
 	{
 		vel *= 18;
-		const Vector3 acc = { 0.0, -5.0, 0.0 }; //bastante efecto de gravedad
-		particles.push_back(new Particle(pos, vel, acc, 5.0, 0.998, CANNON));
+		//const Vector3 acc = { 0.0, -5.0, 0.0 }; //bastante efecto de gravedad -> P1
+		auto p = new Particle(pos, vel, 5.0, 5.0, 0.998, CANNON);
+		g->applyForce(p);
+		particles.push_back(p);
 	}
 
 }

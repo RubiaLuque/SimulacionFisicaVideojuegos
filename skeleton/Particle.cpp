@@ -1,13 +1,13 @@
 #include "Particle.h"
 
 
-Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double radius, double dumping, Data::PROJECTILE_TYPE type) {
+Particle::Particle(Vector3 pos, Vector3 vel, double mass, double radius, double dumping, Data::PROJECTILE_TYPE type) {
 	this->dumping = dumping;
 	this->pos = pos;
-	this->acc = acc;
 	transform = PxTransform(pos.x, pos.y, pos.z);
 	this->vel = vel;
 	this->radius = radius;
+	this->mass = mass;
 
 	physx::PxShape* sphere = CreateShape(PxSphereGeometry(radius)); 
 	physx::PxShape* sphere1 = CreateShape(PxSphereGeometry(0.3));
@@ -26,10 +26,10 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double radius, double 
 
 }
 
-Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double dumping, Data::GENERATORS type) {
+Particle::Particle(Vector3 pos, Vector3 vel, double mass, double dumping, Data::GENERATORS type) {
 	this->dumping = dumping;
 	this->pos = pos;
-	this->acc = acc;
+	this->mass = mass;
 	transform = PxTransform(pos.x, pos.y, pos.z);
 
 	physx::PxShape* sphereFuente = CreateShape(PxSphereGeometry(0.5));
@@ -49,15 +49,15 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double dumping, Data::
 
 }
 
-Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, Vector4 color, float radius,
+Particle::Particle(Vector3 pos, Vector3 vel, double mass, Vector4 color, float radius,
 	double dumping, Data::GENERATORS type = Data::FIREWORK)
 {
 	this->dumping = dumping;
 	this->pos = pos;
-	this->acc = acc;
 	transform = PxTransform(pos.x, pos.y, pos.z);
 	this->vel = vel;
 	this->radius = radius;
+	this->mass = mass;
 
 	physx::PxShape* firework = CreateShape(PxSphereGeometry(radius));
 	if (Data::FIREWORK)
