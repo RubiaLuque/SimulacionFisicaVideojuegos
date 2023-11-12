@@ -173,30 +173,49 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			manager->addParticleSystem(FUENTE);
 			timeKey = 0;
 		}
+		break;
 	}
 	case '6': {
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
 			manager->addParticleSystem(LLUVIA);
 			timeKey = 0;
 		}
+		break;
 	}
 	case '7': {
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
 			manager->addParticleSystem(NIEVE);
 			timeKey = 0;
 		}
+		break;
 	}
 	case '8': {
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
 			manager->addParticleSystem(NIEBLA);
 			timeKey = 0;
 		}
+		break;
 	}
 	case 'Z': {
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
 			manager->addForceToSystem(WIND);
 			timeKey = 0;
 		}
+		break;
+	}
+	case 'V': {
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->addForceToSystem(VORTEX);
+			timeKey = 0;
+		}
+		break;
+	}
+	case 'X': {
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->addForceToSystem(EXPLOSION);
+			timeKey = 0;
+		}
+		break;
 	}
 	default:
 		break;

@@ -32,6 +32,7 @@
       <Filter>ParticleGenerators</Filter>
     </ClCompile>
     <ClCompile Include="WindForceGenerator.cpp" />
+    <ClCompile Include="VortexForceGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -66,6 +67,7 @@
       <Filter>ParticleGenerators</Filter>
     </ClInclude>
     <ClInclude Include="WindForceGenerator.h" />
+    <ClInclude Include="VortexForceGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

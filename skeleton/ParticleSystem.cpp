@@ -29,7 +29,7 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g)
 
 void ParticleSystem::addForce(Data::FORCES f) {
 	this->f = f;
-	WindForceGenerator* w = new WindForceGenerator({-5, 0, 5});
+	WindForceGenerator* w = new WindForceGenerator({-5, 0, -5});
 	forces.push_back(w);
 
 }
