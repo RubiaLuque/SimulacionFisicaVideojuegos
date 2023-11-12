@@ -42,6 +42,14 @@ void SceneManager::addParticleSystem(GENERATORS gen) {
 	}
 }
 
+void SceneManager::addForceToSystem(FORCES f) {
+	for (int i = 0; i < sys.size(); ++i) {
+		if (sys.at(i) != nullptr) {
+			sys.at(i)->addForce(f);
+		}
+	}
+}
+
 void SceneManager::addProjectile(PROJECTILE_TYPE type) {
 	Vector3 vel = cam->getDir();
 	const Vector3 pos = cam->getEye();

@@ -1,6 +1,7 @@
 #include "ParticleSystem.h"
 #include "UniformParticleGenerator.h"
 #include "GaussianParticleGenerator.h"
+#include "WindForceGenerator.h"
 
 ParticleSystem::ParticleSystem(Data::GENERATORS g)
 {
@@ -24,6 +25,13 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g)
 	//NIEBLA
 	GaussianParticleGenerator* niebla = new GaussianParticleGenerator({ 0,40,0 }, { 1,1,1 }, { 50, 50, 50 }, { 1, 5, 1 }, Data::NIEBLA);
 	gens.push_back(niebla);
+}
+
+void ParticleSystem::addForce(Data::FORCES f) {
+	this->f = f;
+	WindForceGenerator* w = new WindForceGenerator({-5, 0, 5});
+	forces.push_back(w);
+
 }
 
 ParticleSystem::~ParticleSystem()
@@ -50,6 +58,7 @@ void ParticleSystem::update(double t) {
 
 	
 	auto aux = gens.at(g)->generateParticles();
+	
 
 	elapsedTime = 0;
 	for (auto it = aux.begin(); it != aux.end(); ++it) {
@@ -75,8 +84,17 @@ void ParticleSystem::update(double t) {
 		}
 	}
 
+
 	//se hace update de todas las demas
 	for (auto it = particles.begin(); it != particles.end(); ++it) {
+		//WIND
+		if (f == Data::WIND && ((*it)->getPos()).magnitude() <= windSphereRadius 
+			&& (*it)->getWind() == false) {
+			forces.at(f - 1)->applyForce(*it);
+		}
+		else if (((*it)->getPos()).magnitude() > windSphereRadius && (*it)->getWind() == true) {
+			forces.at(f - 1)->removeForce(*it);
+		}
 		(*it)->update(t);
 	}
 

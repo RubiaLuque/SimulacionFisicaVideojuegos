@@ -17,5 +17,9 @@ namespace Data {
 		FIREBALL, LIGHTGUN, GUN, CANNON,
 	};
 
+	static enum FORCES {
+		NULLF = 0, WIND, VORTEX, EXPLOSION
+	};
+
 }
 

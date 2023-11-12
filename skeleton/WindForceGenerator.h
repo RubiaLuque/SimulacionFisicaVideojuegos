@@ -4,7 +4,8 @@ class WindForceGenerator : public ForceGenerator
 {
 private:
 	Vector3 windVel;
-	float k1, k2;
+	float k1 = 1, k2;
+
 public:
 	WindForceGenerator(Vector3 windVel) : ForceGenerator() {
 		this->windVel = windVel;

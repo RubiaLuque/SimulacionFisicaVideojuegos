@@ -192,6 +192,12 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			timeKey = 0;
 		}
 	}
+	case 'Z': {
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->addForceToSystem(WIND);
+			timeKey = 0;
+		}
+	}
 	default:
 		break;
 	}

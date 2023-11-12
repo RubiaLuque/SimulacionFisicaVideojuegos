@@ -21,6 +21,8 @@ private:
 	double radius;
 	double mass = 1.0;
 
+	bool wind = false;
+
 public:
 	bool alive = true;
 	double limit_time = 0; //tiempo que lleva en pantalla
@@ -34,10 +36,12 @@ public:
 	Vector3 getPos() { return pos; }
 	double getRadius() noexcept { return radius; }
 	double getMass() noexcept { return mass; }
+	bool getWind() noexcept { return wind; }
 
 	//Setters
 	void setAcc(Vector3 acc) { this->acc = acc; }
 	void setVel(Vector3 vel) { this->vel = vel; }
+	void setWind(bool wind) noexcept { this->wind = wind; }
 	//void setWindForce(Vector3 windForce) { this->windForce = windForce; }
 
 	void update(double t);
