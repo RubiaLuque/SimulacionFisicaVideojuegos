@@ -16,8 +16,7 @@ SceneManager::~SceneManager() {
 
 		}
 	}
-	
-	delete cam;
+	particles.clear();
 
 	for (int i = 0; i < sys.size(); ++i) {
 		if (sys.at(i) != nullptr) {
@@ -25,16 +24,18 @@ SceneManager::~SceneManager() {
 			sys.at(i) = nullptr;
 		}
 	}
+	sys.clear();
+
 }
 
 void SceneManager::addParticleSystem(GENERATORS gen) {
 	if (gen == FUENTE) {
 		sys.push_back(new ParticleSystem(FUENTE));
 	}
-	if (gen == LLUVIA) {
+	else if (gen == LLUVIA) {
 		sys.push_back(new ParticleSystem(LLUVIA));
 	}
-	if (gen == NIEVE) {
+	else if (gen == NIEVE) {
 		sys.push_back(new ParticleSystem(NIEVE));
 	}
 	else { //NIEBLA

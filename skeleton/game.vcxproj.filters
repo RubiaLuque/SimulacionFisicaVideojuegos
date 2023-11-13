@@ -31,8 +31,15 @@
     <ClCompile Include="Firework.cpp">
       <Filter>ParticleGenerators</Filter>
     </ClCompile>
-    <ClCompile Include="WindForceGenerator.cpp" />
-    <ClCompile Include="VortexForceGenerator.cpp" />
+    <ClCompile Include="VortexForceGenerator.cpp">
+      <Filter>ForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="WindForceGenerator.cpp">
+      <Filter>ForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplosionForceGenerator.cpp">
+      <Filter>ForceGenerators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -66,8 +73,15 @@
     <ClInclude Include="Firework.h">
       <Filter>ParticleGenerators</Filter>
     </ClInclude>
-    <ClInclude Include="WindForceGenerator.h" />
-    <ClInclude Include="VortexForceGenerator.h" />
+    <ClInclude Include="VortexForceGenerator.h">
+      <Filter>ForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="WindForceGenerator.h">
+      <Filter>ForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplosionForceGenerator.h">
+      <Filter>ForceGenerators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

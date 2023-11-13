@@ -21,6 +21,9 @@ private:
 	double elapsedTime;
 
 	double windSphereRadius = 50;
+	double vortexSphereRadius = 50;
+	double explosionSphereRadius = 40;
+
 public:
 	ParticleSystem(Data::GENERATORS gen);
 	void addForce(Data::FORCES f);

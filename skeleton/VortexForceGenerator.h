@@ -4,10 +4,10 @@ class VortexForceGenerator : public WindForceGenerator
 {
 private:
 	int K;
-	Vector2 vortexPos = { 0,0 };
+	Vector3 vortexPos = { 0,0, 0 };
 
 public:
-	VortexForceGenerator(Vector3 windVel, Vector2 vortexPos);
+	VortexForceGenerator(Vector3 windVel, Vector3 vortexPos);
 	virtual ~VortexForceGenerator() {};
 	void applyForce(Particle* p);
 	void removeForce(Particle* p);

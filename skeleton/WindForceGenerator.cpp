@@ -11,7 +11,7 @@ void WindForceGenerator::applyForce(Particle* p)
 void WindForceGenerator::removeForce(Particle* p)
 {
 	if (p != nullptr) {
-		p->setVel((windVel + p->getVel())/k1);
+		//p->setVel((windVel + p->getVel())/k1);
 		p->setWind(false);
 	}
 }

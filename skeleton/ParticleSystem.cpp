@@ -2,6 +2,8 @@
 #include "UniformParticleGenerator.h"
 #include "GaussianParticleGenerator.h"
 #include "WindForceGenerator.h"
+#include "VortexForceGenerator.h"
+#include <cmath>
 
 ParticleSystem::ParticleSystem(Data::GENERATORS g)
 {
@@ -31,6 +33,10 @@ void ParticleSystem::addForce(Data::FORCES f) {
 	this->f = f;
 	WindForceGenerator* w = new WindForceGenerator({-5, 0, -5});
 	forces.push_back(w);
+
+	VortexForceGenerator* v = new VortexForceGenerator({-5, 0, -5}, {0,0,0});
+	forces.push_back(v);
+
 
 }
 
@@ -95,6 +101,14 @@ void ParticleSystem::update(double t) {
 		else if (((*it)->getPos()).magnitude() > windSphereRadius && (*it)->getWind() == true) {
 			forces.at(f - 1)->removeForce(*it);
 		}
+
+		//VORTEX
+		if (f == Data::VORTEX && (abs((*it)->getPos().x) < vortexSphereRadius &&
+			abs((*it)->getPos().y) < vortexSphereRadius)) {
+
+			forces.at(f - 1)->applyForce(*it);
+		}
+
 		(*it)->update(t);
 	}
 

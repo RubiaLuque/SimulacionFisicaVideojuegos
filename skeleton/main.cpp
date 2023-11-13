@@ -129,7 +129,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch(toupper(key))
 	{
-	//case 'B': break;
 	//case ' ':	break;
 	case '1': //casts a fireball
 	{
@@ -217,6 +216,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		}
 		break;
 	}
+
 	default:
 		break;
 	}
