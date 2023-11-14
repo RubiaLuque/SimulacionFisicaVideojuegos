@@ -11,6 +11,8 @@ private:
 	Vector3 vel;
 	Vector3 pos;
 
+	Vector3 forceAccum = { 0,0,0 };
+
 	//Fuerzas aplicadas sobre la particula
 	Vector3 acc = { 0, -9.8, 0 };
 	//Vector3 windForce = { 0,0,0 };
@@ -30,6 +32,9 @@ public:
 	Particle(Vector3 pos, Vector3 vel, double mass, double dumping, Data::GENERATORS type);
 	Particle(Vector3 pos, Vector3 vel, double mass, Vector4 color, float radius, double dumping, Data::GENERATORS type);
 	virtual ~Particle();
+
+	inline void addForce(Vector3 f) { forceAccum += f; }
+	inline void clearForces() { forceAccum *= 0; }
 
 	//Getters
 	Vector3 getVel() { return vel; }

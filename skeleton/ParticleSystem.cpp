@@ -94,18 +94,19 @@ void ParticleSystem::update(double t) {
 	//se hace update de todas las demas
 	for (auto it = particles.begin(); it != particles.end(); ++it) {
 		//WIND
-		if (f == Data::WIND && ((*it)->getPos()).magnitude() <= windSphereRadius 
-			&& (*it)->getWind() == false) {
+		if (f == Data::WIND && ((*it)->getPos()).magnitude() <= windSphereRadius) {
 			forces.at(f - 1)->applyForce(*it);
-		}
-		else if (((*it)->getPos()).magnitude() > windSphereRadius && (*it)->getWind() == true) {
-			forces.at(f - 1)->removeForce(*it);
 		}
 
 		//VORTEX
 		if (f == Data::VORTEX && (abs((*it)->getPos().x) < vortexSphereRadius &&
 			abs((*it)->getPos().y) < vortexSphereRadius)) {
 
+			forces.at(f - 1)->applyForce(*it);
+		}
+
+		//EXPLOSION
+		if (f == Data::EXPLOSION && ((*it)->getPos()).magnitude() <= explosionSphereRadius) {
 			forces.at(f - 1)->applyForce(*it);
 		}
 
