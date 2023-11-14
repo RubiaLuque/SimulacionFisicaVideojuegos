@@ -1,6 +1,11 @@
 #include "ExplosionForceGenerator.h"
 
-ExplosionForceGenerator::ExplosionForceGenerator()
+ExplosionForceGenerator::ExplosionForceGenerator() : ForceGenerator()
+{
+
+}
+
+ExplosionForceGenerator::~ExplosionForceGenerator()
 {
 
 }
@@ -8,6 +13,6 @@ ExplosionForceGenerator::ExplosionForceGenerator()
 void ExplosionForceGenerator::applyForceDin(Particle* p, double t)
 {
 	if (p != nullptr) {
-		p->addForce();
+		//p->addForce();
 	}
 }

@@ -3,6 +3,7 @@
 #include "GaussianParticleGenerator.h"
 #include "WindForceGenerator.h"
 #include "VortexForceGenerator.h"
+#include "ExplosionForceGenerator.h"
 #include <cmath>
 
 ParticleSystem::ParticleSystem(Data::GENERATORS g)
@@ -21,7 +22,7 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g)
 	gens.push_back(lluvia);
 
 	//NIEVE
-	GaussianParticleGenerator* nieve = new GaussianParticleGenerator({ 0,70,0 }, { 0,1,0 }, { 50, 5,  50}, { 5, 5, 5 }, Data::NIEVE);
+	GaussianParticleGenerator* nieve = new GaussianParticleGenerator({ 0,20,0 }, { 0,1,0 }, { 50, 5,  50}, { 5, 5, 5 }, Data::NIEVE);
 	gens.push_back(nieve);
 
 	//NIEBLA
@@ -31,7 +32,7 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g)
 
 void ParticleSystem::addForce(Data::FORCES f) {
 	this->f = f;
-	WindForceGenerator* w = new WindForceGenerator({-5, 0, -5});
+	WindForceGenerator* w = new WindForceGenerator({0, -20, -20});
 	forces.push_back(w);
 
 	VortexForceGenerator* v = new VortexForceGenerator({-5, 0, -5}, {0,0,0});
@@ -93,6 +94,7 @@ void ParticleSystem::update(double t) {
 
 	//se hace update de todas las demas
 	for (auto it = particles.begin(); it != particles.end(); ++it) {
+
 		//WIND
 		if (f == Data::WIND && ((*it)->getPos()).magnitude() <= windSphereRadius) {
 			forces.at(f - 1)->applyForce(*it);
@@ -107,7 +109,7 @@ void ParticleSystem::update(double t) {
 
 		//EXPLOSION
 		if (f == Data::EXPLOSION && ((*it)->getPos()).magnitude() <= explosionSphereRadius) {
-			forces.at(f - 1)->applyForce(*it);
+			forces.at(f - 1)->applyForceDin(*it, t);
 		}
 
 		(*it)->update(t);

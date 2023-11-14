@@ -3,7 +3,8 @@
 void WindForceGenerator::applyForce(Particle* p)
 {
 	if (p != nullptr) {
-		p->addForce(k1*(windVel - p->getVel()));
+		p->addForce(k1*(windVel - p->getVel()) + 
+			k2*(windVel - p->getVel()).magnitude()* (windVel - p->getVel()));
 		p->setWind(true);
 	}
 }

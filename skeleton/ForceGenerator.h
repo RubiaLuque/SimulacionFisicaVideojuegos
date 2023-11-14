@@ -8,6 +8,7 @@ public:
 	virtual ~ForceGenerator() {};
 	virtual void applyForce(Particle* p) = 0;
 	virtual void removeForce(Particle* p) = 0;
+	virtual void applyForceDin(Particle* p, double t) {};
 
 };
 
