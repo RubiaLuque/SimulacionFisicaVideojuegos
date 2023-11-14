@@ -9,6 +9,8 @@ namespace Data {
 	static const float FIREWORK_INIT_DEATH = 1.5; //tiempo que tarda en morir la particula inicial
 	static const float FIREWORK_P_DEATH = 3.0; //tiempo de muerte de cada particula del firework
 
+	static const double EXPLOSION_SPHERE_RADIUS = 40;
+
 	static enum GENERATORS {
 		FUENTE, LLUVIA, NIEVE, NIEBLA, FIREWORK
 	};

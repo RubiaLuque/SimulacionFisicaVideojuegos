@@ -38,7 +38,8 @@ void ParticleSystem::addForce(Data::FORCES f) {
 	VortexForceGenerator* v = new VortexForceGenerator({-5, 0, -5}, {0,0,0});
 	forces.push_back(v);
 
-
+	ExplosionForceGenerator* e = new ExplosionForceGenerator({ 0,0,0 });
+	forces.push_back(e);
 }
 
 ParticleSystem::~ParticleSystem()
@@ -108,9 +109,13 @@ void ParticleSystem::update(double t) {
 		}
 
 		//EXPLOSION
-		if (f == Data::EXPLOSION && ((*it)->getPos()).magnitude() <= explosionSphereRadius) {
+	
+		if (f == Data::EXPLOSION && ((*it)->getPos()).magnitude() <= R) {
 			forces.at(f - 1)->applyForceDin(*it, t);
+			//R = forces.at(f - 1)->expandForce(*it, t);
 		}
+		/*else if (f == Data::EXPLOSION && ((*it)->getPos()).magnitude() > Data::EXPLOSION_SPHERE_RADIUS) {
+		}*/
 
 		(*it)->update(t);
 	}

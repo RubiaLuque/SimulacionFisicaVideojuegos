@@ -22,7 +22,7 @@ private:
 
 	double windSphereRadius = 50;
 	double vortexSphereRadius = 50;
-	double explosionSphereRadius = 40;
+	int R = Data::EXPLOSION_SPHERE_RADIUS;
 
 public:
 	ParticleSystem(Data::GENERATORS gen);
