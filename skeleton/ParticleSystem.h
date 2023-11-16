@@ -14,15 +14,17 @@ private:
 	vector<ParticleGenerator*> gens;
 	vector<ForceGenerator*> forces;
 
+	GravityForceGenerator* gr = new GravityForceGenerator();
+
 	Data::GENERATORS g;
 	Data::FORCES f = Data::NULLF;
 	
 	list<Particle*> particles;
 	double elapsedTime;
 
-	double windSphereRadius = 50;
-	double vortexSphereRadius = 50;
 	int R = Data::EXPLOSION_SPHERE_RADIUS;
+
+	bool idle = false;
 
 public:
 	ParticleSystem(Data::GENERATORS gen);
@@ -30,7 +32,6 @@ public:
 	virtual ~ParticleSystem();
 	void update(double t);
 	
-
 	//cambia la propiedad alive de las particulas 
 	inline void setAlive(Particle* p, bool alive) noexcept { p->alive = alive; }
 };

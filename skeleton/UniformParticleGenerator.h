@@ -12,7 +12,7 @@ protected:
 	std::random_device rd;
 	std::mt19937 gen;
 	std::uniform_real_distribution<float> dis;
-
+	bool idle = false;
 	Data::GENERATORS g;
 
 public:

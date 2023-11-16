@@ -195,6 +195,13 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		}
 		break;
 	}
+	case '9': {
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->addParticleSystem(IDLE);
+			timeKey = 0;
+		}
+		break;
+	}
 	case 'Z': {
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
 			manager->addForceToSystem(WIND);

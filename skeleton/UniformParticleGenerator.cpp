@@ -30,6 +30,7 @@ list<Particle*> UniformParticleGenerator::generateParticles()
 	GravityForceGenerator* gr = new GravityForceGenerator();
 
 	list<Particle*> list{};
+	
 	for (int i = 0; i < Data::TAM_LIST; ++i) {
 		Vector3 auxPos = meanPos;
 		auxPos.x += dis(gen) * posWidth.x;
@@ -45,7 +46,6 @@ list<Particle*> UniformParticleGenerator::generateParticles()
 		gr->applyForce(p);
 		list.push_back(p);
 	}
-	
 
 	return list;
 }

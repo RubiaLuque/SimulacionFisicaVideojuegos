@@ -28,17 +28,21 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g)
 	//NIEBLA
 	GaussianParticleGenerator* niebla = new GaussianParticleGenerator({ 0,40,0 }, { 1,1,1 }, { 50, 50, 50 }, { 1, 5, 1 }, Data::NIEBLA);
 	gens.push_back(niebla);
+
+	//IDLE
+	UniformParticleGenerator* idle = new UniformParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 10, 0, 10 }, { 0,0,0 }, Data::IDLE);
+	gens.push_back(idle);
 }
 
 void ParticleSystem::addForce(Data::FORCES f) {
 	this->f = f;
-	WindForceGenerator* w = new WindForceGenerator({0, -20, -20});
+	WindForceGenerator* w = new WindForceGenerator({0, 20, 0});
 	forces.push_back(w);
 
-	VortexForceGenerator* v = new VortexForceGenerator({-5, 0, -5}, {0,0,0});
+	VortexForceGenerator* v = new VortexForceGenerator({0, 0, 0}, {0,0,0});
 	forces.push_back(v);
 
-	ExplosionForceGenerator* e = new ExplosionForceGenerator({ 0,0,0 });
+	ExplosionForceGenerator* e = new ExplosionForceGenerator({ 0,20,0 });
 	forces.push_back(e);
 }
 
@@ -64,14 +68,17 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::update(double t) {
 
-	
-	auto aux = gens.at(g)->generateParticles();
-	
+	//if (g == Data::IDLE && !idle) {
+		auto aux = gens.at(g)->generateParticles();
 
-	elapsedTime = 0;
-	for (auto it = aux.begin(); it != aux.end(); ++it) {
-		particles.push_back(*it);
-	}
+
+		for (auto it = aux.begin(); it != aux.end(); ++it) {
+			particles.push_back(*it);
+		}
+
+		//idle = true;
+	//}
+	
 
 	//eliminar aquellas que lleven mas tiempo del necesario en pantalla
 	for (auto it = particles.begin(); it != particles.end(); ++it) {
@@ -96,14 +103,17 @@ void ParticleSystem::update(double t) {
 	//se hace update de todas las demas
 	for (auto it = particles.begin(); it != particles.end(); ++it) {
 
+		//La gravedad se aplica siempre
+		gr->applyForce(*it);
+
+
 		//WIND
-		if (f == Data::WIND && ((*it)->getPos()).magnitude() <= windSphereRadius) {
+		if (f == Data::WIND && ((*it)->getPos()).magnitude() <= Data::windSphereRadius) {
 			forces.at(f - 1)->applyForce(*it);
 		}
 
 		//VORTEX
-		if (f == Data::VORTEX && (abs((*it)->getPos().x) < vortexSphereRadius &&
-			abs((*it)->getPos().y) < vortexSphereRadius)) {
+		if (f == Data::VORTEX && ((*it)->getPos()).magnitude() <= Data::vortexSphereRadius) {
 
 			forces.at(f - 1)->applyForce(*it);
 		}
@@ -112,10 +122,8 @@ void ParticleSystem::update(double t) {
 	
 		if (f == Data::EXPLOSION && ((*it)->getPos()).magnitude() <= R) {
 			forces.at(f - 1)->applyForceDin(*it, t);
-			//R = forces.at(f - 1)->expandForce(*it, t);
+			R = forces.at(Data::EXPLOSION - 1)->expandForce(t);
 		}
-		/*else if (f == Data::EXPLOSION && ((*it)->getPos()).magnitude() > Data::EXPLOSION_SPHERE_RADIUS) {
-		}*/
 
 		(*it)->update(t);
 	}

@@ -38,15 +38,33 @@ void SceneManager::addParticleSystem(GENERATORS gen) {
 	else if (gen == NIEVE) {
 		sys.push_back(new ParticleSystem(NIEVE));
 	}
-	else { //NIEBLA
+	else if(gen == NIEBLA){ //NIEBLA
 		sys.push_back(new ParticleSystem(NIEBLA));
+	}
+	else if(gen == IDLE){ //Particulas quietas en 0,0,0
+		sys.push_back(new ParticleSystem(IDLE));
 	}
 }
 
 void SceneManager::addForceToSystem(FORCES f) {
+	Particle* explosion = nullptr;
+	Particle* vortex = nullptr; 
+	Particle* wind = nullptr;
 	for (int i = 0; i < sys.size(); ++i) {
 		if (sys.at(i) != nullptr) {
 			sys.at(i)->addForce(f);
+			if (f == Data::EXPLOSION) {
+				explosion = new Particle({ 0,0,0 }, { 0,0,0 }, 0, { 0,0,0,0 }, Data::EXPLOSION_SPHERE_RADIUS, 0, NONE);
+			}
+			else if (f == Data::VORTEX) {
+				vortex = new Particle({ 0,0,0 }, { 0,0,0 }, 0, { 0,0,0,0 }, Data::vortexSphereRadius, 0, NONE);
+				
+			}
+			else if (f == Data::WIND) {
+				wind = new Particle({ 0,0,0 }, { 0,0,0 }, 0, { 0,0,0,0 }, Data::windSphereRadius, 0, NONE);
+			}
+
+
 		}
 	}
 }

@@ -46,6 +46,8 @@ Particle::Particle(Vector3 pos, Vector3 vel, double mass, double dumping, Data::
 		renderItem = new RenderItem(sphereNieve, &transform, Vector4(0.9, 0.9, 0.9, 1.0));
 	else if (type == Data::NIEBLA)
 		renderItem = new RenderItem(sphereNiebla, &transform, Vector4(0.5, 0.5, 0.5, 1.0));
+	else if (type == Data::IDLE)
+		renderItem = new RenderItem(sphereNiebla, &transform, Vector4(1, 0, 0, 1.0));
 
 }
 

@@ -3,7 +3,7 @@
 ExplosionForceGenerator::ExplosionForceGenerator(Vector3 explosionPos) : ForceGenerator()
 {
 	this->explosionPos = explosionPos;
-	K = 500;
+	K = 1000;
 }
 
 ExplosionForceGenerator::~ExplosionForceGenerator()
@@ -22,6 +22,6 @@ void ExplosionForceGenerator::applyForceDin(Particle* p, double t)
 	}
 }
 
-double ExplosionForceGenerator::expandForce(Particle* p, double t) {
-	return p->getVel().magnitude() * t;
+double ExplosionForceGenerator::expandForce(double t) {
+	return expanseVel.magnitude() * t;
 }

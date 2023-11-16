@@ -4,7 +4,7 @@ class WindForceGenerator : public ForceGenerator
 {
 protected:
 	Vector3 windVel;
-	float k1 = 0.3, k2 = 0.001;
+	float k1 = 1.5, k2 = 0.05;
 
 public:
 	WindForceGenerator(Vector3 windVel) : ForceGenerator() {
