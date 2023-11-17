@@ -3,7 +3,7 @@
 #include "GaussianParticleGenerator.h"
 #include "WindForceGenerator.h"
 #include "VortexForceGenerator.h"
-#include "ExplosionForceGenerator.h"
+//#include "ExplosionForceGenerator.h"
 #include <cmath>
 
 ParticleSystem::ParticleSystem(Data::GENERATORS g)
@@ -14,7 +14,7 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g)
 	this->g = g;
 
 	//FUENTE
-	UniformParticleGenerator* fuente = new UniformParticleGenerator({ 0,-10,0 }, { 0, 20,0 }, {1, 10, 1}, { 10,10,10 }, Data::FUENTE);
+	UniformParticleGenerator* fuente = new UniformParticleGenerator({ 0,-10,0 }, { 0, 5,0 }, {1, 10, 1}, { 10,10,10 }, Data::FUENTE);
 	gens.push_back(fuente);
 
 	//LLUVIA
@@ -26,11 +26,11 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g)
 	gens.push_back(nieve);
 
 	//NIEBLA
-	GaussianParticleGenerator* niebla = new GaussianParticleGenerator({ 0,40,0 }, { 1,1,1 }, { 50, 50, 50 }, { 1, 5, 1 }, Data::NIEBLA);
+	GaussianParticleGenerator* niebla = new GaussianParticleGenerator({ 0,10,0 }, { 1,1,1 }, { 50, 50, 50 }, { 1, 5, 1 }, Data::NIEBLA);
 	gens.push_back(niebla);
 
 	//IDLE
-	UniformParticleGenerator* idle = new UniformParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 10, 0, 10 }, { 0,0,0 }, Data::IDLE);
+	UniformParticleGenerator* idle = new UniformParticleGenerator({ 0,50,0 }, { 0,0,0 }, { 10, 0, 10 }, { 0,0,0 }, Data::IDLE);
 	gens.push_back(idle);
 }
 
@@ -42,7 +42,7 @@ void ParticleSystem::addForce(Data::FORCES f) {
 	VortexForceGenerator* v = new VortexForceGenerator({0, 0, 0}, {0,0,0});
 	forces.push_back(v);
 
-	ExplosionForceGenerator* e = new ExplosionForceGenerator({ 0,20,0 });
+	e = new ExplosionForceGenerator({ 0,20,0 });
 	forces.push_back(e);
 }
 
@@ -122,7 +122,7 @@ void ParticleSystem::update(double t) {
 	
 		if (f == Data::EXPLOSION && ((*it)->getPos()).magnitude() <= R) {
 			forces.at(f - 1)->applyForceDin(*it, t);
-			R = forces.at(Data::EXPLOSION - 1)->expandForce(t);
+			R += forces.at(Data::EXPLOSION - 1)->expandForce(t);
 		}
 
 		(*it)->update(t);

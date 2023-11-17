@@ -35,7 +35,7 @@ Particle::Particle(Vector3 pos, Vector3 vel, double mass, double dumping, Data::
 	physx::PxShape* sphereFuente = CreateShape(PxSphereGeometry(0.5));
 	physx::PxShape* shapeLluvia = CreateShape(PxCapsuleGeometry(0.1, 0.3));
 	physx::PxShape* sphereNieve = CreateShape(PxSphereGeometry(1));
-	physx::PxShape* sphereNiebla = CreateShape(PxSphereGeometry(0.3));
+	physx::PxShape* sphereNiebla = CreateShape(PxSphereGeometry(1.5));
 	this->vel = vel;
 
 	if (type == Data::FUENTE)

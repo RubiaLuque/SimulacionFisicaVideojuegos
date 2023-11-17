@@ -5,7 +5,7 @@
 #include "Data.h"
 #include "ParticleGenerator.h"
 #include "Particle.h"
-
+#include "ExplosionForceGenerator.h"
 using namespace std;
 //Esta clase almacena las particulas creadas y las destruye a su debido tiempo
 class ParticleSystem
@@ -15,6 +15,7 @@ private:
 	vector<ForceGenerator*> forces;
 
 	GravityForceGenerator* gr = new GravityForceGenerator();
+	ExplosionForceGenerator* e;
 
 	Data::GENERATORS g;
 	Data::FORCES f = Data::NULLF;
@@ -32,6 +33,8 @@ public:
 	virtual ~ParticleSystem();
 	void update(double t);
 	
+	ExplosionForceGenerator* getExplosion() { return e; }
+
 	//cambia la propiedad alive de las particulas 
 	inline void setAlive(Particle* p, bool alive) noexcept { p->alive = alive; }
 };

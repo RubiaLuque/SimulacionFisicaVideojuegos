@@ -54,7 +54,8 @@ void SceneManager::addForceToSystem(FORCES f) {
 		if (sys.at(i) != nullptr) {
 			sys.at(i)->addForce(f);
 			if (f == Data::EXPLOSION) {
-				explosion = new Particle({ 0,0,0 }, { 0,0,0 }, 0, { 0,0,0,0 }, Data::EXPLOSION_SPHERE_RADIUS, 0, NONE);
+				explosion = new Particle({ 0,20,0 }, { 0,0,0 }, 0, { 0,0,0,0 }, Data::EXPLOSION_SPHERE_RADIUS, 0, NONE);
+				sys.at(i)->getExplosion()->enableExplosion();
 			}
 			else if (f == Data::VORTEX) {
 				vortex = new Particle({ 0,0,0 }, { 0,0,0 }, 0, { 0,0,0,0 }, Data::vortexSphereRadius, 0, NONE);

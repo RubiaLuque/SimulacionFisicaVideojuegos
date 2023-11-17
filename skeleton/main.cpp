@@ -219,6 +219,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'X': {
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
 			manager->addForceToSystem(EXPLOSION);
+
 			timeKey = 0;
 		}
 		break;

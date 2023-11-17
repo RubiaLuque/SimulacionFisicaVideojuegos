@@ -3,15 +3,16 @@
 #include <cmath>
 #include <numbers>
 
-constexpr auto M_PI = 3.14159265358979323846;
 
 class ExplosionForceGenerator : public ForceGenerator
 {
 private:
 	int K;
-	float tau = 2 * M_PI;
+	float tau = 10000;
 	Vector3 explosionPos;
 	Vector3 expanseVel = { 340000,340000,340000 };
+	double elapsedTime = 0;
+	bool explosion = false;
 
 public:
 	ExplosionForceGenerator(Vector3 explosionPos);
@@ -20,6 +21,7 @@ public:
 	void applyForce(Particle* p) {};
 	void applyForceDin(Particle* p, double t) override;
 	double expandForce(double t) override;
+	void enableExplosion();
 	void removeForce(Particle* p) {};
 };
 
