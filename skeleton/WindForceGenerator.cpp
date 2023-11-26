@@ -1,6 +1,6 @@
 #include "WindForceGenerator.h"
 
-void WindForceGenerator::applyForce(Particle* p)
+void WindForceGenerator::updateForce(Particle* p, double t)
 {
 	if (p != nullptr) {
 		p->addForce(k1*(windVel - p->getVel()) + 

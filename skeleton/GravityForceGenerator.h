@@ -12,7 +12,7 @@ private:
 public:
 	GravityForceGenerator() : ForceGenerator() {};
 	virtual ~GravityForceGenerator() {};
-	void applyForce(Particle* p);
+	void updateForce(Particle* p, double t);
 	void removeForce(Particle* p) {};
 };
 

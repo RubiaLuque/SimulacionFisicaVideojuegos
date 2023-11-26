@@ -11,7 +11,7 @@ public:
 		this->windVel = windVel; 
 	}
 	virtual ~WindForceGenerator(){}
-	void applyForce(Particle* p);
+	void updateForce(Particle* p, double t);
 	void removeForce(Particle* p);
 };
 

@@ -9,7 +9,7 @@ private:
 public:
 	VortexForceGenerator(Vector3 windVel, Vector3 vortexPos);
 	virtual ~VortexForceGenerator() {};
-	void applyForce(Particle* p);
+	void updateForce(Particle* p, double t);
 	void removeForce(Particle* p);
 };
 

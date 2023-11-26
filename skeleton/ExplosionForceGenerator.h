@@ -19,7 +19,7 @@ public:
 	virtual ~ExplosionForceGenerator();
 
 	void applyForce(Particle* p) {};
-	void applyForceDin(Particle* p, double t) override;
+	void updateForce(Particle* p, double t) override;
 	double expandForce(double t) override;
 	void enableExplosion();
 	void removeForce(Particle* p) {};

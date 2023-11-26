@@ -6,7 +6,7 @@ VortexForceGenerator::VortexForceGenerator(Vector3 windVel, Vector3 vortexPos) :
 	K = 1;
 }
 
-void VortexForceGenerator::applyForce(Particle* p)
+void VortexForceGenerator::updateForce(Particle* p, double t)
 {
 	if (p != nullptr) {
 
