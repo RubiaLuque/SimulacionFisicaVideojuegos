@@ -31,6 +31,7 @@ int Firework::update(double t)
         //las particulas creadas explotan si han superado su tiempo
         for (int i = 0; i < particles.size(); ++i) {
             particles.at(i)->limit_time += t;
+            gr->updateForce(initP, t);
             particles.at(i)->update(t);
             if(particles.at(i)->limit_time>=_life_time) {
                 cout << particles.at(i)->limit_time << ' ';
@@ -62,6 +63,7 @@ int Firework::update(double t)
     else {
         //se hace update de las particulas que queden tras finalizar el tiempo del firework
         for (int i = 0; i < particles.size(); ++i) {
+            gr->updateForce(particles.at(i), t);
             particles.at(i)->update(t);
         }
 
@@ -103,7 +105,7 @@ void Firework::shootParticle()
     color.z = dis(gen);
 
     initP = new Particle(auxPos, auxVel, 1.0, { color, 1.0 }, 1, 0.998, Data::FIREWORK);
-    gr->applyForce(initP);
+    
     particles.push_back(initP);
 }
 
@@ -128,7 +130,7 @@ vector<Particle*> Firework::explode(Particle* p)
         
         auto p = new Particle(pos, auxVel, 1.0, { color, 1.0 }, radius/2.0, 0.998, 
             Data::FIREWORK);
-        gr->applyForce(p);
+        
         aux.push_back(p);
     }
     //std::cout << n << ' ';

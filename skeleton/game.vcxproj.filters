@@ -41,6 +41,9 @@
       <Filter>ForceGenerators</Filter>
     </ClCompile>
     <ClCompile Include="ForceRegistry.cpp" />
+    <ClCompile Include="SpringForceGenerator.cpp">
+      <Filter>ForceGenerators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -84,6 +87,9 @@
       <Filter>ForceGenerators</Filter>
     </ClInclude>
     <ClInclude Include="ForceRegistry.h" />
+    <ClInclude Include="SpringForceGenerator.h">
+      <Filter>ForceGenerators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

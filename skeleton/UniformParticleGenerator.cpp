@@ -43,7 +43,6 @@ list<Particle*> UniformParticleGenerator::generateParticles()
 		auxVel.z += dis(gen) * velWidth.z;
 
 		auto p = new Particle(auxPos, auxVel, 1.0, 0.988, g);
-		gr->applyForce(p);
 		list.push_back(p);
 	}
 

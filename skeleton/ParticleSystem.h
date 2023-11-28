@@ -6,7 +6,10 @@
 #include "ParticleGenerator.h"
 #include "Particle.h"
 #include "ExplosionForceGenerator.h"
+#include "ForceRegistry.h"
+
 using namespace std;
+
 //Esta clase almacena las particulas creadas y las destruye a su debido tiempo
 class ParticleSystem
 {
@@ -17,13 +20,13 @@ private:
 	GravityForceGenerator* gr = new GravityForceGenerator();
 	ExplosionForceGenerator* e;
 
+	ForceRegistry* fr = new ForceRegistry();
 	Data::GENERATORS g;
 	Data::FORCES f = Data::NULLF;
 	
 	list<Particle*> particles;
 	double elapsedTime;
 
-	int R = Data::EXPLOSION_SPHERE_RADIUS;
 
 	bool idle = false;
 

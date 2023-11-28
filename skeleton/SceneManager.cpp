@@ -53,6 +53,7 @@ void SceneManager::addForceToSystem(FORCES f) {
 	for (int i = 0; i < sys.size(); ++i) {
 		if (sys.at(i) != nullptr) {
 			sys.at(i)->addForce(f);
+			
 			if (f == Data::EXPLOSION) {
 				explosion = new Particle({ 0,20,0 }, { 0,0,0 }, 0, { 0,0,0,0 }, Data::EXPLOSION_SPHERE_RADIUS, 0, NONE);
 				sys.at(i)->getExplosion()->enableExplosion();
@@ -80,31 +81,31 @@ void SceneManager::addProjectile(PROJECTILE_TYPE type) {
 		vel *= 10;
 		//const Vector3 acc = { 0.0, -0.6, 0.0 }; //muy poca gravedad porque se quiere simular que flota un poco -> P1
 		auto p = new Particle(pos, vel, 0.0001, 3.0, 0.888, FIREBALL);
-		g->applyForce(p);
 		particles.push_back(p);
+		fr->addRegistry(g, p);
 	}
 	else if (type == LIGHTGUN)
 	{
 		vel *= 25;
 		//Vector3 acc = { 0.0, 0.0, 0.0 }; //no tiene efecto gravedad -> P1
 		auto p = new Particle(pos, vel, 0.0, 1.0, 0.998, LIGHTGUN);
-		g->applyForce(p);
 		particles.push_back(p);
+		fr->addRegistry(g, p);
 	}
 	else if (type == GUN) {
 		vel *= 20;
 		//const Vector3 acc = { 0.0, -1.0, 0.0 }; //poco efecto de la gravedad -> P1
 		auto p = new Particle(pos, vel, 0.1, 1.0, 0.998, GUN);
-		g->applyForce(p);
 		particles.push_back(p);
+		fr->addRegistry(g, p);
 	}
 	else //cannon
 	{
 		vel *= 18;
 		//const Vector3 acc = { 0.0, -5.0, 0.0 }; //bastante efecto de gravedad -> P1
 		auto p = new Particle(pos, vel, 3.0, 5.0, 0.998, CANNON);
-		g->applyForce(p);
 		particles.push_back(p);
+		fr->addRegistry(g, p);
 	}
 
 }
@@ -130,6 +131,8 @@ void SceneManager::update(double t) {
 					);
 		}
 	}
+
+	fr->updateForces(t);
 
 	//se hace update de todas las demas
 	for (int i = 0; i < particles.size(); ++i) {

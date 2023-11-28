@@ -40,13 +40,11 @@ list<Particle*> GaussianParticleGenerator::generateParticles()
 		if (g == Data::NIEBLA) {
 			//auto p = new Particle(auxPos, auxVel, { 0, -2.6, 0 }, 0.988, g); -> P2
 			auto p = new Particle(auxPos, auxVel, 0.26, 0.998, g);
-			gr->applyForce(p);
 			list.push_back(p);
 		}
 		else {
 			//auto p = new Particle(auxPos, auxVel, { 0, -9.8, 0 }, 0.988, g); -> P2
 			auto p = new Particle(auxPos, auxVel, 1.0, 0.998, g);
-			gr->applyForce(p);
 			list.push_back(p);
 		}
 

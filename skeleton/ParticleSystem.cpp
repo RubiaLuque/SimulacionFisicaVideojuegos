@@ -36,6 +36,7 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g)
 
 void ParticleSystem::addForce(Data::FORCES f) {
 	this->f = f;
+
 	WindForceGenerator* w = new WindForceGenerator({0, 20, 0});
 	forces.push_back(w);
 
@@ -44,6 +45,8 @@ void ParticleSystem::addForce(Data::FORCES f) {
 
 	e = new ExplosionForceGenerator({ 0,20,0 });
 	forces.push_back(e);
+
+	fr->addRegistry(forces.at(f-1), nullptr);
 }
 
 ParticleSystem::~ParticleSystem()
@@ -68,17 +71,20 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::update(double t) {
 
-	//if (g == Data::IDLE && !idle) {
-		auto aux = gens.at(g)->generateParticles();
+	auto aux = gens.at(g)->generateParticles();
 
 
-		for (auto it = aux.begin(); it != aux.end(); ++it) {
-			particles.push_back(*it);
+	for (auto it = aux.begin(); it != aux.end(); ++it) {
+		particles.push_back(*it);
+		//A todas las particulas les afecta la gravedad
+		fr->addRegistry(gr, *it);
+		for (int i = 0; i < forces.size(); ++i) {
+			fr->addRegistry(forces[i], *it);
 		}
+	}
 
-		//idle = true;
-	//}
-	
+
+
 
 	//eliminar aquellas que lleven mas tiempo del necesario en pantalla
 	for (auto it = particles.begin(); it != particles.end(); ++it) {
@@ -99,34 +105,12 @@ void ParticleSystem::update(double t) {
 		}
 	}
 
+	fr->updateForces(t);
 
 	//se hace update de todas las demas
 	for (auto it = particles.begin(); it != particles.end(); ++it) {
-
-		//La gravedad se aplica siempre
-		gr->applyForce(*it);
-
-
-		//WIND
-		if (f == Data::WIND && ((*it)->getPos()).magnitude() <= Data::windSphereRadius) {
-			forces.at(f - 1)->applyForce(*it);
-		}
-
-		//VORTEX
-		if (f == Data::VORTEX && ((*it)->getPos()).magnitude() <= Data::vortexSphereRadius) {
-
-			forces.at(f - 1)->applyForce(*it);
-		}
-
-		//EXPLOSION
-	
-		if (f == Data::EXPLOSION && ((*it)->getPos()).magnitude() <= R) {
-			forces.at(f - 1)->applyForceDin(*it, t);
-			R += forces.at(Data::EXPLOSION - 1)->expandForce(t);
-		}
-
 		(*it)->update(t);
 	}
 
-	
+
 }

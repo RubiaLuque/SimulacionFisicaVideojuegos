@@ -13,6 +13,7 @@ private:
 	Vector3 expanseVel = { 340000,340000,340000 };
 	double elapsedTime = 0;
 	bool explosion = false;
+	int R = Data::EXPLOSION_SPHERE_RADIUS;
 
 public:
 	ExplosionForceGenerator(Vector3 explosionPos);
