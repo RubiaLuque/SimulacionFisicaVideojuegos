@@ -4,6 +4,7 @@
 #include "WindForceGenerator.h"
 #include "VortexForceGenerator.h"
 #include "AnchoredSpringForceGen.h"
+#include "BuoyancyForceGenerator.h"
 //#include "ExplosionForceGenerator.h"
 #include <cmath>
 
@@ -154,27 +155,27 @@ void ParticleSystem::generateSlinky() {
 	Particle* p5 = new Particle({ 0, -30,0 }, { 0,0,0 }, 1.0, 1.0, 0.988, Data::IDLE);
 
 	//Fuerzas entre p1 y p2
-	SpringForceGenerator* f1 = new SpringForceGenerator(5, 5, p2);
-	SpringForceGenerator* f2 = new SpringForceGenerator(5, 5, p1);
+	SpringForceGenerator* f1 = new SpringForceGenerator(5, 1, p2);
+	SpringForceGenerator* f2 = new SpringForceGenerator(5, 1, p1);
 
 	fr->addRegistry(f1, p1); 
 	fr->addRegistry(f2, p2);
 
 	//Fuerzas entre p2 y p3
-	SpringForceGenerator* f3 = new SpringForceGenerator(5, 10, p3);
-	SpringForceGenerator* f4 = new SpringForceGenerator(5, 10, p2);
+	SpringForceGenerator* f3 = new SpringForceGenerator(5, 1, p3);
+	SpringForceGenerator* f4 = new SpringForceGenerator(5, 1, p2);
 	fr->addRegistry(f3, p2);
 	fr->addRegistry(f4, p3);
 
 	//Fuerzas entre p3 y p4
-	SpringForceGenerator* f5 = new SpringForceGenerator(5, 10, p4);
-	SpringForceGenerator* f6 = new SpringForceGenerator(5, 10, p3);
+	SpringForceGenerator* f5 = new SpringForceGenerator(5, 1, p4);
+	SpringForceGenerator* f6 = new SpringForceGenerator(5, 1, p3);
 	fr->addRegistry(f5, p3);
 	fr->addRegistry(f6, p4);
 
 	//Fuerzas entre p4 y p5
-	SpringForceGenerator* f7 = new SpringForceGenerator(5, 10, p5);
-	SpringForceGenerator* f8 = new SpringForceGenerator(5, 10, p4);
+	SpringForceGenerator* f7 = new SpringForceGenerator(5, 1, p5);
+	SpringForceGenerator* f8 = new SpringForceGenerator(5, 1, p4);
 	fr->addRegistry(f7, p4);
 	fr->addRegistry(f8, p5);
 
@@ -198,6 +199,17 @@ void ParticleSystem::generateSlinky() {
 	fr->addRegistry(gr, p4);
 	fr->addRegistry(gr, p5);*/
 
+}
+
+void ParticleSystem::generateBuoyancyWater() {
+	float height = 10.0;
+	BuoyancyForceGenerator* b = new BuoyancyForceGenerator(height, 10, 1000);
+	Particle* p = new Particle({ 0, 30, 0 }, { 0,0,0 }, 0.0001, height/2, 0.98, Data::IDLE);
+	fr->addRegistry(b, p);
+	fr->addRegistry(gr, p);
+
+	forces.push_back(b);
+	particles.push_back(p);
 }
 
 void ParticleSystem::setK(int op)

@@ -158,6 +158,18 @@ void SceneManager::generateSlinky()
 	s->generateSlinky();
 }
 
+void SceneManager::generateBuoyancyWater()
+{
+	ParticleSystem* s = new ParticleSystem(NONE);
+	sys.push_back(s);
+	s->generateBuoyancyWater();
+}
+
+void SceneManager::generateBuoyancyMercury()
+{
+
+}
+
 void SceneManager::addFirework()
 {
 	firework = new Firework();

@@ -80,6 +80,18 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double mass, double ra
 
 }
 
+Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, Vector4 color, double mass, double radius, double dumping)
+{
+	this->dumping = dumping;
+	this->pos = pos;
+	this->mass = mass;
+	this->radius = radius;
+	transform = PxTransform(pos.x, pos.y, pos.z);
+	physx::PxShape* box = CreateShape(PxBoxGeometry(radius, 1, radius));
+
+	renderItem = new RenderItem(box, &transform, color);
+}
+
 Particle::~Particle() {
 	//se eliminan de la lista de elementos a renderizar
 	DeregisterRenderItem(renderItem);
@@ -89,7 +101,7 @@ void Particle::update(double t) {
 
 	Vector3 resulting_accel = forceAccum * (double)(1/mass);
 	
-	//Euler 
+	//Euler semi-implicito
 	pos = pos + vel * t; 
 	vel += resulting_accel * t;
 	vel *= powf(dumping, t);

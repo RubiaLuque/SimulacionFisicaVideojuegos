@@ -40,6 +40,9 @@ public:
 	void generateSpring();
 	void generateSlinky();
 
+	void generateBuoyancyWater();
+	void generateBuoyancyMercury();
+
 	//cambia la propiedad alive de las particulas 
 	inline void setAlive(Particle* p, bool alive) { p->alive = alive; }
 };

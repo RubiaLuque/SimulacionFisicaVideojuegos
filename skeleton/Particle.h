@@ -32,6 +32,7 @@ public:
 	Particle(Vector3 pos, Vector3 vel, double mass, double dumping, Data::GENERATORS type);
 	Particle(Vector3 pos, Vector3 vel, double mass, Vector4 color, float radius, double dumping, Data::GENERATORS type);
 	Particle(Vector3 pos, Vector3 vel, Vector3 acc, double mass, double radius, double dumping);
+	Particle(Vector3 pos, Vector3 vel, Vector3 acc, Vector4 color, double mass, double radius, double dumping);
 	virtual ~Particle();
 
 	inline void addForce(Vector3 f) { forceAccum += f; }
