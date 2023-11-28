@@ -41,9 +41,6 @@ void SceneManager::addParticleSystem(GENERATORS gen) {
 	else if(gen == NIEBLA){ //NIEBLA
 		sys.push_back(new ParticleSystem(NIEBLA));
 	}
-	else if(gen == IDLE){ //Particulas quietas en 0,0,0
-		sys.push_back(new ParticleSystem(IDLE));
-	}
 }
 
 void SceneManager::addForceToSystem(FORCES f) {
@@ -145,6 +142,20 @@ void SceneManager::update(double t) {
 	}
 
 	if (fire) firework->update(t);
+}
+
+void SceneManager::generateSpring()
+{
+	ParticleSystem* s = new ParticleSystem(NONE);
+	sys.push_back(s);
+	s->generateSpring();
+}
+
+void SceneManager::generateSlinky()
+{
+	ParticleSystem* s = new ParticleSystem(NONE);
+	sys.push_back(s);
+	s->generateSlinky();
 }
 
 void SceneManager::addFirework()

@@ -127,9 +127,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	PX_UNUSED(camera);
 
-	switch(toupper(key))
+	switch (toupper(key))
 	{
-	//case ' ':	break;
+		//case ' ':	break;
 	case '1': //casts a fireball
 	{
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
@@ -195,13 +195,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		}
 		break;
 	}
-	case '9': {
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
-			manager->addParticleSystem(IDLE);
-			timeKey = 0;
-		}
-		break;
-	}
 	case 'Z': {
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
 			manager->addForceToSystem(WIND);
@@ -224,7 +217,20 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		}
 		break;
 	}
+	case 'C':
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->generateSpring();
 
+			timeKey = 0;
+		}
+		break;
+	case 'B':
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->generateSlinky();
+
+			timeKey = 0;
+		}
+		break;
 	default:
 		break;
 	}

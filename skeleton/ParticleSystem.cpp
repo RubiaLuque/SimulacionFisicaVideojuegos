@@ -3,6 +3,7 @@
 #include "GaussianParticleGenerator.h"
 #include "WindForceGenerator.h"
 #include "VortexForceGenerator.h"
+#include "AnchoredSpringForceGen.h"
 //#include "ExplosionForceGenerator.h"
 #include <cmath>
 
@@ -28,10 +29,6 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g)
 	//NIEBLA
 	GaussianParticleGenerator* niebla = new GaussianParticleGenerator({ 0,10,0 }, { 1,1,1 }, { 50, 50, 50 }, { 1, 5, 1 }, Data::NIEBLA);
 	gens.push_back(niebla);
-
-	//IDLE
-	UniformParticleGenerator* idle = new UniformParticleGenerator({ 0,50,0 }, { 0,0,0 }, { 10, 0, 10 }, { 0,0,0 }, Data::IDLE);
-	gens.push_back(idle);
 }
 
 void ParticleSystem::addForce(Data::FORCES f) {
@@ -46,7 +43,6 @@ void ParticleSystem::addForce(Data::FORCES f) {
 	e = new ExplosionForceGenerator({ 0,20,0 });
 	forces.push_back(e);
 
-	fr->addRegistry(forces.at(f-1), nullptr);
 }
 
 ParticleSystem::~ParticleSystem()
@@ -70,21 +66,28 @@ ParticleSystem::~ParticleSystem()
 }
 
 void ParticleSystem::update(double t) {
+	if (g != Data::NONE)
+	{
+		auto aux = gens.at(g)->generateParticles();
 
-	auto aux = gens.at(g)->generateParticles();
 
+		for (auto it = aux.begin(); it != aux.end(); ++it) {
+			particles.push_back(*it);
+			//A todas las particulas les afecta la gravedad
+			fr->addRegistry(gr, *it);
+			if (f == Data::WIND) {
+				fr->addRegistry(forces.at(f - 1), *it);
+			}
+			else if (f == Data::VORTEX) {
+				fr->addRegistry(forces.at(f - 1), *it);
+			}
+			else if (f == Data::EXPLOSION) {
+				fr->addRegistry(forces.at(f - 1), *it);
+			}
 
-	for (auto it = aux.begin(); it != aux.end(); ++it) {
-		particles.push_back(*it);
-		//A todas las particulas les afecta la gravedad
-		fr->addRegistry(gr, *it);
-		for (int i = 0; i < forces.size(); ++i) {
-			fr->addRegistry(forces[i], *it);
 		}
+
 	}
-
-
-
 
 	//eliminar aquellas que lleven mas tiempo del necesario en pantalla
 	for (auto it = particles.begin(); it != particles.end(); ++it) {
@@ -94,9 +97,10 @@ void ParticleSystem::update(double t) {
 			setAlive((*it), false);
 
 			particles.erase(remove_if(particles.begin(), particles.end(),
-				[](Particle* p) noexcept {
+				[&](Particle* p) {
 					if (p->alive) return false;
 					else { //si no esta vivo, se elimina
+						fr->deleteParticleRegistry(p);
 						delete p;
 						return true;
 					}
@@ -113,4 +117,95 @@ void ParticleSystem::update(double t) {
 	}
 
 
+}
+
+void ParticleSystem::generateSpring()
+{
+	//Muelle entre 2 particulas
+	Particle* p1 = new Particle({ -20, 20, 0 }, { 0,0,0 }, 0.85, 1, 0.98, Data::IDLE);
+	Particle* p2 = new Particle({ 20, 20, 0 }, { 0,0,0 }, 2.0, 2.0, 0.98, Data::IDLE);
+	
+	SpringForceGenerator* f1 = new SpringForceGenerator(1, 10, p2);
+	SpringForceGenerator* f2 = new SpringForceGenerator(1, 10, p1);
+
+	fr->addRegistry(f1, p1);
+	fr->addRegistry(f2, p2);
+
+	forces.push_back(f1);
+	forces.push_back(f2);
+	particles.push_back(p1);
+	particles.push_back(p2);
+
+	//Muelle entre una particula con la pared
+	Particle* p3 = new Particle({ 0, -20, 0 }, { 0,0,0 }, 1.0, 1.0, 0.988, Data::IDLE);
+	AnchoredSpringForceGen* f3 = new AnchoredSpringForceGen(1, 10, { 0, 10, 0 });
+	fr->addRegistry(f3, p3);
+	forces.push_back(f3);
+	particles.push_back(p3);
+
+	fr->addRegistry(gr, p3);
+}
+
+void ParticleSystem::generateSlinky() {
+	Particle* p1 = new Particle({ 0, 10,0 }, { 0,0,0 }, 1.0, 1.0, 0.988, Data::IDLE);
+	Particle* p2 = new Particle({ 0, 0,0 }, { 0,0,0 }, 1.0, 1.0, 0.988, Data::IDLE);
+	Particle* p3 = new Particle({ 0, -10,0 }, { 0,0,0 }, 1.0, 1.0, 0.988, Data::IDLE);
+	Particle* p4 = new Particle({ 0, -20,0 }, { 0,0,0 }, 1.0, 1.0, 0.988, Data::IDLE);
+	Particle* p5 = new Particle({ 0, -30,0 }, { 0,0,0 }, 1.0, 1.0, 0.988, Data::IDLE);
+
+	//Fuerzas entre p1 y p2
+	SpringForceGenerator* f1 = new SpringForceGenerator(5, 5, p2);
+	SpringForceGenerator* f2 = new SpringForceGenerator(5, 5, p1);
+
+	fr->addRegistry(f1, p1); 
+	fr->addRegistry(f2, p2);
+
+	//Fuerzas entre p2 y p3
+	SpringForceGenerator* f3 = new SpringForceGenerator(5, 10, p3);
+	SpringForceGenerator* f4 = new SpringForceGenerator(5, 10, p2);
+	fr->addRegistry(f3, p2);
+	fr->addRegistry(f4, p3);
+
+	//Fuerzas entre p3 y p4
+	SpringForceGenerator* f5 = new SpringForceGenerator(5, 10, p4);
+	SpringForceGenerator* f6 = new SpringForceGenerator(5, 10, p3);
+	fr->addRegistry(f5, p3);
+	fr->addRegistry(f6, p4);
+
+	//Fuerzas entre p4 y p5
+	SpringForceGenerator* f7 = new SpringForceGenerator(5, 10, p5);
+	SpringForceGenerator* f8 = new SpringForceGenerator(5, 10, p4);
+	fr->addRegistry(f7, p4);
+	fr->addRegistry(f8, p5);
+
+	forces.push_back(f1);
+	forces.push_back(f2);
+	forces.push_back(f3);
+	forces.push_back(f4);
+	forces.push_back(f5);
+	forces.push_back(f6);
+	forces.push_back(f7);
+	forces.push_back(f8);
+
+	particles.push_back(p1);
+	particles.push_back(p2);
+	particles.push_back(p3);
+	particles.push_back(p4);
+	particles.push_back(p5);
+
+	/*fr->addRegistry(gr, p2);
+	fr->addRegistry(gr, p3);
+	fr->addRegistry(gr, p4);
+	fr->addRegistry(gr, p5);*/
+
+}
+
+void ParticleSystem::setK(int op)
+{
+	/*for (auto it = forces.begin(); it != forces.end(); ++it) {
+		if ((*it) == dynamic_cast<SpringForceGenerator*>(*it)) {
+			if (op == 0) (*it)->increaseK();
+			else (*it)->decreaseK();
+		}
+	}*/
 }

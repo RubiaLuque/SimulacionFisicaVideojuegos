@@ -10,7 +10,7 @@ Particle::Particle(Vector3 pos, Vector3 vel, double mass, double radius, double 
 	this->mass = mass;
 
 	physx::PxShape* sphere = CreateShape(PxSphereGeometry(radius)); 
-	physx::PxShape* sphere1 = CreateShape(PxSphereGeometry(0.3));
+	//physx::PxShape* sphere1 = CreateShape(PxSphereGeometry(0.3));
 
 	if (type == Data::FIREBALL)
 		renderItem = new RenderItem(sphere, &transform, Vector4(255.0, 140.0, 0.0, 1.0));
@@ -20,8 +20,8 @@ Particle::Particle(Vector3 pos, Vector3 vel, double mass, double radius, double 
 		renderItem = new RenderItem(sphere, &transform, Vector4(128, 128, 128, 1.0));
 	else if (type == Data::CANNON)
 		renderItem = new RenderItem(sphere, &transform, Vector4(70, 130, 180, 1.0));
-	else
-		renderItem = new RenderItem(sphere1, &transform, Vector4(139, 0, 225, 0.8));
+	else if(type == Data::IDLE)
+		renderItem = new RenderItem(sphere, &transform, Vector4(139, 0, 225, 1.0));
 	
 
 }
@@ -66,6 +66,20 @@ Particle::Particle(Vector3 pos, Vector3 vel, double mass, Vector4 color, float r
 		renderItem = new RenderItem(firework, &transform, color);
 }
 
+Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double mass, double radius, double dumping)
+{
+	//Constructor para una particula quieta que es una caja
+	this->dumping = dumping;
+	this->pos = pos;
+	this->mass = mass;
+	this->radius = radius;
+	transform = PxTransform(pos.x, pos.y, pos.z);
+	physx::PxShape* box = CreateShape(PxBoxGeometry(radius, radius/3, radius));
+
+	renderItem = new RenderItem(box, &transform, Vector4(1.0, 1.0, 1.0, 1.0));
+
+}
+
 Particle::~Particle() {
 	//se eliminan de la lista de elementos a renderizar
 	DeregisterRenderItem(renderItem);
@@ -75,9 +89,10 @@ void Particle::update(double t) {
 
 	Vector3 resulting_accel = forceAccum * (double)(1/mass);
 	
+	//Euler 
+	pos = pos + vel * t; 
 	vel += resulting_accel * t;
 	vel *= powf(dumping, t);
-	pos = pos + vel * t; 
 	transform.p.x = pos.x; transform.p.y = pos.y; transform.p.z = pos.z;
 
 	clearForces();

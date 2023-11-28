@@ -37,6 +37,9 @@ public:
 	void addFirework();
 	void update(double t);
 
+	void generateSpring();
+	void generateSlinky();
+
 	//cambia la propiedad alive de las particulas 
 	inline void setAlive(Particle* p, bool alive) { p->alive = alive; }
 };

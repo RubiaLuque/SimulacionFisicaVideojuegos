@@ -35,7 +35,11 @@ public:
 	void addForce(Data::FORCES f);
 	virtual ~ParticleSystem();
 	void update(double t);
-	
+
+	void generateSpring();
+	void generateSlinky();
+	void setK(int op);
+
 	ExplosionForceGenerator* getExplosion() { return e; }
 
 	//cambia la propiedad alive de las particulas 

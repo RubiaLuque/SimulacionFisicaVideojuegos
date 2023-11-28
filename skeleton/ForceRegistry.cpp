@@ -27,5 +27,8 @@ void ForceRegistry::addRegistry(ForceGenerator* f, Particle* p)
 
 void ForceRegistry::deleteParticleRegistry(Particle* p)
 {
-	
+	for (auto it = begin(); it != end();) {
+		if (it->second == p) it = erase(it);
+		else ++it;
+	}
 }

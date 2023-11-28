@@ -3,7 +3,7 @@
 ExplosionForceGenerator::ExplosionForceGenerator(Vector3 explosionPos) : ForceGenerator()
 {
 	this->explosionPos = explosionPos;
-	K = 1000000;
+	K = 10000000000;
 }
 
 ExplosionForceGenerator::~ExplosionForceGenerator()
