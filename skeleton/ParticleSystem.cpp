@@ -7,6 +7,7 @@
 #include "BuoyancyForceGenerator.h"
 //#include "ExplosionForceGenerator.h"
 #include <cmath>
+#include <list>
 
 ParticleSystem::ParticleSystem(Data::GENERATORS g)
 {
@@ -74,20 +75,22 @@ void ParticleSystem::update(double t) {
 
 		for (auto it = aux.begin(); it != aux.end(); ++it) {
 			particles.push_back(*it);
-			//A todas las particulas les afecta la gravedad
 			fr->addRegistry(gr, *it);
-			if (f == Data::WIND) {
-				fr->addRegistry(forces.at(f - 1), *it);
-			}
-			else if (f == Data::VORTEX) {
-				fr->addRegistry(forces.at(f - 1), *it);
-			}
-			else if (f == Data::EXPLOSION) {
-				fr->addRegistry(forces.at(f - 1), *it);
-			}
-
 		}
 
+	}
+
+	for (auto it = particles.begin(); it != particles.end(); ++it) {
+		//A todas las particulas les afecta la gravedad
+		if (f == Data::WIND) {
+			fr->addRegistry(forces.at(f - 1), *it);
+		}
+		else if (f == Data::VORTEX) {
+			fr->addRegistry(forces.at(f - 1), *it);
+		}
+		else if (f == Data::EXPLOSION) {
+			fr->addRegistry(forces.at(f - 1), *it);
+		}
 	}
 
 	//eliminar aquellas que lleven mas tiempo del necesario en pantalla
@@ -148,34 +151,34 @@ void ParticleSystem::generateSpring()
 }
 
 void ParticleSystem::generateSlinky() {
-	Particle* p1 = new Particle({ 0, 10,0 }, { 0,0,0 }, 1.0, 1.0, 0.988, Data::IDLE);
-	Particle* p2 = new Particle({ 0, 0,0 }, { 0,0,0 }, 1.0, 1.0, 0.988, Data::IDLE);
-	Particle* p3 = new Particle({ 0, -10,0 }, { 0,0,0 }, 1.0, 1.0, 0.988, Data::IDLE);
-	Particle* p4 = new Particle({ 0, -20,0 }, { 0,0,0 }, 1.0, 1.0, 0.988, Data::IDLE);
-	Particle* p5 = new Particle({ 0, -30,0 }, { 0,0,0 }, 1.0, 1.0, 0.988, Data::IDLE);
+	Particle* p1 = new Particle({ 0, 10,0 }, { 0,0,0 }, { 0,0,0 }, { 1.0, 0.0,0.0,1.0 }, 1.0, 2.0, 0.988, Data::IDLE); //rojo
+	Particle* p2 = new Particle({ 0, 0,0 }, { 0,0,0 }, { 0,0,0 }, { 1.0, 0.5, 0.0, 1.0 }, 1.0, 2.0, 0.988, Data::IDLE); //naranja
+	Particle* p3 = new Particle({ 0, -10,0 }, { 0,0,0 }, { 0,0,0 }, { 1.0, 1.0, 0.0, 1.0 }, 1.0, 2.0, 0.988, Data::IDLE); //amarillo
+	Particle* p4 = new Particle({ 0, -20,0 }, { 0,0,0 }, { 0,0,0 }, { 0.0, 1.0, 0.0, 1.0 }, 1.0, 2.0, 0.988, Data::IDLE); //verde
+	Particle* p5 = new Particle({ 0, -30,0 }, { 0,0,0 }, { 0,0,0 }, { 0.0, 0.0, 1.0, 1.0 }, 1.0, 2.0, 0.988, Data::IDLE); //azul
 
 	//Fuerzas entre p1 y p2
-	SpringForceGenerator* f1 = new SpringForceGenerator(5, 1, p2);
-	SpringForceGenerator* f2 = new SpringForceGenerator(5, 1, p1);
+	SpringForceGenerator* f1 = new SpringForceGenerator(10, 1, p2);
+	SpringForceGenerator* f2 = new SpringForceGenerator(10, 1, p1);
 
 	fr->addRegistry(f1, p1); 
 	fr->addRegistry(f2, p2);
 
 	//Fuerzas entre p2 y p3
-	SpringForceGenerator* f3 = new SpringForceGenerator(5, 1, p3);
-	SpringForceGenerator* f4 = new SpringForceGenerator(5, 1, p2);
+	SpringForceGenerator* f3 = new SpringForceGenerator(10, 1, p3);
+	SpringForceGenerator* f4 = new SpringForceGenerator(10, 1, p2);
 	fr->addRegistry(f3, p2);
 	fr->addRegistry(f4, p3);
 
 	//Fuerzas entre p3 y p4
-	SpringForceGenerator* f5 = new SpringForceGenerator(5, 1, p4);
-	SpringForceGenerator* f6 = new SpringForceGenerator(5, 1, p3);
+	SpringForceGenerator* f5 = new SpringForceGenerator(10, 1, p4);
+	SpringForceGenerator* f6 = new SpringForceGenerator(10, 1, p3);
 	fr->addRegistry(f5, p3);
 	fr->addRegistry(f6, p4);
 
 	//Fuerzas entre p4 y p5
-	SpringForceGenerator* f7 = new SpringForceGenerator(5, 1, p5);
-	SpringForceGenerator* f8 = new SpringForceGenerator(5, 1, p4);
+	SpringForceGenerator* f7 = new SpringForceGenerator(10, 1, p5);
+	SpringForceGenerator* f8 = new SpringForceGenerator(10, 1, p4);
 	fr->addRegistry(f7, p4);
 	fr->addRegistry(f8, p5);
 
@@ -203,8 +206,20 @@ void ParticleSystem::generateSlinky() {
 
 void ParticleSystem::generateBuoyancyWater() {
 	float height = 10.0;
-	BuoyancyForceGenerator* b = new BuoyancyForceGenerator(height, 10, 1000);
-	Particle* p = new Particle({ 0, 30, 0 }, { 0,0,0 }, 0.0001, height/2, 0.98, Data::IDLE);
+	BuoyancyForceGenerator* b = new BuoyancyForceGenerator(height, 1, 1000);
+	Particle* p = new Particle({ 0, 30, 0 }, { 0,0,0 }, 50, height/2, 0.98, Data::IDLE);
+	fr->addRegistry(b, p);
+	fr->addRegistry(gr, p);
+
+	forces.push_back(b);
+	particles.push_back(p);
+}
+
+void ParticleSystem::generateBuoyancyMercury()
+{
+	float height = 10.0;
+	BuoyancyForceGenerator* b = new BuoyancyForceGenerator(height, 1, 13600);
+	Particle* p = new Particle({ 0, 30, 0 }, { 0,0,0 }, { 0,0,0 }, { 0.8, 0.8, 0.8, 1.0 }, 1000, height / 2, 0.98, Data::IDLE);
 	fr->addRegistry(b, p);
 	fr->addRegistry(gr, p);
 

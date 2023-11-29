@@ -16,7 +16,7 @@ public:
 	virtual ~BuoyancyForceGenerator();
 	void removeForce(Particle* p) {};
 
-	void update(Particle* p, double t);
+	void updateForce(Particle* p, double t);
 
 };
 

@@ -146,6 +146,9 @@ void SceneManager::update(double t) {
 
 void SceneManager::generateSpring()
 {
+	//Se borran los otros sistemas a añadir un sistema con muelles, para que sea mas facil visualizarlo
+	//Comentar la sigiente linea para combinar varios sistemas con muelles
+	sys.clear();
 	ParticleSystem* s = new ParticleSystem(NONE);
 	sys.push_back(s);
 	s->generateSpring();
@@ -153,6 +156,7 @@ void SceneManager::generateSpring()
 
 void SceneManager::generateSlinky()
 {
+	sys.clear();
 	ParticleSystem* s = new ParticleSystem(NONE);
 	sys.push_back(s);
 	s->generateSlinky();
@@ -160,6 +164,7 @@ void SceneManager::generateSlinky()
 
 void SceneManager::generateBuoyancyWater()
 {
+	sys.clear();
 	ParticleSystem* s = new ParticleSystem(NONE);
 	sys.push_back(s);
 	s->generateBuoyancyWater();
@@ -167,7 +172,10 @@ void SceneManager::generateBuoyancyWater()
 
 void SceneManager::generateBuoyancyMercury()
 {
-
+	sys.clear();
+	ParticleSystem* s = new ParticleSystem(NONE);
+	sys.push_back(s);
+	s->generateBuoyancyMercury();
 }
 
 void SceneManager::addFirework()

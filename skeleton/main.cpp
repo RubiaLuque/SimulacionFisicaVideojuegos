@@ -238,6 +238,13 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			timeKey = 0;
 		}
 		break;
+	case 'M':
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->generateBuoyancyMercury();
+
+			timeKey = 0;
+		}
+		break;
 	default:
 		break;
 	}

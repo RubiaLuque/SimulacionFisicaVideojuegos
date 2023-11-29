@@ -86,10 +86,26 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, Vector4 color, double 
 	this->pos = pos;
 	this->mass = mass;
 	this->radius = radius;
+	this->acc = acc;
 	transform = PxTransform(pos.x, pos.y, pos.z);
 	physx::PxShape* box = CreateShape(PxBoxGeometry(radius, 1, radius));
 
 	renderItem = new RenderItem(box, &transform, color);
+}
+
+Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, Vector4 color, double mass, double radius, double dumping, Data::PROJECTILE_TYPE type)
+{
+	this->dumping = dumping;
+	this->pos = pos;
+	this->mass = mass;
+	this->vel = vel;
+	this->radius = radius;
+	this->acc = acc;
+	transform = PxTransform(pos.x, pos.y, pos.z);
+
+	physx::PxShape* sphere = CreateShape(PxSphereGeometry(radius));
+
+	renderItem = new RenderItem(sphere, &transform, color);
 }
 
 Particle::~Particle() {

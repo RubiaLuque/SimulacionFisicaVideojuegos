@@ -5,7 +5,7 @@ BuoyancyForceGenerator::BuoyancyForceGenerator(float height, float volume, float
 	this->height = height;
 	this->volume = volume;
 	this->density = density;
-	liquid = new Particle({ 0,5,0 }, { 0,0,0 }, { 0,0,0 }, { 0.2, 1.0, 1.0, 1.0 }, (double)density/volume, 100, 0.0);
+	liquid = new Particle({ 0,10,0 }, { 0,0,0 }, { 0,0,0 }, { 0.2, 1.0, 1.0, 1.0 }, (double)density/volume, 100, 0.0);
 }
 
 BuoyancyForceGenerator::~BuoyancyForceGenerator()
@@ -13,7 +13,7 @@ BuoyancyForceGenerator::~BuoyancyForceGenerator()
 	delete liquid;
 }
 
-void BuoyancyForceGenerator::update(Particle* p, double t)
+void BuoyancyForceGenerator::updateForce(Particle* p, double t)
 {
 	if (p == nullptr) return;
 
@@ -33,10 +33,10 @@ void BuoyancyForceGenerator::update(Particle* p, double t)
 	}
 	//Parcialmente sumergido
 	else {
-		immersed = (double)((h0 - h) / height) + 0.5;
+		immersed = (float)(h0 - h) / height + 0.5;
 	}
 
-	f.y = density * volume * immersed * 9.8;
+	f.y = density * volume * immersed * gravity;
 
 	p->addForce(f);
 }

@@ -39,6 +39,8 @@ public:
 	void generateSpring();
 	void generateSlinky();
 	void generateBuoyancyWater();
+	void generateBuoyancyMercury();
+
 	void setK(int op);
 
 	ExplosionForceGenerator* getExplosion() { return e; }
