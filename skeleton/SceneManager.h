@@ -39,6 +39,7 @@ public:
 
 	void generateSpring();
 	void generateSlinky();
+	void setK(int op);
 
 	void generateBuoyancyWater();
 	void generateBuoyancyMercury();

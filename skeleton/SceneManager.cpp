@@ -111,34 +111,33 @@ void SceneManager::addProjectile(PROJECTILE_TYPE type) {
 void SceneManager::update(double t) {
 
 	//eliminar aquellas que lleven mas tiempo del necesario en pantalla
-	for (int i = 0; i < particles.size(); ++i) {
-		particles.at(i)->limit_time += t;
-		if (particles.at(i)->limit_time > Data::LIMIT_ON_SCREEN) {
+	for (auto it = particles.begin(); it != particles.end(); it++) {
+		(*it)->limit_time += t;
+		if ((*it)->limit_time > Data::LIMIT_ON_SCREEN) {
 			//se marca como no vivo
-			setAlive(particles.at(i), false);
-
-			particles.erase(remove_if(particles.begin(), particles.end(),
-				[](Particle* p) noexcept {
-					if (p->alive) return false;
-					else { //si no esta vivo, se elimina
-						delete p;
-						return true;
-					}
-				}), particles.end()
-					);
+			setAlive(*it, false);
 		}
 	}
 
-	fr->updateForces(t);
+	particles.erase(remove_if(particles.begin(), particles.end(),
+		[](Particle* p) noexcept {
+			if (p->alive) return false;
+			else { //si no esta vivo, se elimina
+				delete p;
+				return true;
+			}
+		}), particles.end());
+
+	//fr->updateForces(t);
 
 	//se hace update de todas las demas
-	for (int i = 0; i < particles.size(); ++i) {
-		particles.at(i)->update(t);
+	for (auto* particle : particles) {
+		particle->update(t);
 	}
 
 	//Se hace update de los sistemas de particulas
-	for (int i = 0; i < sys.size(); ++i) {
-		sys.at(i)->update(t);
+	for (auto* system : sys) {
+		system->update(t);
 	}
 
 	if (fire) firework->update(t);
@@ -148,6 +147,9 @@ void SceneManager::generateSpring()
 {
 	//Se borran los otros sistemas a añadir un sistema con muelles, para que sea mas facil visualizarlo
 	//Comentar la sigiente linea para combinar varios sistemas con muelles
+	for (auto* system : sys) {
+		delete system;
+	}
 	sys.clear();
 	ParticleSystem* s = new ParticleSystem(NONE);
 	sys.push_back(s);
@@ -156,14 +158,27 @@ void SceneManager::generateSpring()
 
 void SceneManager::generateSlinky()
 {
+	for (auto* system : sys) {
+		delete system;
+	}
 	sys.clear();
 	ParticleSystem* s = new ParticleSystem(NONE);
 	sys.push_back(s);
 	s->generateSlinky();
 }
 
+void SceneManager::setK(int op)
+{
+	for (auto* system : sys) {
+		system->setK(op);
+	}
+}
+
 void SceneManager::generateBuoyancyWater()
 {
+	for (auto* system : sys) {
+		delete system;
+	}
 	sys.clear();
 	ParticleSystem* s = new ParticleSystem(NONE);
 	sys.push_back(s);
@@ -172,6 +187,9 @@ void SceneManager::generateBuoyancyWater()
 
 void SceneManager::generateBuoyancyMercury()
 {
+	for (auto* system : sys) {
+		delete system;
+	}
 	sys.clear();
 	ParticleSystem* s = new ParticleSystem(NONE);
 	sys.push_back(s);
@@ -184,5 +202,3 @@ void SceneManager::addFirework()
 	fire = true;
 	firework->shootParticle();
 }
-
-

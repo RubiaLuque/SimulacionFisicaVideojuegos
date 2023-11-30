@@ -245,6 +245,20 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			timeKey = 0;
 		}
 		break;
+	case 'P':
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->setK(0);
+
+			timeKey = 0;
+		}
+		break;
+	case 'O':
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->setK(1);
+
+			timeKey = 0;
+		}
+		break;
 	default:
 		break;
 	}

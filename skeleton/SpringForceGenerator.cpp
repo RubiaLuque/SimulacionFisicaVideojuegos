@@ -9,7 +9,7 @@ SpringForceGenerator::SpringForceGenerator(int K, int x0, Particle* other)
 
 SpringForceGenerator::~SpringForceGenerator()
 {
-	delete other;
+	//delete other;
 }
 
 void SpringForceGenerator::updateForce(Particle* p, double t)

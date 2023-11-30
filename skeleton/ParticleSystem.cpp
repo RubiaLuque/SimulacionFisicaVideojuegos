@@ -65,6 +65,16 @@ ParticleSystem::~ParticleSystem()
 		}
 	}
 	particles.clear();
+
+	for (auto it = forces.begin(); it != forces.end(); ++it) {
+		if (*it != nullptr) {
+			delete* it;
+			*it = nullptr;
+		}
+	}
+	forces.clear();
+
+	delete fr;
 }
 
 void ParticleSystem::update(double t) {
@@ -87,9 +97,11 @@ void ParticleSystem::update(double t) {
 		}
 		else if (f == Data::VORTEX) {
 			fr->addRegistry(forces.at(f - 1), *it);
+
 		}
 		else if (f == Data::EXPLOSION) {
 			fr->addRegistry(forces.at(f - 1), *it);
+
 		}
 	}
 
@@ -99,19 +111,18 @@ void ParticleSystem::update(double t) {
 		if ((*it)->limit_time > Data::LIMIT_ON_SCREEN) {
 			//se marca como no vivo
 			setAlive((*it), false);
-
-			particles.erase(remove_if(particles.begin(), particles.end(),
-				[&](Particle* p) {
-					if (p->alive) return false;
-					else { //si no esta vivo, se elimina
-						fr->deleteParticleRegistry(p);
-						delete p;
-						return true;
-					}
-				}), particles.end()
-					);
 		}
 	}
+
+	particles.erase(remove_if(particles.begin(), particles.end(),
+		[&](Particle* p) {
+			if (p->alive) return false;
+			else { //si no esta vivo, se elimina
+				fr->deleteParticleRegistry(p);
+				delete p;
+				return true;
+			}
+		}), particles.end());
 
 	fr->updateForces(t);
 
@@ -205,7 +216,7 @@ void ParticleSystem::generateSlinky() {
 }
 
 void ParticleSystem::generateBuoyancyWater() {
-	float height = 10.0;
+	float height = 10.0f;
 	BuoyancyForceGenerator* b = new BuoyancyForceGenerator(height, 1, 1000);
 	Particle* p = new Particle({ 0, 30, 0 }, { 0,0,0 }, 50, height/2, 0.98, Data::IDLE);
 	fr->addRegistry(b, p);
@@ -217,7 +228,7 @@ void ParticleSystem::generateBuoyancyWater() {
 
 void ParticleSystem::generateBuoyancyMercury()
 {
-	float height = 10.0;
+	float height = 10.0f;
 	BuoyancyForceGenerator* b = new BuoyancyForceGenerator(height, 1, 13600);
 	Particle* p = new Particle({ 0, 30, 0 }, { 0,0,0 }, { 0,0,0 }, { 0.8, 0.8, 0.8, 1.0 }, 1000, height / 2, 0.98, Data::IDLE);
 	fr->addRegistry(b, p);
@@ -229,10 +240,10 @@ void ParticleSystem::generateBuoyancyMercury()
 
 void ParticleSystem::setK(int op)
 {
-	/*for (auto it = forces.begin(); it != forces.end(); ++it) {
-		if ((*it) == dynamic_cast<SpringForceGenerator*>(*it)) {
-			if (op == 0) (*it)->increaseK();
-			else (*it)->decreaseK();
+	for (auto* force : forces) {
+		if (SpringForceGenerator* spring = dynamic_cast<SpringForceGenerator*>(force)) {
+			if (op == 0) spring->increaseK();
+			else spring->decreaseK();
 		}
-	}*/
+	}
 }

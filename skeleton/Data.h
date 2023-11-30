@@ -3,7 +3,7 @@
 namespace Data {
 	static const float MAX_TIME_KEY = 1.0;
 
-	static const float LIMIT_ON_SCREEN= 60.0;
+	static const float LIMIT_ON_SCREEN= 6.0;
 	static const int TAM_LIST = 5;
 	static const float FIREWORK_DEATH = 5.0; //tiempo de muerte de todo el firework
 	static const float FIREWORK_INIT_DEATH = 1.5; //tiempo que tarda en morir la particula inicial
