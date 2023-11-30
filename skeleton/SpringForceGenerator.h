@@ -16,6 +16,6 @@ public:
 	void updateForce(Particle* p, double t);
 	void removeForce(Particle* p) {};
 	inline void increaseK() noexcept { K += increment; }
-	inline void decreaseK() noexcept { K += decrement; }
+	inline void decreaseK() noexcept { if(K>abs(decrement)) K += decrement; }
 };
 
