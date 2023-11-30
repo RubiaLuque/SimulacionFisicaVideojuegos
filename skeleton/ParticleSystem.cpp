@@ -136,11 +136,11 @@ void ParticleSystem::update(double t) {
 void ParticleSystem::generateSpring()
 {
 	//Muelle entre 2 particulas
-	Particle* p1 = new Particle({ -20, 20, 0 }, { 0,0,0 }, 0.85, 1, 0.98, Data::IDLE);
-	Particle* p2 = new Particle({ 20, 20, 0 }, { 0,0,0 }, 2.0, 2.0, 0.98, Data::IDLE);
+	Particle* p1 = new Particle({ -20, 20, 0 }, { 0,0,0 }, { 0,0,0 }, {0.3, 0.8, 0.0, 1.0}, 10, 1, 0.98, Data::IDLE);
+	Particle* p2 = new Particle({ 20, 20, 0 }, { 0,0,0 }, { 0,0,0 }, { 0.3, 0.8, 0.0, 1.0 }, 20, 2.0, 0.98, Data::IDLE);
 	
-	SpringForceGenerator* f1 = new SpringForceGenerator(1, 10, p2);
-	SpringForceGenerator* f2 = new SpringForceGenerator(1, 10, p1);
+	SpringForceGenerator* f1 = new SpringForceGenerator(500, 10, p2);
+	SpringForceGenerator* f2 = new SpringForceGenerator(500, 10, p1);
 
 	fr->addRegistry(f1, p1);
 	fr->addRegistry(f2, p2);
@@ -150,22 +150,26 @@ void ParticleSystem::generateSpring()
 	particles.push_back(p1);
 	particles.push_back(p2);
 
+	/*fr->addRegistry(gr, p1);
+	fr->addRegistry(gr, p2);*/
+
 	//Muelle entre una particula con la pared
-	Particle* p3 = new Particle({ 0, -20, 0 }, { 0,0,0 }, 1.0, 1.0, 0.988, Data::IDLE);
-	AnchoredSpringForceGen* f3 = new AnchoredSpringForceGen(1, 10, { 0, 10, 0 });
+	Particle* p3 = new Particle({ 0, -20, 0 }, { 5,0,0 }, 1.0, 1.0, 0.988, Data::IDLE);
+	AnchoredSpringForceGen* f3 = new AnchoredSpringForceGen(5, 10, { 5, 10, 0 });
 	fr->addRegistry(f3, p3);
 	forces.push_back(f3);
 	particles.push_back(p3);
 
 	fr->addRegistry(gr, p3);
+	forces.push_back(gr);
 }
 
 void ParticleSystem::generateSlinky() {
-	Particle* p1 = new Particle({ 0, 50,0 }, { 0,0,0 }, { 0,0,0 }, { 1.0, 0.0,0.0,1.0 }, 1.0, 2.0, 0.988, Data::IDLE); //rojo
-	Particle* p2 = new Particle({ 0, 35,0 }, { 0,0,0 }, { 0,0,0 }, { 1.0, 0.5, 0.0, 1.0 }, 1.0, 2.0, 0.988, Data::IDLE); //naranja
-	Particle* p3 = new Particle({ 0, 15,0 }, { 0,0,0 }, { 0,0,0 }, { 1.0, 1.0, 0.0, 1.0 }, 1.0, 2.0, 0.988, Data::IDLE); //amarillo
+	Particle* p1 = new Particle({ 0, 50,0 }, { 0,0,0 }, { 0,0,0 }, { 1.0, 0.0,0.0,1.0 }, 1000, 2.0, 0.988, Data::IDLE); //rojo
+	Particle* p2 = new Particle({ 0, 35,0 }, { 0,0,0 }, { 0,0,0 }, { 1.0, 0.5, 0.0, 1.0 }, 100, 2.0, 0.988, Data::IDLE); //naranja
+	Particle* p3 = new Particle({ 0, 15,0 }, { 0,0,0 }, { 0,0,0 }, { 1.0, 1.0, 0.0, 1.0 }, 10, 2.0, 0.988, Data::IDLE); //amarillo
 	Particle* p4 = new Particle({ 0, 0,0 }, { 0,0,0 }, { 0,0,0 }, { 0.0, 1.0, 0.0, 1.0 }, 1.0, 2.0, 0.988, Data::IDLE); //verde
-	Particle* p5 = new Particle({ 0, -15,0 }, { 0,0,0 }, { 0,0,0 }, { 0.0, 0.0, 1.0, 1.0 }, 1.0, 2.0, 0.988, Data::IDLE); //azul
+	Particle* p5 = new Particle({ 0, -15,0 }, { 0,0,0 }, { 0,0,0 }, { 0.0, 0.0, 1.0, 1.0 }, 0.1, 2.0, 0.988, Data::IDLE); //azul
 
 	//Fuerzas entre p1 y p2
 	SpringForceGenerator* f1 = new SpringForceGenerator(10, 1, p2);
