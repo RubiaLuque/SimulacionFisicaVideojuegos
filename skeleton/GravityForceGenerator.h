@@ -8,7 +8,7 @@ class GravityForceGenerator : public ForceGenerator
 {
 private:
 	Vector3 acc;
-	const float g = -9.8;
+	const float g = -10;
 public:
 	GravityForceGenerator() : ForceGenerator() {};
 	virtual ~GravityForceGenerator() {};

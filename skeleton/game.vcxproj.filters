@@ -50,6 +50,9 @@
     <ClCompile Include="BuoyancyForceGenerator.cpp">
       <Filter>ForceGenerators</Filter>
     </ClCompile>
+    <ClCompile Include="BungeeForceGenerator.cpp">
+      <Filter>ForceGenerators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -100,6 +103,9 @@
       <Filter>ForceGenerators</Filter>
     </ClInclude>
     <ClInclude Include="BuoyancyForceGenerator.h">
+      <Filter>ForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="BungeeForceGenerator.h">
       <Filter>ForceGenerators</Filter>
     </ClInclude>
   </ItemGroup>

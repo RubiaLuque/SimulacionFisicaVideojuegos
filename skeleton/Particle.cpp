@@ -118,9 +118,9 @@ void Particle::update(double t) {
 	Vector3 resulting_accel = forceAccum * (double)(1/mass);
 	
 	//Euler semi-implicito
-	pos = pos + vel * t; 
 	vel += resulting_accel * t;
 	vel *= powf(dumping, t);
+	pos = pos + vel * t; 
 	transform.p.x = pos.x; transform.p.y = pos.y; transform.p.z = pos.z;
 
 	clearForces();
