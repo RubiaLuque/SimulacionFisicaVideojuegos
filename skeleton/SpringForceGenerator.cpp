@@ -1,18 +1,18 @@
 #include "SpringForceGenerator.h"
-
-SpringForceGenerator::SpringForceGenerator(int K, int x0, Particle* other)
+template <typename T>
+SpringForceGenerator<T>::SpringForceGenerator(int K, int x0, T other)
 {
 	this->K = K;
 	this->other = other;
 	this->x0 = x0;
 }
-
-SpringForceGenerator::~SpringForceGenerator()
+template <typename T>
+SpringForceGenerator<T>::~SpringForceGenerator()
 {
 	//delete other;
 }
-
-void SpringForceGenerator::updateForce(Particle* p, double t)
+template <typename T>
+void SpringForceGenerator<T>::updateForce(T p, double t)
 {
 	if (p != nullptr) {
 		Vector3 aux = other->getPos() - p->getPos();

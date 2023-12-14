@@ -4,7 +4,7 @@
 //#include "Particle.h"
 using namespace std;
 
-class GravityForceGenerator : public ForceGenerator
+class GravityForceGenerator : public ForceGenerator<Particle*>
 {
 private:
 	Vector3 acc;

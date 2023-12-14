@@ -4,8 +4,8 @@
 #include <cmath>
 
 class normal_distribution;
-
-class GaussianParticleGenerator : public ParticleGenerator
+template <typename T>
+class GaussianParticleGenerator : public ParticleGenerator<T>
 {
 protected: 
 	Vector3 stdDevPos, stdDevVel;
@@ -22,6 +22,6 @@ public:
 
 	GaussianParticleGenerator(Vector3 meanPos, Vector3 meanVel, Vector3 stdDevPos, Vector3 stdDevVel, Data::GENERATORS g);
 	~GaussianParticleGenerator();
-	list<Particle*> generateParticles();
+	list<T> generateParticles();
 };
 

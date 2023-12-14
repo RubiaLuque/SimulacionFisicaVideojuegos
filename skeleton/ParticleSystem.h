@@ -9,18 +9,18 @@
 #include "ForceRegistry.h"
 
 using namespace std;
-
 //Esta clase almacena las particulas creadas y las destruye a su debido tiempo
 class ParticleSystem
 {
 private:
-	vector<ParticleGenerator*> gens;
-	vector<ForceGenerator*> forces;
+	vector<ParticleGenerator<Particle*>*> gens;
+	vector<ForceGenerator<Particle*>*> forces;
 
 	GravityForceGenerator* gr = new GravityForceGenerator();
-	ExplosionForceGenerator* e;
+	ExplosionForceGenerator<Particle*>* e;
 
-	ForceRegistry* fr = new ForceRegistry();
+	ForceRegistry<Particle*>* fr = new ForceRegistry<Particle*>();
+
 	Data::GENERATORS g;
 	Data::FORCES f = Data::NULLF;
 	
@@ -43,7 +43,7 @@ public:
 
 	void setK(int op);
 
-	ExplosionForceGenerator* getExplosion() { return e; }
+	ExplosionForceGenerator<Particle*>* getExplosion() { return e; }
 
 	//cambia la propiedad alive de las particulas 
 	inline void setAlive(Particle* p, bool alive) noexcept { p->alive = alive; }

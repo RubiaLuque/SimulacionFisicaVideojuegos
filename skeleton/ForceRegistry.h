@@ -1,10 +1,8 @@
 #pragma once
 #include "ForceGenerator.h"
 #include <map>
-
-typedef std::pair<ForceGenerator*, Particle*> FRPair;
-
-class ForceRegistry : public std::multimap<ForceGenerator*, Particle*>
+template <typename T>
+class ForceRegistry : public std::multimap<ForceGenerator<T>*, Particle*>
 {
 private:
 
@@ -13,8 +11,8 @@ public:
 	virtual ~ForceRegistry();
 
 	void updateForces(double t);
-	void addRegistry(ForceGenerator* f, Particle* p);
-	void deleteParticleRegistry(Particle* p);
+	void addRegistry(ForceGenerator<T>* f, T p);
+	void deleteParticleRegistry(T p);
 
 };
 

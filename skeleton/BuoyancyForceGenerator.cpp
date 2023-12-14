@@ -1,19 +1,19 @@
 #include "BuoyancyForceGenerator.h"
-
-BuoyancyForceGenerator::BuoyancyForceGenerator(float height, float volume, float density)
+template <typename T>
+BuoyancyForceGenerator<T>::BuoyancyForceGenerator(float height, float volume, float density)
 {
 	this->height = height;
 	this->volume = volume;
 	this->density = density;
 	liquid = new Particle({ 0,10,0 }, { 0,0,0 }, { 0,0,0 }, { 0.2, 1.0, 1.0, 1.0 }, (double)density/volume, 100, 0.0);
 }
-
-BuoyancyForceGenerator::~BuoyancyForceGenerator()
+template <typename T>
+BuoyancyForceGenerator<T>::~BuoyancyForceGenerator()
 {
 	delete liquid;
 }
-
-void BuoyancyForceGenerator::updateForce(Particle* p, double t)
+template <typename T>
+void BuoyancyForceGenerator<T>::updateForce(T p, double t)
 {
 	if (p == nullptr) return;
 

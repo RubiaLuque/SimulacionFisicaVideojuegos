@@ -25,5 +25,9 @@ namespace Data {
 		NULLF = 0, WIND, VORTEX, EXPLOSION, SPRING
 	};
 
+	static enum RIGIDS {
+		SUELO, STATIC, DYNAMIC
+	};
+
 }
 

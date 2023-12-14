@@ -271,6 +271,8 @@
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SolidRigid.cpp" />
+    <ClCompile Include="SolidRigidSystem.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="UniformParticleGenerator.cpp" />
     <ClCompile Include="VortexForceGenerator.cpp" />
@@ -296,6 +298,8 @@
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SolidRigid.h" />
+    <ClInclude Include="SolidRigidSystem.h" />
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="UniformParticleGenerator.h" />
     <ClInclude Include="VortexForceGenerator.h" />

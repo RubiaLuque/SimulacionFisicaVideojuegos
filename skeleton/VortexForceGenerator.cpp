@@ -1,12 +1,12 @@
 #include "VortexForceGenerator.h"
-
-VortexForceGenerator::VortexForceGenerator(Vector3 windVel, Vector3 vortexPos) : WindForceGenerator(windVel)
+template <typename T>
+VortexForceGenerator<T>::VortexForceGenerator(Vector3 windVel, Vector3 vortexPos) : WindForceGenerator(windVel)
 {
 	this->vortexPos = vortexPos;
 	K = 1;
 }
-
-void VortexForceGenerator::updateForce(Particle* p, double t)
+template <typename T>
+void VortexForceGenerator<T>::updateForce(T p, double t)
 {
 	if (p != nullptr && ((p)->getPos()).magnitude() <= Data::vortexSphereRadius) {
 
@@ -18,8 +18,8 @@ void VortexForceGenerator::updateForce(Particle* p, double t)
 
 	}
 }
-
-void VortexForceGenerator::removeForce(Particle* p)
+template <typename T>
+void VortexForceGenerator<T>::removeForce(T p)
 {
 
 }

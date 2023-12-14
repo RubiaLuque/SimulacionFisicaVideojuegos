@@ -1,20 +1,20 @@
 #pragma once
 #include "ForceGenerator.h"
-
-class SpringForceGenerator : public ForceGenerator
+template <typename T>
+class SpringForceGenerator : public ForceGenerator<T>
 {
 protected:
 	int K;
 	int x0; //Longitud del muelle en reposo
-	Particle* other;
+	T* other;
 	int increment = 10;
 	int decrement = -10;
 
 public:
-	SpringForceGenerator(int K, int x0, Particle* other);
+	SpringForceGenerator(int K, int x0, T other);
 	virtual ~SpringForceGenerator();
-	void updateForce(Particle* p, double t);
-	void removeForce(Particle* p) {};
+	void updateForce(T p, double t);
+	void removeForce(T p) {};
 	inline void increaseK() noexcept { K += increment; }
 	inline void decreaseK() noexcept { if(K>abs(decrement)) K += decrement; }
 };

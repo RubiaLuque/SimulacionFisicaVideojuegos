@@ -1,17 +1,18 @@
 #include "ExplosionForceGenerator.h"
 #include <iostream>
-ExplosionForceGenerator::ExplosionForceGenerator(Vector3 explosionPos) : ForceGenerator()
+template <typename T>
+ExplosionForceGenerator<T>::ExplosionForceGenerator(Vector3 explosionPos) : ForceGenerator()
 {
 	this->explosionPos = explosionPos;
 	K = 10000000000;
 }
-
-ExplosionForceGenerator::~ExplosionForceGenerator()
+template <typename T>
+ExplosionForceGenerator<T>::~ExplosionForceGenerator()
 {
 
 }
-
-void ExplosionForceGenerator::updateForce(Particle* p, double t)
+template <typename T>
+void ExplosionForceGenerator<T>::updateForce(T p, double t)
 {
 
 	if (p != nullptr && ((p)->getPos()).magnitude() <= R) {
@@ -28,12 +29,13 @@ void ExplosionForceGenerator::updateForce(Particle* p, double t)
 		
 	}
 }
-
-double ExplosionForceGenerator::expandForce(double t) {
+template <typename T>
+double ExplosionForceGenerator<T>::expandForce(double t) {
 	return expanseVel.magnitude() * elapsedTime;
 }
 
-void ExplosionForceGenerator::enableExplosion()
+template <typename T>
+void ExplosionForceGenerator<T>::enableExplosion()
 {
 	elapsedTime = 0;
 }

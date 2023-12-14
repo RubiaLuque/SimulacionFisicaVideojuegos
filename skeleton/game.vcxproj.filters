@@ -53,6 +53,8 @@
     <ClCompile Include="BungeeForceGenerator.cpp">
       <Filter>ForceGenerators</Filter>
     </ClCompile>
+    <ClCompile Include="SolidRigid.cpp" />
+    <ClCompile Include="SolidRigidSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -108,6 +110,8 @@
     <ClInclude Include="BungeeForceGenerator.h">
       <Filter>ForceGenerators</Filter>
     </ClInclude>
+    <ClInclude Include="SolidRigid.h" />
+    <ClInclude Include="SolidRigidSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

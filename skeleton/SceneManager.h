@@ -2,6 +2,7 @@
 #include "Render/Camera.h"
 #include "Particle.h"
 #include "ParticleSystem.h"
+#include "SolidRigidSystem.h"
 #include "ForceRegistry.h"
 #include <vector>
 #include "Data.h"
@@ -19,9 +20,11 @@ private:
 	Camera* cam;
 	vector<ParticleSystem*> sys;
 	vector<ParticleSystem*> forces;
+	vector<SolidRigidSystem*> solidSys;
 
 	Firework* firework;
-	ForceRegistry* fr = new ForceRegistry();
+	ForceRegistry<Particle*>* fr = new ForceRegistry<Particle*>();
+
 	bool particleSys;
 	bool fire;
 

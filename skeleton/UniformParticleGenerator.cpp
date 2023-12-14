@@ -1,7 +1,8 @@
 #include "UniformParticleGenerator.h"
 #include "GravityForceGenerator.h"
 
-UniformParticleGenerator::UniformParticleGenerator(Vector3 meanPos, Vector3 meanVel, Vector3 posWidth, 
+template <typename T>
+UniformParticleGenerator<T>::UniformParticleGenerator(Vector3 meanPos, Vector3 meanVel, Vector3 posWidth, 
 	Vector3 velWidth, Data::GENERATORS g) : ParticleGenerator()
 {
 	//de donde se parte
@@ -20,16 +21,18 @@ UniformParticleGenerator::UniformParticleGenerator(Vector3 meanPos, Vector3 mean
 	this->velWidth = velWidth;
 }
 
-UniformParticleGenerator::~UniformParticleGenerator()
+template <typename T>
+UniformParticleGenerator<T>::~UniformParticleGenerator()
 {
 }
 
-list<Particle*> UniformParticleGenerator::generateParticles()
+template <typename T>
+list<T> UniformParticleGenerator<T>::generateParticles()
 {
 	
 	GravityForceGenerator* gr = new GravityForceGenerator();
 
-	list<Particle*> list{};
+	list<T> list{};
 	
 	for (int i = 0; i < Data::TAM_LIST; ++i) {
 		Vector3 auxPos = meanPos;
@@ -44,6 +47,9 @@ list<Particle*> UniformParticleGenerator::generateParticles()
 
 		auto p = new Particle(auxPos, auxVel, 1.0, 0.988, g);
 		list.push_back(p);
+
+		auto s = new SolidRigid(auxPos, auxVel, { 0,0,0 }, { 0.5, 0.5, 0.5, 1 }, Data::DYNAMIC);
+		list.push_back(s);
 	}
 
 	return list;

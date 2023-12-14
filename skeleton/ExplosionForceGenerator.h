@@ -3,8 +3,8 @@
 #include <cmath>
 #include <numbers>
 
-
-class ExplosionForceGenerator : public ForceGenerator
+template <typename T>
+class ExplosionForceGenerator : public ForceGenerator<T>
 {
 private:
 	int K;
@@ -19,10 +19,10 @@ public:
 	ExplosionForceGenerator(Vector3 explosionPos);
 	virtual ~ExplosionForceGenerator();
 
-	void applyForce(Particle* p) {};
-	void updateForce(Particle* p, double t) override;
+	void applyForce(T p) {};
+	void updateForce(T p, double t) override;
 	double expandForce(double t) override;
 	void enableExplosion();
-	void removeForce(Particle* p) {};
+	void removeForce(T p) {};
 };
 

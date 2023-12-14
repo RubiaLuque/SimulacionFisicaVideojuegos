@@ -37,6 +37,13 @@ SceneManager* manager;
 
 float timeKey = 0;
 bool keyPressed = false;
+
+namespace mainSpace {
+	static PxPhysics* getPhysics() noexcept { return gPhysics; }
+	static PxScene* getScene() noexcept { return gScene; }
+
+}
+
 //partícula practica 1
 //Particle* particle; -->Descomentar para usar una sola particula en MRU
 
@@ -66,6 +73,30 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
+
+	//PRACTICA 5 -> SÓLIDOS RÍGIDOS
+	//Generar suelo
+	//PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({ 0,0,0 }));
+	//PxShape* shape = CreateShape(PxBoxGeometry(100, 0.1, 100));
+	//suelo->attachShape(*shape); //Se enlaza la caja con un solido rigido
+	//gScene->addActor(*suelo); //Se añade el solido rigido a la escena
+	////Pintar el suelo
+	//RenderItem* item;
+	//item = new RenderItem(shape, suelo, { 0.8, 0.8, 0.8, 1 });
+
+	//Rigid bodies dinamicos
+	//PxRigidDynamic* new_solid;
+	//new_solid = gPhysics->createRigidDynamic(PxTransform({ -70, 200, -70 }));
+	//new_solid->setLinearVelocity({ 0,5,0 });
+	//new_solid->setAngularVelocity({ 0,0,0 });
+	//PxShape* new_shape = CreateShape(PxBoxGeometry(5, 5, 5));
+	//new_solid->attachShape(*new_shape);
+	//PxRigidBodyExt::updateMassAndInertia(*new_solid, 0.15);
+	//gScene->addActor(*new_solid);
+	////Pintar el nuevo solido rigido dinamico
+	//RenderItem* dynamic_solid;
+	//dynamic_solid = new RenderItem(new_shape, new_solid, { 0.2, 0.2, 0.2, 1 });
+
 
 	//particula - PRACTICA 1
 	//particle = new Particle(PxVec3(1.0, 1.0, 1.0), PxVec3(0.0, 5.0, 0.0), PxVec3(0.0, 6.0, 0.0), 1.0, 0.998);

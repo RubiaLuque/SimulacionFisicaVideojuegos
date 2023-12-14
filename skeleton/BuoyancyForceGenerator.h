@@ -1,7 +1,7 @@
 #pragma once
 #include "ForceGenerator.h"
-
-class BuoyancyForceGenerator : public ForceGenerator
+template <typename T>
+class BuoyancyForceGenerator : public ForceGenerator<T>
 {
 private:
 	float height;
@@ -14,9 +14,9 @@ private:
 public:
 	BuoyancyForceGenerator(float height, float volume, float density);
 	virtual ~BuoyancyForceGenerator();
-	void removeForce(Particle* p) {};
+	void removeForce(T p) {};
 
-	void updateForce(Particle* p, double t);
+	void updateForce(T p, double t);
 
 };
 

@@ -1,19 +1,19 @@
 #include "ForceRegistry.h"
-
-ForceRegistry::~ForceRegistry()
+template <typename T>
+ForceRegistry<T>::~ForceRegistry()
 {
 	this->clear();
 }
-
-void ForceRegistry::updateForces(double t)
+template <typename T>
+void ForceRegistry<T>::updateForces(double t)
 {
 	for (auto it = begin(); it != end(); ++it) {
 		if(it->second!= nullptr)
 			it->first->updateForce(it->second, t);
 	}
 }
-
-void ForceRegistry::addRegistry(ForceGenerator* f, Particle* p)
+template <typename T>
+void ForceRegistry<T>::addRegistry(ForceGenerator<T>* f, T p)
 {
 	this->insert({ f, p });
 	//auto itForce = find(f);
@@ -24,8 +24,8 @@ void ForceRegistry::addRegistry(ForceGenerator* f, Particle* p)
 	//	itForce->second = p;
 	//}
 }
-
-void ForceRegistry::deleteParticleRegistry(Particle* p)
+template <typename T>
+void ForceRegistry<T>::deleteParticleRegistry(T p)
 {
 	for (auto it = begin(); it != end();) {
 		if (it->second == p) it = erase(it);

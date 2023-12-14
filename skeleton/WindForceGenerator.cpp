@@ -1,6 +1,6 @@
 #include "WindForceGenerator.h"
-
-void WindForceGenerator::updateForce(Particle* p, double t)
+template <typename T>
+void WindForceGenerator<T>::updateForce(T p, double t)
 {
 	if (p != nullptr && p->getPos().magnitude() <= Data::windSphereRadius) {
 
@@ -8,7 +8,7 @@ void WindForceGenerator::updateForce(Particle* p, double t)
 			k2*(windVel - p->getVel()).magnitude()* (windVel - p->getVel()));
 	}
 }
-
-void WindForceGenerator::removeForce(Particle* p)
+template <typename T>
+void WindForceGenerator<T>::removeForce(T p)
 {
 }

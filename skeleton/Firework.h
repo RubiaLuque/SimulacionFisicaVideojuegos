@@ -7,8 +7,8 @@
 #include <random>
 
 using namespace std;
-class UniformParticleGenerator;
-class GaussianParticleGenerator;
+//class UniformParticleGenerator<Particle*>;
+//class GaussianParticleGenerator<Particle*>;
 
 class Firework
 {

@@ -4,8 +4,8 @@
 #include <cmath>
 
 using namespace std;
-
-class UniformParticleGenerator : public ParticleGenerator
+template <typename T>
+class UniformParticleGenerator : public ParticleGenerator<T>
 {
 protected:
 	Vector3 velWidth, posWidth;
@@ -19,6 +19,6 @@ public:
 	UniformParticleGenerator(Vector3 meanPos, Vector3 meanVel, Vector3 posWidth, Vector3 velWidth, Data::GENERATORS g);
 	~UniformParticleGenerator();
 
-	list<Particle*> generateParticles();
+	list<T> generateParticles();
 };
 

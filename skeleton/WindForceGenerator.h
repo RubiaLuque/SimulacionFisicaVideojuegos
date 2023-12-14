@@ -1,6 +1,7 @@
 #pragma once
 #include "ForceGenerator.h"
-class WindForceGenerator : public ForceGenerator
+template <typename T>
+class WindForceGenerator : public ForceGenerator<T>
 {
 protected:
 	Vector3 windVel;
@@ -11,7 +12,7 @@ public:
 		this->windVel = windVel; 
 	}
 	virtual ~WindForceGenerator(){}
-	void updateForce(Particle* p, double t);
-	void removeForce(Particle* p);
+	void updateForce(T p, double t);
+	void removeForce(T p);
 };
 

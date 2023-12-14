@@ -1,7 +1,8 @@
 #include "GaussianParticleGenerator.h"
 #include "GravityForceGenerator.h"
 
-GaussianParticleGenerator::GaussianParticleGenerator(Vector3 meanPos, Vector3 meanVel, 
+template <typename T>
+GaussianParticleGenerator<T>::GaussianParticleGenerator(Vector3 meanPos, Vector3 meanVel, 
 	Vector3 stdDevPos, Vector3 stdDevVel, Data::GENERATORS g) : ParticleGenerator()
 {
 	std::random_device rd{};
@@ -17,14 +18,16 @@ GaussianParticleGenerator::GaussianParticleGenerator(Vector3 meanPos, Vector3 me
 
 }
 
-GaussianParticleGenerator::~GaussianParticleGenerator()
+template <typename T>
+GaussianParticleGenerator<T>::~GaussianParticleGenerator()
 {
 }
 
-list<Particle*> GaussianParticleGenerator::generateParticles()
+template <typename T>
+list<T> GaussianParticleGenerator<T>::generateParticles()
 {
 	GravityForceGenerator* gr = new GravityForceGenerator();
-	list<Particle*> list{};
+	list<T> list{};
 	for (int i = 0; i < Data::TAM_LIST; ++i) {
 		Vector3 auxPos = meanPos;
 		auxPos.x += d(gen) * stdDevPos.x;
@@ -36,16 +39,28 @@ list<Particle*> GaussianParticleGenerator::generateParticles()
 		auxVel.y += d(gen) * stdDevVel.y;
 		auxVel.z += d(gen) * stdDevVel.z;
 
-		
-		if (g == Data::NIEBLA) {
-			//auto p = new Particle(auxPos, auxVel, { 0, -2.6, 0 }, 0.988, g); -> P2
-			auto p = new Particle(auxPos, auxVel, 0.26, 0.998, g);
-			list.push_back(p);
+		if (Particle * p == dynamic_cast<T*>()) {
+			if (g == Data::NIEBLA) {
+				//auto p = new Particle(auxPos, auxVel, { 0, -2.6, 0 }, 0.988, g); -> P2
+				p = new Particle(auxPos, auxVel, 0.26, 0.998, g);
+				list.push_back(p);
+			}
+			else {
+				//auto p = new Particle(auxPos, auxVel, { 0, -9.8, 0 }, 0.988, g); -> P2
+				p = new Particle(auxPos, auxVel, 1.0, 0.998, g);
+				list.push_back(p);
+			}
+
 		}
-		else {
-			//auto p = new Particle(auxPos, auxVel, { 0, -9.8, 0 }, 0.988, g); -> P2
-			auto p = new Particle(auxPos, auxVel, 1.0, 0.998, g);
-			list.push_back(p);
+		else if(SolidRigid* s == dynamic_cast<T*>()){
+			if (g == Data::NIEBLA) {
+				s = new SolidRigid(auxPos, auxVel, { 0,0,0 }, {1,1,1,1}, 10, 0.15, Data::DYNAMIC);
+				list.push_back(s);
+			}
+			else {
+				s = new SolidRigid(auxPos, auxVel, { 0,0,0 }, { 1,1,1,1 }, 10, 0.15, Data::DYNAMIC);
+				list.push_back(s);
+			}
 		}
 
 	}

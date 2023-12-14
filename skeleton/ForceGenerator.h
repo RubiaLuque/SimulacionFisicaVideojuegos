@@ -1,14 +1,16 @@
 #pragma once
 #include "Particle.h"
+
+template <typename T>
 class ForceGenerator
 {
 private:
 public:
 	ForceGenerator() noexcept {};
 	virtual ~ForceGenerator() {};
-	virtual void updateForce(Particle* p, double t) {};
-	virtual void removeForce(Particle* p) = 0;
-	virtual void applyForceDin(Particle* p, double t) {};
+	virtual void updateForce(T p, double t) {};
+	virtual void removeForce(T p) = 0;
+	virtual void applyForceDin(T p, double t) {};
 	virtual double expandForce(double t) { return 0; };
 
 };

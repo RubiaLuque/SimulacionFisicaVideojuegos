@@ -1,6 +1,7 @@
 #pragma once
 #include "WindForceGenerator.h"
-class VortexForceGenerator : public WindForceGenerator
+template <typename T>
+class VortexForceGenerator : public WindForceGenerator<T>
 {
 private:
 	int K;
@@ -9,7 +10,7 @@ private:
 public:
 	VortexForceGenerator(Vector3 windVel, Vector3 vortexPos);
 	virtual ~VortexForceGenerator() {};
-	void updateForce(Particle* p, double t);
-	void removeForce(Particle* p);
+	void updateForce(T p, double t);
+	void removeForce(T p);
 };
 
