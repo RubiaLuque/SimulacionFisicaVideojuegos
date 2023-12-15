@@ -7,9 +7,10 @@ SolidRigid::SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Vector4 color, d
 	this->pos = pos;
 	this->mass = mass;
 	this->radius = radius;
+	this->r = r;
 
 	if (r == Data::SUELO) {
-		PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform(pos));
+		suelo = gPhysics->createRigidStatic(PxTransform(pos));
 		PxShape* shape = CreateShape(PxBoxGeometry(100, 0.1, 100));
 		suelo->attachShape(*shape); //Se enlaza la caja con un solido rigido
 		gScene->addActor(*suelo); //Se añade el solido rigido a la escena
@@ -19,7 +20,7 @@ SolidRigid::SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Vector4 color, d
 		this->aVel = { 0,0,0 };
 	}
 	else if (r == Data::STATIC) {
-		PxRigidStatic* staticR = gPhysics->createRigidStatic(PxTransform(pos));
+		staticR = gPhysics->createRigidStatic(PxTransform(pos));
 		PxShape* shape = CreateShape(PxBoxGeometry(radius, radius, radius));
 		staticR->attachShape(*shape); //Se enlaza la caja con un solido rigido
 		gScene->addActor(*staticR); //Se añade el solido rigido a la escena
@@ -29,25 +30,33 @@ SolidRigid::SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Vector4 color, d
 		this->aVel = { 0,0,0 };
 	}
 	else if (r == Data::DYNAMIC) {
-		PxRigidDynamic* new_solid;
-		new_solid = gPhysics->createRigidDynamic(PxTransform(pos));
-		new_solid->setLinearVelocity(lVel);
-		new_solid->setAngularVelocity(aVel);
+		dynamicR = gPhysics->createRigidDynamic(PxTransform(pos));
+		dynamicR->setLinearVelocity(lVel);
+		dynamicR->setAngularVelocity(aVel);
 		PxShape* new_shape = CreateShape(PxBoxGeometry(radius, radius, radius));
-		new_solid->attachShape(*new_shape);
-		PxRigidBodyExt::updateMassAndInertia(*new_solid,(mass));
-		gScene->addActor(*new_solid);
+		dynamicR->attachShape(*new_shape);
+		PxRigidBodyExt::updateMassAndInertia(*dynamicR,(mass));
+		gScene->addActor(*dynamicR);
 		//Pintar el nuevo solido rigido dinamico
-		renderItem = new RenderItem(new_shape, new_solid, { 0.2, 0.2, 0.2, 1 });
+		renderItem = new RenderItem(new_shape, dynamicR, { 0.2, 0.2, 0.2, 1 });
 	}
 }
 
 SolidRigid::~SolidRigid()
 {
-	DeregisterRenderItem(renderItem);
+	if (r == Data::SUELO) suelo->release();
+	else if (r == Data::STATIC) staticR->release();
+	else if (r == Data::DYNAMIC) dynamicR->release();
+
+	
 }
 
 void SolidRigid::update(double t)
 {
 
+}
+
+void SolidRigid::addForce(Vector3 f)
+{
+	if (r == Data::DYNAMIC) dynamicR->addForce(f);
 }

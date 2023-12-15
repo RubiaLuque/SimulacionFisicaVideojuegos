@@ -18,22 +18,22 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g, PxPhysics* gPhysics, PxScene*
 	this->gPhysics = gPhysics;
 
 	//FUENTE
-	UniformParticleGenerator<Particle*>* fuente = new UniformParticleGenerator<Particle*>
+	UniformParticleGenerator<Particle>* fuente = new UniformParticleGenerator<Particle>
 		({ 0,-10,0 }, { 0, 5,0 }, {1, 10, 1}, { 10,10,10 }, Data::FUENTE);
 	gens.push_back(fuente);
 
 	//LLUVIA
-	UniformParticleGenerator<Particle*>* lluvia = new UniformParticleGenerator<Particle*>
+	UniformParticleGenerator<Particle>* lluvia = new UniformParticleGenerator<Particle>
 		({ 0, 50,0 }, { 0, 0, 0 }, { 30, 3, 30 }, { 1, 5, 1 }, Data::LLUVIA);
 	gens.push_back(lluvia);
 
 	//NIEVE
-	GaussianParticleGenerator<Particle*>* nieve = new GaussianParticleGenerator<Particle*>
+	GaussianParticleGenerator<Particle>* nieve = new GaussianParticleGenerator<Particle>
 		({ 0,20,0 }, { 0,1,0 }, { 50, 5,  50}, { 5, 5, 5 }, Data::NIEVE);
 	gens.push_back(nieve);
 
 	//NIEBLA
-	GaussianParticleGenerator<Particle*>* niebla = new GaussianParticleGenerator<Particle*>
+	GaussianParticleGenerator<Particle>* niebla = new GaussianParticleGenerator<Particle>
 		({ 0,10,0 }, { 1,1,1 }, { 50, 50, 50 }, { 1, 5, 1 }, Data::NIEBLA);
 	gens.push_back(niebla);
 }
@@ -41,13 +41,13 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g, PxPhysics* gPhysics, PxScene*
 void ParticleSystem::addForce(Data::FORCES f) {
 	this->f = f;
 
-	WindForceGenerator<Particle*>* w = new WindForceGenerator<Particle*>({0, 20, 0});
+	WindForceGenerator<Particle>* w = new WindForceGenerator<Particle>({0, 20, 0});
 	forces.push_back(w);
 
-	VortexForceGenerator<Particle*>* v = new VortexForceGenerator<Particle*>({0, 0, 0}, {0,0,0});
+	VortexForceGenerator<Particle>* v = new VortexForceGenerator<Particle>({0, 0, 0}, {0,0,0});
 	forces.push_back(v);
 
-	e = new ExplosionForceGenerator<Particle*>({ 0,20,0 });
+	e = new ExplosionForceGenerator<Particle>({ 0,20,0 });
 	forces.push_back(e);
 
 }
@@ -145,8 +145,8 @@ void ParticleSystem::generateSpring()
 	Particle* p1 = new Particle({ -20, 20, 0 }, { 0,0,0 }, { 0,0,0 }, {0.3, 0.8, 0.0, 1.0}, 10, 1, 0.98, Data::IDLE);
 	Particle* p2 = new Particle({ 20, 20, 0 }, { 0,0,0 }, { 0,0,0 }, { 0.3, 0.8, 0.0, 1.0 }, 20, 2.0, 0.98, Data::IDLE);
 	
-	SpringForceGenerator<Particle*>* f1 = new SpringForceGenerator<Particle*>(500, 10, p2);
-	SpringForceGenerator<Particle*>* f2 = new SpringForceGenerator<Particle*>(500, 10, p1);
+	SpringForceGenerator<Particle>* f1 = new SpringForceGenerator<Particle>(500, 10, p2);
+	SpringForceGenerator<Particle>* f2 = new SpringForceGenerator<Particle>(500, 10, p1);
 
 	fr->addRegistry(f1, p1);
 	fr->addRegistry(f2, p2);
@@ -161,7 +161,7 @@ void ParticleSystem::generateSpring()
 
 	//Muelle entre una particula con la pared
 	Particle* p3 = new Particle({ 5, -20, 0 }, { 0,0,0 }, 1.0, 1.0, 0.988, Data::IDLE);
-	AnchoredSpringForceGen<Particle*>* f3 = new AnchoredSpringForceGen<Particle*>(5, 10, { 5, 10, 0 });
+	AnchoredSpringForceGen<Particle>* f3 = new AnchoredSpringForceGen<Particle>(5, 10, { 5, 10, 0 });
 	fr->addRegistry(f3, p3);
 	forces.push_back(f3);
 	particles.push_back(p3);
@@ -171,8 +171,8 @@ void ParticleSystem::generateSpring()
 
 	Particle* p4 = new Particle({ -10, 30, 0 }, { 0,0,0 }, { 0,0,0 }, { 1.0, 0.5, 0.0, 1.0 }, 30, 2, 0.998, Data::IDLE);
 	Particle* p5 = new Particle({ 10, 30, 0 }, { 0,0,0 }, { 0,0,0 }, { 1.0, 0.5, 0.0, 1.0 }, 30, 2, 0.998, Data::IDLE);
-	SpringForceGenerator<Particle*>* f4 = new SpringForceGenerator<Particle*>(500, 10, p5);
-	SpringForceGenerator<Particle*>* f5 = new SpringForceGenerator<Particle*>(500, 10, p4);
+	SpringForceGenerator<Particle>* f4 = new SpringForceGenerator<Particle>(500, 10, p5);
+	SpringForceGenerator<Particle>* f5 = new SpringForceGenerator<Particle>(500, 10, p4);
 
 	fr->addRegistry(f4, p4);
 	fr->addRegistry(f5, p5);
@@ -192,27 +192,27 @@ void ParticleSystem::generateSlinky() {
 	Particle* p5 = new Particle({ 0, -15,0 }, { 0,0,0 }, { 0,0,0 }, { 0.0, 0.0, 1.0, 1.0 }, 5.0, 2.0, 0.988, Data::IDLE); //azul
 
 	//Fuerzas entre p1 y p2
-	SpringForceGenerator<Particle*>* f1 = new SpringForceGenerator<Particle*>(600, 10, p2);
-	SpringForceGenerator<Particle*>* f2 = new SpringForceGenerator<Particle*>(600, 10, p1);
+	SpringForceGenerator<Particle>* f1 = new SpringForceGenerator<Particle>(600, 10, p2);
+	SpringForceGenerator<Particle>* f2 = new SpringForceGenerator<Particle>(600, 10, p1);
 
 	fr->addRegistry(f1, p1); 
 	fr->addRegistry(f2, p2);
 
 	//Fuerzas entre p2 y p3
-	SpringForceGenerator<Particle*>* f3 = new SpringForceGenerator<Particle*>(400, 10, p3);
-	SpringForceGenerator<Particle*>* f4 = new SpringForceGenerator<Particle*>(400, 10, p2);
+	SpringForceGenerator<Particle>* f3 = new SpringForceGenerator<Particle>(400, 10, p3);
+	SpringForceGenerator<Particle>* f4 = new SpringForceGenerator<Particle>(400, 10, p2);
 	fr->addRegistry(f3, p2);
 	fr->addRegistry(f4, p3);
 
 	//Fuerzas entre p3 y p4
-	SpringForceGenerator<Particle*>* f5 = new SpringForceGenerator<Particle*>(200, 10, p4);
-	SpringForceGenerator<Particle*>* f6 = new SpringForceGenerator<Particle*>(200, 10, p3);
+	SpringForceGenerator<Particle>* f5 = new SpringForceGenerator<Particle>(200, 10, p4);
+	SpringForceGenerator<Particle>* f6 = new SpringForceGenerator<Particle>(200, 10, p3);
 	fr->addRegistry(f5, p3);
 	fr->addRegistry(f6, p4);
 
 	//Fuerzas entre p4 y p5
-	SpringForceGenerator<Particle*>* f7 = new SpringForceGenerator<Particle*>(100, 10, p5);
-	SpringForceGenerator<Particle*>* f8 = new SpringForceGenerator<Particle*>(100, 10, p4);
+	SpringForceGenerator<Particle>* f7 = new SpringForceGenerator<Particle>(100, 10, p5);
+	SpringForceGenerator<Particle>* f8 = new SpringForceGenerator<Particle>(100, 10, p4);
 	fr->addRegistry(f7, p4);
 	fr->addRegistry(f8, p5);
 
@@ -241,7 +241,7 @@ void ParticleSystem::generateSlinky() {
 
 void ParticleSystem::generateBuoyancyWater() {
 	float height = 10.0f;
-	BuoyancyForceGenerator<Particle*>* b = new BuoyancyForceGenerator<Particle*>(height, 1, 1000);
+	BuoyancyForceGenerator<Particle>* b = new BuoyancyForceGenerator<Particle>(height, 1, 1000);
 	Particle* p = new Particle({ 0, 30, 0 }, { 0,0,0 }, 50, height/2, 0.98, Data::IDLE);
 	fr->addRegistry(b, p);
 	fr->addRegistry(gr, p);
@@ -253,7 +253,7 @@ void ParticleSystem::generateBuoyancyWater() {
 void ParticleSystem::generateBuoyancyMercury()
 {
 	float height = 10.0f;
-	BuoyancyForceGenerator<Particle*>* b = new BuoyancyForceGenerator<Particle*>(height, 0.8, 13600);
+	BuoyancyForceGenerator<Particle>* b = new BuoyancyForceGenerator<Particle>(height, 0.8, 13600);
 	Particle* p = new Particle({ 0, 30, 0 }, { 0,0,0 }, { 0,0,0 }, { 0.8, 0.8, 0.8, 1.0 }, 2000, height / 2, 0.98, Data::IDLE);
 	fr->addRegistry(b, p);
 	fr->addRegistry(gr, p);
@@ -265,7 +265,7 @@ void ParticleSystem::generateBuoyancyMercury()
 void ParticleSystem::setK(int op)
 {
 	for (auto* force : forces) {
-		if (SpringForceGenerator<Particle*>* spring = dynamic_cast<SpringForceGenerator<Particle*>*>(force)) {
+		if (SpringForceGenerator<Particle>* spring = dynamic_cast<SpringForceGenerator<Particle>*>(force)) {
 			if (op == 0) spring->increaseK();
 			else spring->decreaseK();
 		}

@@ -13,25 +13,25 @@ SolidRigidSystem::SolidRigidSystem(PxPhysics* gPhysics, PxScene* gScene)
 	this->gScene = gScene;
 	this->gPhysics = gPhysics;
 
-	gens = std::vector<ParticleGenerator<SolidRigid*>*>{};
+	gens = std::vector<ParticleGenerator<SolidRigid>*>{};
 	elapsedTime = 0;
 	//FUENTE
-	UniformParticleGenerator<SolidRigid*>* fuente = new UniformParticleGenerator<SolidRigid*>
+	UniformParticleGenerator<SolidRigid>* fuente = new UniformParticleGenerator<SolidRigid>
 		({ 0,-10,0 }, { 0, 5,0 }, { 1, 10, 1 }, { 10,10,10 }, Data::FUENTE, gPhysics, gScene);
 	gens.push_back(fuente);
 
 	//LLUVIA
-	UniformParticleGenerator<SolidRigid*>* lluvia = new UniformParticleGenerator<SolidRigid*>
+	UniformParticleGenerator<SolidRigid>* lluvia = new UniformParticleGenerator<SolidRigid>
 		({ 0, 50,0 }, { 0, 0, 0 }, { 30, 3, 30 }, { 1, 5, 1 }, Data::LLUVIA, gPhysics, gScene);
 	gens.push_back(lluvia);
 
 	//NIEVE
-	GaussianParticleGenerator<SolidRigid*>* nieve = new GaussianParticleGenerator<SolidRigid*>
+	GaussianParticleGenerator<SolidRigid>* nieve = new GaussianParticleGenerator<SolidRigid>
 		({ 0,20,0 }, { 0,1,0 }, { 50, 5,  50 }, { 5, 5, 5 }, Data::NIEVE, gPhysics, gScene);
 	gens.push_back(nieve);
 
 	//NIEBLA
-	GaussianParticleGenerator<SolidRigid*>* niebla = new GaussianParticleGenerator<SolidRigid*>
+	GaussianParticleGenerator<SolidRigid>* niebla = new GaussianParticleGenerator<SolidRigid>
 		({ 0,10,0 }, { 1,1,1 }, { 50, 50, 50 }, { 1, 5, 1 }, Data::NIEBLA, gPhysics, gScene);
 	gens.push_back(niebla);
 }
@@ -70,13 +70,13 @@ void SolidRigidSystem::addForce(Data::FORCES f)
 {
 	this->f = f;
 
-	WindForceGenerator<SolidRigid*>* w = new WindForceGenerator<SolidRigid*>({ 0, 20, 0 });
+	WindForceGenerator<SolidRigid>* w = new WindForceGenerator<SolidRigid>({ 0, 20, 0 });
 	forces.push_back(w);
 
-	VortexForceGenerator<SolidRigid*>* v = new VortexForceGenerator<SolidRigid*>({ 0, 0, 0 }, { 0,0,0 });
+	VortexForceGenerator<SolidRigid>* v = new VortexForceGenerator<SolidRigid>({ 0, 0, 0 }, { 0,0,0 });
 	forces.push_back(v);
 
-	e = new ExplosionForceGenerator<SolidRigid*>({ 0,20,0 });
+	e = new ExplosionForceGenerator<SolidRigid>({ 0,20,0 });
 	forces.push_back(e);
 }
 
@@ -135,8 +135,8 @@ void SolidRigidSystem::generateSpring()
 	SolidRigid* p1 = new SolidRigid({ -20, 20, 0 }, { 0,0,0 }, { 0,0,0 }, { 0.3, 0.8, 0.0, 1.0 }, 10, 1, Data::DYNAMIC, gPhysics, gScene);
 	SolidRigid* p2 = new SolidRigid({ 20, 20, 0 }, { 0,0,0 }, { 0,0,0 }, { 0.3, 0.8, 0.0, 1.0 }, 20, 2.0, Data::DYNAMIC, gPhysics, gScene);
 
-	SpringForceGenerator<SolidRigid*>* f1 = new SpringForceGenerator<SolidRigid*>(500, 10, p2);
-	SpringForceGenerator<SolidRigid*>* f2 = new SpringForceGenerator<SolidRigid*>(500, 10, p1);
+	SpringForceGenerator<SolidRigid>* f1 = new SpringForceGenerator<SolidRigid>(500, 10, p2);
+	SpringForceGenerator<SolidRigid>* f2 = new SpringForceGenerator<SolidRigid>(500, 10, p1);
 
 	fr->addRegistry(f1, p1);
 	fr->addRegistry(f2, p2);
@@ -148,15 +148,15 @@ void SolidRigidSystem::generateSpring()
 
 	//Muelle entre una particula con la pared
 	SolidRigid* p3 = new SolidRigid({ 5, -20, 0 }, { 0,0,0 }, { 0,0,0 }, {1,1,1,1}, 1.0, 1.0, Data::DYNAMIC, gPhysics, gScene);
-	AnchoredSpringForceGen<SolidRigid*>* f3 = new AnchoredSpringForceGen<SolidRigid*>(5, 10, { 5, 10, 0 });
+	AnchoredSpringForceGen<SolidRigid>* f3 = new AnchoredSpringForceGen<SolidRigid>(5, 10, { 5, 10, 0 });
 	fr->addRegistry(f3, p3);
 	forces.push_back(f3);
 	solids.push_back(p3);
 
 	SolidRigid* p4 = new SolidRigid({ -10, 30, 0 }, { 0,0,0 }, { 0,0,0 }, { 1.0, 0.5, 0.0, 1.0 }, 30, 2,Data::DYNAMIC, gPhysics, gScene);
 	SolidRigid* p5 = new SolidRigid({ 10, 30, 0 }, { 0,0,0 }, { 0,0,0 }, { 1.0, 0.5, 0.0, 1.0 }, 30, 2, Data::DYNAMIC, gPhysics, gScene);
-	SpringForceGenerator<SolidRigid*>* f4 = new SpringForceGenerator<SolidRigid*>(500, 10, p5);
-	SpringForceGenerator<SolidRigid*>* f5 = new SpringForceGenerator<SolidRigid*>(500, 10, p4);
+	SpringForceGenerator<SolidRigid>* f4 = new SpringForceGenerator<SolidRigid>(500, 10, p5);
+	SpringForceGenerator<SolidRigid>* f5 = new SpringForceGenerator<SolidRigid>(500, 10, p4);
 
 	fr->addRegistry(f4, p4);
 	fr->addRegistry(f5, p5);
@@ -176,27 +176,27 @@ void SolidRigidSystem::generateSlinky()
 	SolidRigid* p5 = new SolidRigid({ 0, -15,0 }, { 0,0,0 }, { 0,0,0 }, { 0.0, 0.0, 1.0, 1.0 }, 5.0, 2.0, Data::DYNAMIC, gPhysics, gScene); //azul
 
 	//Fuerzas entre p1 y p2
-	SpringForceGenerator<SolidRigid*>* f1 = new SpringForceGenerator<SolidRigid*>(600, 10, p2);
-	SpringForceGenerator<SolidRigid*>* f2 = new SpringForceGenerator<SolidRigid*>(600, 10, p1);
+	SpringForceGenerator<SolidRigid>* f1 = new SpringForceGenerator<SolidRigid>(600, 10, p2);
+	SpringForceGenerator<SolidRigid>* f2 = new SpringForceGenerator<SolidRigid>(600, 10, p1);
 
 	fr->addRegistry(f1, p1);
 	fr->addRegistry(f2, p2);
 
 	//Fuerzas entre p2 y p3
-	SpringForceGenerator<SolidRigid*>* f3 = new SpringForceGenerator<SolidRigid*>(400, 10, p3);
-	SpringForceGenerator<SolidRigid*>* f4 = new SpringForceGenerator<SolidRigid*>(400, 10, p2);
+	SpringForceGenerator<SolidRigid>* f3 = new SpringForceGenerator<SolidRigid>(400, 10, p3);
+	SpringForceGenerator<SolidRigid>* f4 = new SpringForceGenerator<SolidRigid>(400, 10, p2);
 	fr->addRegistry(f3, p2);
 	fr->addRegistry(f4, p3);
 
 	//Fuerzas entre p3 y p4
-	SpringForceGenerator<SolidRigid*>* f5 = new SpringForceGenerator<SolidRigid*>(200, 10, p4);
-	SpringForceGenerator<SolidRigid*>* f6 = new SpringForceGenerator<SolidRigid*>(200, 10, p3);
+	SpringForceGenerator<SolidRigid>* f5 = new SpringForceGenerator<SolidRigid>(200, 10, p4);
+	SpringForceGenerator<SolidRigid>* f6 = new SpringForceGenerator<SolidRigid>(200, 10, p3);
 	fr->addRegistry(f5, p3);
 	fr->addRegistry(f6, p4);
 
 	//Fuerzas entre p4 y p5
-	SpringForceGenerator<SolidRigid*>* f7 = new SpringForceGenerator<SolidRigid*>(100, 10, p5);
-	SpringForceGenerator<SolidRigid*>* f8 = new SpringForceGenerator<SolidRigid*>(100, 10, p4);
+	SpringForceGenerator<SolidRigid>* f7 = new SpringForceGenerator<SolidRigid>(100, 10, p5);
+	SpringForceGenerator<SolidRigid>* f8 = new SpringForceGenerator<SolidRigid>(100, 10, p4);
 	fr->addRegistry(f7, p4);
 	fr->addRegistry(f8, p5);
 
@@ -219,7 +219,7 @@ void SolidRigidSystem::generateSlinky()
 void SolidRigidSystem::generateBuoyancyWater()
 {
 	float height = 10.0f;
-	BuoyancyForceGenerator<SolidRigid*>* b = new BuoyancyForceGenerator<SolidRigid*>(height, 1, 1000);
+	BuoyancyForceGenerator<SolidRigid>* b = new BuoyancyForceGenerator<SolidRigid>(height, 1, 1000);
 	SolidRigid* p = new SolidRigid({ 0, 30, 0 }, { 0,0,0 }, { 0,0,0 }, {0.5, 0.3, 0.2, 1}, 50, height / 2, Data::DYNAMIC, gPhysics, gScene);
 	fr->addRegistry(b, p);
 
@@ -230,7 +230,7 @@ void SolidRigidSystem::generateBuoyancyWater()
 void SolidRigidSystem::generateBuoyancyMercury()
 {
 	float height = 10.0f;
-	BuoyancyForceGenerator<SolidRigid*>* b = new BuoyancyForceGenerator<SolidRigid*>(height, 0.8, 13600);
+	BuoyancyForceGenerator<SolidRigid>* b = new BuoyancyForceGenerator<SolidRigid>(height, 0.8, 13600);
 	SolidRigid* p = new SolidRigid({ 0, 30, 0 }, { 0,0,0 }, { 0,0,0 }, { 0.8, 0.8, 0.8, 1.0 }, 2000, height / 2, Data::DYNAMIC, gPhysics, gScene);
 	fr->addRegistry(b, p);
 
@@ -241,7 +241,7 @@ void SolidRigidSystem::generateBuoyancyMercury()
 void SolidRigidSystem::setK(int op)
 {
 	for (auto* force : forces) {
-		if (SpringForceGenerator<SolidRigid*>* spring = dynamic_cast<SpringForceGenerator<SolidRigid*>*>(force)) {
+		if (SpringForceGenerator<SolidRigid>* spring = dynamic_cast<SpringForceGenerator<SolidRigid>*>(force)) {
 			if (op == 0) spring->increaseK();
 			else spring->decreaseK();
 		}

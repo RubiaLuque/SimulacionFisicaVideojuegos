@@ -12,13 +12,13 @@ using namespace std;
 class SolidRigidSystem
 {
 private:
-	vector<ParticleGenerator<SolidRigid*>*> gens;
-	vector<ForceGenerator<SolidRigid*>*> forces;
+	vector<ParticleGenerator<SolidRigid>*> gens;
+	vector<ForceGenerator<SolidRigid>*> forces;
 
-	ForceRegistry<SolidRigid*>* fr = new ForceRegistry<SolidRigid*>();
+	ForceRegistry<SolidRigid>* fr = new ForceRegistry<SolidRigid>();
 	Data::GENERATORS g;
 	Data::FORCES f = Data::NULLF;
-	ExplosionForceGenerator<SolidRigid*>* e;
+	ExplosionForceGenerator<SolidRigid>* e;
 	vector<SolidRigid*> solids;
 	double elapsedTime;
 

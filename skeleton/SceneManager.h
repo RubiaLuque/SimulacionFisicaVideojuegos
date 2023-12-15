@@ -23,8 +23,8 @@ private:
 	vector<SolidRigidSystem*> solidForces;
 
 	Firework* firework;
-	ForceRegistry<Particle*>* fr = new ForceRegistry<Particle*>();
-	ForceRegistry<SolidRigid*>* sFr = new ForceRegistry<SolidRigid*>();
+	ForceRegistry<Particle>* fr = new ForceRegistry<Particle>();
+	ForceRegistry<SolidRigid>* sFr = new ForceRegistry<SolidRigid>();
 
 	bool particleSys;
 	bool fire;

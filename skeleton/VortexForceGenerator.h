@@ -8,9 +8,25 @@ private:
 	Vector3 vortexPos = { 0,0, 0 };
 
 public:
-	VortexForceGenerator(Vector3 windVel, Vector3 vortexPos);
+	VortexForceGenerator(Vector3 windVel, Vector3 vortexPos) : WindForceGenerator<T>(windVel)
+	{
+		this->vortexPos = vortexPos;
+		K = 1;
+	}
+
 	virtual ~VortexForceGenerator() {};
-	void updateForce(T p, double t);
-	void removeForce(T p);
+	void updateForce(T* p, double t) {
+		if (p != nullptr && ((p)->getPos()).magnitude() <= Data::vortexSphereRadius) {
+
+			this->windVel = K * Vector3(-(p->getPos().z - this->vortexPos.z),
+				100 - (p->getPos().y - this->vortexPos.y), p->getPos().x - this->vortexPos.x);
+
+			p->addForce(k1 * (windVel - p->getVel()) +
+				k2 * (windVel - p->getVel()).magnitude() * (windVel - p->getVel()));
+
+		}
+	}
+
+	void removeForce(T* p){ }
 };
 

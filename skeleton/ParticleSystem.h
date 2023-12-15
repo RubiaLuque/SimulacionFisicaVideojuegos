@@ -12,13 +12,13 @@ using namespace std;
 class ParticleSystem
 {
 private:
-	vector<ParticleGenerator<Particle*>*> gens;
-	vector<ForceGenerator<Particle*>*> forces;
+	vector<ParticleGenerator<Particle>*> gens;
+	vector<ForceGenerator<Particle>*> forces;
 
 	GravityForceGenerator* gr = new GravityForceGenerator();
-	ExplosionForceGenerator<Particle*>* e;
+	ExplosionForceGenerator<Particle>* e;
 
-	ForceRegistry<Particle*>* fr = new ForceRegistry<Particle*>();
+	ForceRegistry<Particle>* fr = new ForceRegistry<Particle>();
 
 	Data::GENERATORS g;
 	Data::FORCES f = Data::NULLF;
@@ -44,7 +44,7 @@ public:
 
 	void setK(int op);
 
-	ExplosionForceGenerator<Particle*>* getExplosion() { return e; }
+	ExplosionForceGenerator<Particle>* getExplosion() { return e; }
 
 	//cambia la propiedad alive de las particulas 
 	inline void setAlive(Particle* p, bool alive) noexcept { p->alive = alive; }

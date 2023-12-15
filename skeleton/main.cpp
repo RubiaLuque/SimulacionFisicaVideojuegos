@@ -129,6 +129,8 @@ void stepPhysics(bool interactive, double t)
 //Se limpia la memoria usada
 void cleanupPhysics(bool interactive)
 {
+	delete manager;
+
 	PX_UNUSED(interactive);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
@@ -144,7 +146,6 @@ void cleanupPhysics(bool interactive)
 
 	//delete particle; --> para eliminar la particula inicial
 
-	delete manager;
 }
 
 // Function called when a key is pressed

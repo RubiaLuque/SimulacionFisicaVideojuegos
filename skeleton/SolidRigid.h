@@ -15,6 +15,11 @@ private:
 	RenderItem* renderItem = nullptr;
 	double radius;
 	double mass;
+	PxRigidStatic* suelo;
+	PxRigidStatic* staticR;
+	PxRigidDynamic* dynamicR;
+
+	Data::RIGIDS r;
 
 	PxPhysics* gPhysics;
 	PxScene* gScene;
@@ -31,6 +36,8 @@ public:
 	double getMass() noexcept { return mass; }
 
 	void update(double t);
+
+	void addForce(Vector3 f);
 
 	bool alive = true;
 	double limit_time = 0; //tiempo que lleva en pantalla
