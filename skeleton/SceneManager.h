@@ -3,10 +3,8 @@
 #include "Particle.h"
 #include "ParticleSystem.h"
 #include "SolidRigidSystem.h"
-//#include "ForceRegistry.h"
 #include <vector>
 #include "Data.h"
-//#include "Firework.h"
 
 using namespace std;
 using namespace Data;
@@ -20,10 +18,13 @@ private:
 	Camera* cam;
 	vector<ParticleSystem*> sys;
 	vector<ParticleSystem*> forces;
+
 	vector<SolidRigidSystem*> solidSys;
+	vector<SolidRigidSystem*> solidForces;
 
 	Firework* firework;
 	ForceRegistry<Particle*>* fr = new ForceRegistry<Particle*>();
+	ForceRegistry<SolidRigid*>* sFr = new ForceRegistry<SolidRigid*>();
 
 	bool particleSys;
 	bool fire;

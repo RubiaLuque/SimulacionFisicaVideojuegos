@@ -2,12 +2,12 @@
 #include "ForceGenerator.h"
 #include <map>
 template <typename T>
-class ForceRegistry : public std::multimap<ForceGenerator<T>*, Particle*>
+class ForceRegistry : public std::multimap<ForceGenerator<T>*, T>
 {
 private:
 
 public:
-	ForceRegistry() {};
+	ForceRegistry();
 	virtual ~ForceRegistry();
 
 	void updateForces(double t);

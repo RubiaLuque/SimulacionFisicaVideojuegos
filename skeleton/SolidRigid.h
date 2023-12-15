@@ -12,7 +12,6 @@ private:
 	Vector3 pos;
 	Vector3 lVel; //Velocidad lineal
 	Vector3 aVel; //velocidad angular
-	PxTransform transform;
 	RenderItem* renderItem = nullptr;
 	double radius;
 	double mass;

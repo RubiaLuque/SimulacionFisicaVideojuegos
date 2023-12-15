@@ -1,5 +1,5 @@
 #include "SolidRigid.h"
-//#include "main.cpp"
+#include "main.cpp"
 
 SolidRigid::SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Vector4 color, double radius, double mass, Data::RIGIDS r)
 {

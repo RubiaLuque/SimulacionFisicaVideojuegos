@@ -1,4 +1,7 @@
 #include "ForceRegistry.h"
+template<typename T>
+ForceRegistry<T>::ForceRegistry(){ }
+
 template <typename T>
 ForceRegistry<T>::~ForceRegistry()
 {
@@ -16,13 +19,6 @@ template <typename T>
 void ForceRegistry<T>::addRegistry(ForceGenerator<T>* f, T p)
 {
 	this->insert({ f, p });
-	//auto itForce = find(f);
-	////La fuerza no estaba registrada
-	//if (itForce == end()) {
-	//}
-	//else {
-	//	itForce->second = p;
-	//}
 }
 template <typename T>
 void ForceRegistry<T>::deleteParticleRegistry(T p)
