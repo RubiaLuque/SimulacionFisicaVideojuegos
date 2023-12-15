@@ -15,8 +15,12 @@ private:
 	RenderItem* renderItem = nullptr;
 	double radius;
 	double mass;
+
+	PxPhysics* gPhysics;
+	PxScene* gScene;
+
 public:
-	SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Vector4 color, double radius, double mass, Data::RIGIDS);
+	SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Vector4 color, double radius, double mass, Data::RIGIDS, PxPhysics* gPhysics, PxScene* gScene);
 
 	virtual ~SolidRigid();
 

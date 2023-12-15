@@ -15,8 +15,13 @@ protected:
 	bool idle = false;
 	Data::GENERATORS g;
 
+	PxPhysics* gPhysics = nullptr; 
+	PxScene* gScene = nullptr;
+
 public:
 	UniformParticleGenerator(Vector3 meanPos, Vector3 meanVel, Vector3 posWidth, Vector3 velWidth, Data::GENERATORS g);
+	UniformParticleGenerator(Vector3 meanPos, Vector3 meanVel, Vector3 posWidth, Vector3 velWidth, 
+		Data::GENERATORS g, PxPhysics* gPhysics, PxScene* gScene);
 	~UniformParticleGenerator();
 
 	list<T> generateParticles();

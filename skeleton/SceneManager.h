@@ -28,9 +28,11 @@ private:
 
 	bool particleSys;
 	bool fire;
+	PxPhysics* gPhysics; 
+	PxScene* gScene;
 
 public:
-	SceneManager();
+	SceneManager(PxPhysics* gPhysics, PxScene* gScene);
 
 	virtual ~SceneManager();
 

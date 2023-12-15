@@ -1,10 +1,12 @@
 #include "SceneManager.h"
 #include "GravityForceGenerator.h"
 
-SceneManager::SceneManager() {
+SceneManager::SceneManager(PxPhysics* gPhysics, PxScene* gScene) {
 	cam = GetCamera();
 	particleSys = false;
 	fire = false;
+	this->gPhysics = gPhysics;
+	this->gScene = gScene;
 }
 
 SceneManager::~SceneManager() {
@@ -30,16 +32,16 @@ SceneManager::~SceneManager() {
 
 void SceneManager::addParticleSystem(GENERATORS gen) {
 	if (gen == FUENTE) {
-		sys.push_back(new ParticleSystem(FUENTE));
+		sys.push_back(new ParticleSystem(FUENTE, gPhysics, gScene));
 	}
 	else if (gen == LLUVIA) {
-		sys.push_back(new ParticleSystem(LLUVIA));
+		sys.push_back(new ParticleSystem(LLUVIA, gPhysics, gScene));
 	}
 	else if (gen == NIEVE) {
-		sys.push_back(new ParticleSystem(NIEVE));
+		sys.push_back(new ParticleSystem(NIEVE, gPhysics, gScene));
 	}
 	else if(gen == NIEBLA){ //NIEBLA
-		sys.push_back(new ParticleSystem(NIEBLA));
+		sys.push_back(new ParticleSystem(NIEBLA, gPhysics, gScene));
 	}
 }
 
@@ -151,7 +153,7 @@ void SceneManager::generateSpring()
 		delete system;
 	}
 	sys.clear();
-	ParticleSystem* s = new ParticleSystem(NONE);
+	ParticleSystem* s = new ParticleSystem(NONE, gPhysics, gScene);
 	sys.push_back(s);
 	s->generateSpring();
 }
@@ -162,7 +164,7 @@ void SceneManager::generateSlinky()
 		delete system;
 	}
 	sys.clear();
-	ParticleSystem* s = new ParticleSystem(NONE);
+	ParticleSystem* s = new ParticleSystem(NONE, gPhysics, gScene);
 	sys.push_back(s);
 	s->generateSlinky();
 }
@@ -180,7 +182,7 @@ void SceneManager::generateBuoyancyWater()
 		delete system;
 	}
 	sys.clear();
-	ParticleSystem* s = new ParticleSystem(NONE);
+	ParticleSystem* s = new ParticleSystem(NONE, gPhysics, gScene);
 	sys.push_back(s);
 	s->generateBuoyancyWater();
 }
@@ -191,7 +193,7 @@ void SceneManager::generateBuoyancyMercury()
 		delete system;
 	}
 	sys.clear();
-	ParticleSystem* s = new ParticleSystem(NONE);
+	ParticleSystem* s = new ParticleSystem(NONE, gPhysics, gScene);
 	sys.push_back(s);
 	s->generateBuoyancyMercury();
 }

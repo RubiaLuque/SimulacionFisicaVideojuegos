@@ -38,9 +38,6 @@ SceneManager* manager;
 float timeKey = 0;
 bool keyPressed = false;
 
-PxPhysics* getPhysics() noexcept { return gPhysics; }
-PxScene* getScene() noexcept { return gScene; }
-
 
 //partícula practica 1
 //Particle* particle; -->Descomentar para usar una sola particula en MRU
@@ -99,7 +96,7 @@ void initPhysics(bool interactive)
 	//particula - PRACTICA 1
 	//particle = new Particle(PxVec3(1.0, 1.0, 1.0), PxVec3(0.0, 5.0, 0.0), PxVec3(0.0, 6.0, 0.0), 1.0, 0.998);
 
-	manager = new SceneManager();
+	manager = new SceneManager(gPhysics, gScene);
 }
 
 

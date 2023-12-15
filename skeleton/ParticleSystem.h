@@ -4,7 +4,6 @@
 #include "core.hpp"
 #include "Data.h"
 #include "ParticleGenerator.h"
-//#include "Particle.h"
 #include "ExplosionForceGenerator.h"
 #include "ForceRegistry.h"
 
@@ -29,9 +28,11 @@ private:
 
 
 	bool idle = false;
+	PxPhysics* gPhysics; 
+	PxScene* gScene;
 
 public:
-	ParticleSystem(Data::GENERATORS gen);
+	ParticleSystem(Data::GENERATORS gen, PxPhysics* gPhysics, PxScene* gScene);
 	void addForce(Data::FORCES f);
 	virtual ~ParticleSystem();
 	void update(double t);

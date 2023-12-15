@@ -8,11 +8,14 @@
 #include <cmath>
 #include <list>
 
-ParticleSystem::ParticleSystem(Data::GENERATORS g)
+ParticleSystem::ParticleSystem(Data::GENERATORS g, PxPhysics* gPhysics, PxScene* gScene)
 {
 	particles = std::list<Particle*>{};
 	elapsedTime = 0;
 	this->g = g;
+
+	this->gScene = gScene;
+	this->gPhysics = gPhysics;
 
 	//FUENTE
 	UniformParticleGenerator<Particle*>* fuente = new UniformParticleGenerator<Particle*>

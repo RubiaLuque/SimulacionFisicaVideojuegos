@@ -18,9 +18,14 @@ protected:
 
 	Data::GENERATORS g;
 
+	PxPhysics* gPhysics = nullptr; 
+	PxScene* gScene = nullptr;
+
 public:
 
 	GaussianParticleGenerator(Vector3 meanPos, Vector3 meanVel, Vector3 stdDevPos, Vector3 stdDevVel, Data::GENERATORS g);
+	GaussianParticleGenerator(Vector3 meanPos, Vector3 meanVel, Vector3 stdDevPos, Vector3 stdDevVel, 
+		Data::GENERATORS g, PxPhysics* gPhysics, PxScene* gScene);
 	~GaussianParticleGenerator();
 	list<T> generateParticles();
 };

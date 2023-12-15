@@ -22,8 +22,11 @@ private:
 	vector<SolidRigid*> solids;
 	double elapsedTime;
 
+	PxPhysics* gPhysics; 
+	PxScene* gScene;
+
 public:
-	SolidRigidSystem();
+	SolidRigidSystem(PxPhysics* gPhysics, PxScene* gScene);
 	virtual ~SolidRigidSystem();
 
 	void addForce(Data::FORCES f);
