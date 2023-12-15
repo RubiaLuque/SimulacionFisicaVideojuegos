@@ -38,8 +38,14 @@ public:
 
 	//añade proyectiles al vector
 	void addProjectile(PROJECTILE_TYPE type);
+
+	//Crear sistemas de particulas o solidos rigidos
 	void addParticleSystem(GENERATORS gen);
+	void addSolidRigidSystem(GENERATORS gen);
+
+	//Añade fuerzas a todos los sistemas
 	void addForceToSystem(FORCES f);
+
 	void addFirework();
 	void update(double t);
 

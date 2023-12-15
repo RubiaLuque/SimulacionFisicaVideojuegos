@@ -5,33 +5,35 @@
 #include "VortexForceGenerator.h"
 #include "AnchoredSpringForceGen.h"
 #include "BuoyancyForceGenerator.h"
+#include "UniformSR.h"
+#include "GaussianSR.h"
 #include <cmath>
 #include <list>
 
-SolidRigidSystem::SolidRigidSystem(PxPhysics* gPhysics, PxScene* gScene)
+SolidRigidSystem::SolidRigidSystem(Data::GENERATORS g, PxPhysics* gPhysics, PxScene* gScene)
 {
+	this->g = g;
 	this->gScene = gScene;
 	this->gPhysics = gPhysics;
 
 	gens = std::vector<ParticleGenerator<SolidRigid>*>{};
 	elapsedTime = 0;
 	//FUENTE
-	UniformParticleGenerator<SolidRigid>* fuente = new UniformParticleGenerator<SolidRigid>
-		({ 0,-10,0 }, { 0, 5,0 }, { 1, 10, 1 }, { 10,10,10 }, Data::FUENTE, gPhysics, gScene);
+	UniformParticleGenerator<SolidRigid>* fuente = new UniformSR({ 0,-10,0 }, { 0, 5,0 }, { 1, 10, 1 }, { 10,10,10 }, Data::FUENTE, gPhysics, gScene);
 	gens.push_back(fuente);
 
 	//LLUVIA
-	UniformParticleGenerator<SolidRigid>* lluvia = new UniformParticleGenerator<SolidRigid>
+	UniformParticleGenerator<SolidRigid>* lluvia = new UniformSR
 		({ 0, 50,0 }, { 0, 0, 0 }, { 30, 3, 30 }, { 1, 5, 1 }, Data::LLUVIA, gPhysics, gScene);
 	gens.push_back(lluvia);
 
 	//NIEVE
-	GaussianParticleGenerator<SolidRigid>* nieve = new GaussianParticleGenerator<SolidRigid>
+	GaussianParticleGenerator<SolidRigid>* nieve = new GaussianSR
 		({ 0,20,0 }, { 0,1,0 }, { 50, 5,  50 }, { 5, 5, 5 }, Data::NIEVE, gPhysics, gScene);
 	gens.push_back(nieve);
 
 	//NIEBLA
-	GaussianParticleGenerator<SolidRigid>* niebla = new GaussianParticleGenerator<SolidRigid>
+	GaussianParticleGenerator<SolidRigid>* niebla = new GaussianSR
 		({ 0,10,0 }, { 1,1,1 }, { 50, 50, 50 }, { 1, 5, 1 }, Data::NIEBLA, gPhysics, gScene);
 	gens.push_back(niebla);
 }

@@ -2,7 +2,7 @@
 #include "ForceGenerator.h"
 #include <map>
 template <typename T>
-class ForceRegistry : public std::multimap<ForceGenerator<T>*, T>
+class ForceRegistry : public std::multimap<ForceGenerator<T>*, T*>
 {
 private:
 

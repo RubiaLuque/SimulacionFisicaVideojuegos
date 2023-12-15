@@ -1,5 +1,6 @@
 #pragma once
 #include "Particle.h"
+#include "SolidRigid.h"
 
 template <typename T>
 class ForceGenerator

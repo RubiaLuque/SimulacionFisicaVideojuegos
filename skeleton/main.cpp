@@ -14,7 +14,7 @@
 
 #include <iostream>
 
-std::string display_text = "This is a test";
+std::string display_text = "Particle mode ON. Solid Rigid mode OFF";
 
 
 using namespace physx;
@@ -37,7 +37,7 @@ SceneManager* manager;
 
 float timeKey = 0;
 bool keyPressed = false;
-
+bool solidMode = false;
 
 //partícula practica 1
 //Particle* particle; -->Descomentar para usar una sola particula en MRU
@@ -195,29 +195,45 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	}
 	case '5': {
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && !solidMode) {
 			manager->addParticleSystem(FUENTE);
+			timeKey = 0;
+		}
+		else if(!keyPressed && timeKey <= Data::MAX_TIME_KEY && solidMode){
+			manager->addSolidRigidSystem(FUENTE);
 			timeKey = 0;
 		}
 		break;
 	}
 	case '6': {
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && !solidMode) {
 			manager->addParticleSystem(LLUVIA);
+			timeKey = 0;
+		}
+		else if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && solidMode) {
+			manager->addSolidRigidSystem(LLUVIA);
 			timeKey = 0;
 		}
 		break;
 	}
 	case '7': {
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && !solidMode) {
 			manager->addParticleSystem(NIEVE);
+			timeKey = 0;
+		}
+		else if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && solidMode) {
+			manager->addSolidRigidSystem(NIEVE);
 			timeKey = 0;
 		}
 		break;
 	}
 	case '8': {
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && !solidMode) {
 			manager->addParticleSystem(NIEBLA);
+			timeKey = 0;
+		}
+		else if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && solidMode) {
+			manager->addSolidRigidSystem(NIEBLA);
 			timeKey = 0;
 		}
 		break;
@@ -283,6 +299,20 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
 			manager->setK(1);
 
+			timeKey = 0;
+		}
+		break;
+	case 'R':
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			solidMode ? solidMode = false : solidMode = true;
+			solidMode ? display_text = "Particle mode OFF. Solid Rigid mode ON" : display_text = "Particle mode ON. Solid Rigid mode OFF";
+			timeKey = 0;
+		}
+		break;
+
+	case 'Q':
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			auto suelo = new SolidRigid({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, { 1,1,1,1 }, 100, 1, Data::SUELO, gPhysics, gScene);
 			timeKey = 0;
 		}
 		break;

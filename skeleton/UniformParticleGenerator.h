@@ -61,10 +61,13 @@ public:
 
 	~UniformParticleGenerator(){}
 
+		//return new T(auxPos, auxVel, 1.0, 0.988, g);
+	
+
 	list<T*> generateParticles() {
 		GravityForceGenerator* gr = new GravityForceGenerator();
 
-		list<T*> list{};
+		list<T*> list;
 
 		for (int i = 0; i < Data::TAM_LIST; ++i) {
 			Vector3 auxPos = meanPos;
@@ -77,15 +80,7 @@ public:
 			auxVel.y += dis(gen) * velWidth.y;
 			auxVel.z += dis(gen) * velWidth.z;
 
-			if (typeid(T) == typeid(Particle)) {
-				auto p = new Particle(auxPos, auxVel, 1.0, 0.988, g);
-				list.push_back(p);
-
-			}
-			else if (typeid(T) == typeid(SolidRigid)) {
-				auto s = new SolidRigid(auxPos, auxVel, { 0,0,0 }, { 0.5, 0.5, 0.5, 1 }, Data::DYNAMIC);
-				list.push_back(s);
-			}
+			list.push_back(createParticle(auxPos, auxVel));
 		}
 
 		return list;

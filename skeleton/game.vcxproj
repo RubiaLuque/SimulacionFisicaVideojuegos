@@ -261,7 +261,9 @@
     <ClCompile Include="Firework.cpp" />
     <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="ForceRegistry.cpp" />
+    <ClCompile Include="GaussianP.cpp" />
     <ClCompile Include="GaussianParticleGenerator.cpp" />
+    <ClCompile Include="GaussianSR.cpp" />
     <ClCompile Include="GravityForceGenerator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Particle.cpp" />
@@ -274,7 +276,9 @@
     <ClCompile Include="SolidRigid.cpp" />
     <ClCompile Include="SolidRigidSystem.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
+    <ClCompile Include="UniformP.cpp" />
     <ClCompile Include="UniformParticleGenerator.cpp" />
+    <ClCompile Include="UniformSR.cpp" />
     <ClCompile Include="VortexForceGenerator.cpp" />
     <ClCompile Include="WindForceGenerator.cpp" />
   </ItemGroup>
@@ -289,7 +293,9 @@
     <ClInclude Include="Firework.h" />
     <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="ForceRegistry.h" />
+    <ClInclude Include="GaussianP.h" />
     <ClInclude Include="GaussianParticleGenerator.h" />
+    <ClInclude Include="GaussianSR.h" />
     <ClInclude Include="GravityForceGenerator.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleGenerator.h" />
@@ -301,7 +307,9 @@
     <ClInclude Include="SolidRigid.h" />
     <ClInclude Include="SolidRigidSystem.h" />
     <ClInclude Include="SpringForceGenerator.h" />
+    <ClInclude Include="UniformP.h" />
     <ClInclude Include="UniformParticleGenerator.h" />
+    <ClInclude Include="UniformSR.h" />
     <ClInclude Include="VortexForceGenerator.h" />
     <ClInclude Include="WindForceGenerator.h" />
   </ItemGroup>

@@ -18,4 +18,5 @@ protected:
 public:
 	virtual ~ParticleGenerator() {};
 	virtual list<T*> generateParticles() = 0; //esto hace que la clase sea abstracta
+	virtual T* createParticle(Vector3 pos, Vector3 vel) = 0;
 };

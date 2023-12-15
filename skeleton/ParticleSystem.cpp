@@ -5,6 +5,8 @@
 #include "VortexForceGenerator.h"
 #include "AnchoredSpringForceGen.h"
 #include "BuoyancyForceGenerator.h"
+#include "UniformP.h"
+#include "GaussianP.h"
 #include <cmath>
 #include <list>
 
@@ -18,22 +20,22 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g, PxPhysics* gPhysics, PxScene*
 	this->gPhysics = gPhysics;
 
 	//FUENTE
-	UniformParticleGenerator<Particle>* fuente = new UniformParticleGenerator<Particle>
+	UniformParticleGenerator<Particle>* fuente = new UniformP
 		({ 0,-10,0 }, { 0, 5,0 }, {1, 10, 1}, { 10,10,10 }, Data::FUENTE);
 	gens.push_back(fuente);
 
 	//LLUVIA
-	UniformParticleGenerator<Particle>* lluvia = new UniformParticleGenerator<Particle>
+	UniformParticleGenerator<Particle>* lluvia = new UniformP
 		({ 0, 50,0 }, { 0, 0, 0 }, { 30, 3, 30 }, { 1, 5, 1 }, Data::LLUVIA);
 	gens.push_back(lluvia);
 
 	//NIEVE
-	GaussianParticleGenerator<Particle>* nieve = new GaussianParticleGenerator<Particle>
+	GaussianParticleGenerator<Particle>* nieve = new GaussianP
 		({ 0,20,0 }, { 0,1,0 }, { 50, 5,  50}, { 5, 5, 5 }, Data::NIEVE);
 	gens.push_back(nieve);
 
 	//NIEBLA
-	GaussianParticleGenerator<Particle>* niebla = new GaussianParticleGenerator<Particle>
+	GaussianParticleGenerator<Particle>* niebla = new GaussianP
 		({ 0,10,0 }, { 1,1,1 }, { 50, 50, 50 }, { 1, 5, 1 }, Data::NIEBLA);
 	gens.push_back(niebla);
 }

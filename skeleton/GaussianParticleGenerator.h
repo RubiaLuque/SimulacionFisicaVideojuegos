@@ -60,9 +60,9 @@ public:
 
 	~GaussianParticleGenerator(){}
 
-	list<T*> generateParticles() {
+	virtual list<T*> generateParticles() {
 		GravityForceGenerator* gr = new GravityForceGenerator();
-		list<T*> list{};
+		list<T*> list;
 		for (int i = 0; i < Data::TAM_LIST; ++i) {
 			Vector3 auxPos = meanPos;
 			auxPos.x += d(gen) * stdDevPos.x;
@@ -74,29 +74,7 @@ public:
 			auxVel.y += d(gen) * stdDevVel.y;
 			auxVel.z += d(gen) * stdDevVel.z;
 
-			if (typeid(T) == typeid(Particle)) {
-				if (g == Data::NIEBLA) {
-					//auto p = new Particle(auxPos, auxVel, { 0, -2.6, 0 }, 0.988, g); -> P2
-					auto p = new Particle(auxPos, auxVel, 0.26, 0.998, g);
-					list.push_back(p);
-				}
-				else {
-					//auto p = new Particle(auxPos, auxVel, { 0, -9.8, 0 }, 0.988, g); -> P2
-					auto p = new Particle(auxPos, auxVel, 1.0, 0.998, g);
-					list.push_back(p);
-				}
-
-			}
-			else if (typeid(T) == typeid(SolidRigid)) {
-				if (g == Data::NIEBLA) {
-					auto s = new SolidRigid(auxPos, auxVel, { 0,0,0 }, { 1,1,1,1 }, 10, 0.15, Data::DYNAMIC, gPhysics, gScene);
-					list.push_back(s);
-				}
-				else {
-					auto s = new SolidRigid(auxPos, auxVel, { 0,0,0 }, { 1,1,1,1 }, 10, 0.15, Data::DYNAMIC, gPhysics, gScene);
-					list.push_back(s);
-				}
-			}
+			list.push_back(createParticle(auxPos, auxVel));
 
 		}
 

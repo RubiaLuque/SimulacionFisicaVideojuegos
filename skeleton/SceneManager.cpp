@@ -45,6 +45,22 @@ void SceneManager::addParticleSystem(GENERATORS gen) {
 	}
 }
 
+void SceneManager::addSolidRigidSystem(GENERATORS gen)
+{
+	if (gen == FUENTE) {
+		solidSys.push_back(new SolidRigidSystem(FUENTE, gPhysics, gScene));
+	}
+	else if (gen == LLUVIA) {
+		solidSys.push_back(new SolidRigidSystem(LLUVIA, gPhysics, gScene));
+	}
+	else if (gen == NIEVE) {
+		solidSys.push_back(new SolidRigidSystem(NIEVE, gPhysics, gScene));
+	}
+	else if (gen == NIEBLA) { //NIEBLA
+		solidSys.push_back(new SolidRigidSystem(NIEBLA, gPhysics, gScene));
+	}
+}
+
 void SceneManager::addForceToSystem(FORCES f) {
 	Particle* explosion = nullptr;
 	Particle* vortex = nullptr; 
@@ -60,6 +76,26 @@ void SceneManager::addForceToSystem(FORCES f) {
 			else if (f == Data::VORTEX) {
 				vortex = new Particle({ 0,0,0 }, { 0,0,0 }, 0, { 0,0,0,0 }, Data::vortexSphereRadius, 0, NONE);
 				
+			}
+			else if (f == Data::WIND) {
+				wind = new Particle({ 0,0,0 }, { 0,0,0 }, 0, { 0,0,0,0 }, Data::windSphereRadius, 0, NONE);
+			}
+
+
+		}
+	}
+
+	for (int i = 0; i < solidSys.size(); ++i) {
+		if (solidSys.at(i) != nullptr) {
+			solidSys.at(i)->addForce(f);
+
+			if (f == Data::EXPLOSION) {
+				explosion = new Particle({ 0,20,0 }, { 0,0,0 }, 0, { 0,0,0,0 }, Data::EXPLOSION_SPHERE_RADIUS, 0, NONE);
+				solidSys.at(i)->getExplosion()->enableExplosion();
+			}
+			else if (f == Data::VORTEX) {
+				vortex = new Particle({ 0,0,0 }, { 0,0,0 }, 0, { 0,0,0,0 }, Data::vortexSphereRadius, 0, NONE);
+
 			}
 			else if (f == Data::WIND) {
 				wind = new Particle({ 0,0,0 }, { 0,0,0 }, 0, { 0,0,0,0 }, Data::windSphereRadius, 0, NONE);
@@ -130,8 +166,6 @@ void SceneManager::update(double t) {
 			}
 		}), particles.end());
 
-	//fr->updateForces(t);
-
 	//se hace update de todas las demas
 	for (auto* particle : particles) {
 		particle->update(t);
@@ -140,6 +174,10 @@ void SceneManager::update(double t) {
 	//Se hace update de los sistemas de particulas
 	for (auto* system : sys) {
 		system->update(t);
+	}
+
+	for (auto* solidS : solidSys) {
+		solidS->update(t);
 	}
 
 	if (fire) firework->update(t);
@@ -152,7 +190,11 @@ void SceneManager::generateSpring()
 	for (auto* system : sys) {
 		delete system;
 	}
+	for (auto* solidS : solidSys) {
+		delete solidS;
+	}
 	sys.clear();
+	solidSys.clear();
 	ParticleSystem* s = new ParticleSystem(NONE, gPhysics, gScene);
 	sys.push_back(s);
 	s->generateSpring();
@@ -163,7 +205,11 @@ void SceneManager::generateSlinky()
 	for (auto* system : sys) {
 		delete system;
 	}
+	for (auto* solidS : solidSys) {
+		delete solidS;
+	}
 	sys.clear();
+	solidSys.clear();
 	ParticleSystem* s = new ParticleSystem(NONE, gPhysics, gScene);
 	sys.push_back(s);
 	s->generateSlinky();
@@ -174,6 +220,10 @@ void SceneManager::setK(int op)
 	for (auto* system : sys) {
 		system->setK(op);
 	}
+
+	for (auto* solidS : solidSys) {
+		solidS->setK(op);
+	}
 }
 
 void SceneManager::generateBuoyancyWater()
@@ -181,7 +231,11 @@ void SceneManager::generateBuoyancyWater()
 	for (auto* system : sys) {
 		delete system;
 	}
+	for (auto* solidS : solidSys) {
+		delete solidS;
+	}
 	sys.clear();
+	solidSys.clear();
 	ParticleSystem* s = new ParticleSystem(NONE, gPhysics, gScene);
 	sys.push_back(s);
 	s->generateBuoyancyWater();
@@ -192,7 +246,11 @@ void SceneManager::generateBuoyancyMercury()
 	for (auto* system : sys) {
 		delete system;
 	}
+	for (auto* solidS : solidSys) {
+		delete solidS;
+	}
 	sys.clear();
+	solidSys.clear();
 	ParticleSystem* s = new ParticleSystem(NONE, gPhysics, gScene);
 	sys.push_back(s);
 	s->generateBuoyancyMercury();

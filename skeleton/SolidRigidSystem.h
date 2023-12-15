@@ -26,7 +26,7 @@ private:
 	PxScene* gScene;
 
 public:
-	SolidRigidSystem(PxPhysics* gPhysics, PxScene* gScene);
+	SolidRigidSystem(Data::GENERATORS g, PxPhysics* gPhysics, PxScene* gScene);
 	virtual ~SolidRigidSystem();
 
 	void addForce(Data::FORCES f);
@@ -39,6 +39,8 @@ public:
 	void generateBuoyancyMercury();
 
 	void setK(int op);
+
+	ExplosionForceGenerator<SolidRigid>* getExplosion() { return e; }
 
 	//cambia la propiedad alive de las particulas 
 	inline void setAlive(SolidRigid* s, bool alive) noexcept { s->alive = alive; }

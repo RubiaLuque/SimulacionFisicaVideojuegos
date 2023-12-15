@@ -38,7 +38,7 @@ SolidRigid::SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Vector4 color, d
 		PxRigidBodyExt::updateMassAndInertia(*dynamicR,(mass));
 		gScene->addActor(*dynamicR);
 		//Pintar el nuevo solido rigido dinamico
-		renderItem = new RenderItem(new_shape, dynamicR, { 0.2, 0.2, 0.2, 1 });
+		renderItem = new RenderItem(new_shape, dynamicR, color);
 	}
 }
 
