@@ -10,7 +10,7 @@
 #include "callbacks.hpp"
 #include "SceneManager.h"
 
-#include "Particle.h"
+//#include "Particle.h"
 
 #include <iostream>
 
@@ -38,11 +38,9 @@ SceneManager* manager;
 float timeKey = 0;
 bool keyPressed = false;
 
-namespace mainSpace {
-	static PxPhysics* getPhysics() noexcept { return gPhysics; }
-	static PxScene* getScene() noexcept { return gScene; }
+PxPhysics* getPhysics() noexcept { return gPhysics; }
+PxScene* getScene() noexcept { return gScene; }
 
-}
 
 //partícula practica 1
 //Particle* particle; -->Descomentar para usar una sola particula en MRU

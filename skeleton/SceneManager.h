@@ -3,10 +3,10 @@
 #include "Particle.h"
 #include "ParticleSystem.h"
 #include "SolidRigidSystem.h"
-#include "ForceRegistry.h"
+//#include "ForceRegistry.h"
 #include <vector>
 #include "Data.h"
-#include "Firework.h"
+//#include "Firework.h"
 
 using namespace std;
 using namespace Data;

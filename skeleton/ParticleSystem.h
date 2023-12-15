@@ -4,7 +4,7 @@
 #include "core.hpp"
 #include "Data.h"
 #include "ParticleGenerator.h"
-#include "Particle.h"
+//#include "Particle.h"
 #include "ExplosionForceGenerator.h"
 #include "ForceRegistry.h"
 

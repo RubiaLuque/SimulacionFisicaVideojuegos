@@ -1,6 +1,6 @@
 #include "VortexForceGenerator.h"
 template <typename T>
-VortexForceGenerator<T>::VortexForceGenerator(Vector3 windVel, Vector3 vortexPos) : WindForceGenerator(windVel)
+VortexForceGenerator<T>::VortexForceGenerator(Vector3 windVel, Vector3 vortexPos) : WindForceGenerator<T>(windVel)
 {
 	this->vortexPos = vortexPos;
 	K = 1;

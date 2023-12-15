@@ -8,7 +8,7 @@ protected:
 	float k1 = 0.1, k2 = 0.005;
 
 public:
-	WindForceGenerator(Vector3 windVel) : ForceGenerator() {
+	WindForceGenerator(Vector3 windVel) : ForceGenerator<T>() {
 		this->windVel = windVel; 
 	}
 	virtual ~WindForceGenerator(){}

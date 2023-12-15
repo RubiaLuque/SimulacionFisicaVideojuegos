@@ -3,7 +3,7 @@
 
 template <typename T>
 UniformParticleGenerator<T>::UniformParticleGenerator(Vector3 meanPos, Vector3 meanVel, Vector3 posWidth, 
-	Vector3 velWidth, Data::GENERATORS g) : ParticleGenerator()
+	Vector3 velWidth, Data::GENERATORS g) : ParticleGenerator<T>()
 {
 	//de donde se parte
 	this->meanPos = meanPos;
@@ -45,11 +45,15 @@ list<T> UniformParticleGenerator<T>::generateParticles()
 		auxVel.y += dis(gen) * velWidth.y;
 		auxVel.z += dis(gen) * velWidth.z;
 
-		auto p = new Particle(auxPos, auxVel, 1.0, 0.988, g);
-		list.push_back(p);
+		if (Particle* p == dynamic_cast<T>()) {
+			p = new Particle(auxPos, auxVel, 1.0, 0.988, g);
+			list.push_back(p);
 
-		auto s = new SolidRigid(auxPos, auxVel, { 0,0,0 }, { 0.5, 0.5, 0.5, 1 }, Data::DYNAMIC);
-		list.push_back(s);
+		}
+		else if (SolidRigid* s == dynamic_cast<T>()) {
+			s = new SolidRigid(auxPos, auxVel, { 0,0,0 }, { 0.5, 0.5, 0.5, 1 }, Data::DYNAMIC);
+			list.push_back(s);
+		}
 	}
 
 	return list;

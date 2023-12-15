@@ -3,7 +3,7 @@
 
 template <typename T>
 GaussianParticleGenerator<T>::GaussianParticleGenerator(Vector3 meanPos, Vector3 meanVel, 
-	Vector3 stdDevPos, Vector3 stdDevVel, Data::GENERATORS g) : ParticleGenerator()
+	Vector3 stdDevPos, Vector3 stdDevVel, Data::GENERATORS g) : ParticleGenerator<T>()
 {
 	std::random_device rd{};
 	std::mt19937 gen{rd()};
@@ -39,7 +39,7 @@ list<T> GaussianParticleGenerator<T>::generateParticles()
 		auxVel.y += d(gen) * stdDevVel.y;
 		auxVel.z += d(gen) * stdDevVel.z;
 
-		if (Particle * p == dynamic_cast<T*>()) {
+		if (Particle * p == dynamic_cast<T>()) {
 			if (g == Data::NIEBLA) {
 				//auto p = new Particle(auxPos, auxVel, { 0, -2.6, 0 }, 0.988, g); -> P2
 				p = new Particle(auxPos, auxVel, 0.26, 0.998, g);
@@ -52,7 +52,7 @@ list<T> GaussianParticleGenerator<T>::generateParticles()
 			}
 
 		}
-		else if(SolidRigid* s == dynamic_cast<T*>()){
+		else if(SolidRigid* s == dynamic_cast<T>()){
 			if (g == Data::NIEBLA) {
 				s = new SolidRigid(auxPos, auxVel, { 0,0,0 }, {1,1,1,1}, 10, 0.15, Data::DYNAMIC);
 				list.push_back(s);
