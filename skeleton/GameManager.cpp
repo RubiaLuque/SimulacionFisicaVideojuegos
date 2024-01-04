@@ -49,12 +49,47 @@ void GameManager::addProjectile(PROJECTILE_TYPE type)
 
 void GameManager::chooseMode(char key)
 {
-	if (key == '1') gm = EASY;
-	else if (key == '2') gm = MEDIUM;
-	else if (key == '3') gm = HARD;
+	if (key == '1') {
+		gm = EASY;
+		setUpScene();
+	}
+	else if (key == '2') {
+		gm = MEDIUM;
+		setUpScene();
+	}
+	else if (key == '3') {
+		gm = HARD;
+		setUpScene();
+	}
 }
 
 void GameManager::setUpScene()
+{
+	if (gm = EASY) {
+		easyMode();
+	}
+	else if (gm = MEDIUM) {
+		mediumMode();
+	}
+	else if (gm = HARD) {
+		hardMode();
+	}
+}
+
+void GameManager::easyMode()
+{
+	Vector3 vel = cam->getDir();
+	const Vector3 pos = cam->getEye();
+
+	//auto fire_target = new Target(pos, )
+}
+
+void GameManager::mediumMode()
+{
+
+}
+
+void GameManager::hardMode()
 {
 
 }

@@ -64,7 +64,7 @@ SolidRigid::SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Data::PROJECTILE
 		PxRigidBodyExt::updateMassAndInertia(*dynamicR, (mass));
 		gScene->addActor(*dynamicR);
 		//Pintar el nuevo solido rigido dinamico
-		renderItem = new RenderItem(shape, dynamicR, {1, 0.49, 0, 1});
+		renderItem = new RenderItem(shape, dynamicR, {1, 0.35, 0, 1});
 	}
 	else if (type == Data::LASER) {
 		this->lVel = lVel * 200;

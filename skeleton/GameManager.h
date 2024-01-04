@@ -3,6 +3,7 @@
 #include "Particle.h"
 #include "ParticleSystem.h"
 #include "SolidRigidSystem.h"
+#include "Target.h"
 #include "Data.h"
 
 using namespace std;
@@ -51,6 +52,11 @@ public:
 
 	//Crear la distribucion inicial de las dianas y el modo de juego
 	void setUpScene();
+
+	//Configuraciones de los tres niveles de dificultad
+	void easyMode();
+	void mediumMode();
+	void hardMode();
 
 	//Actualizacion de los elementos de escena y de las colisiones
 	void update(double t);
