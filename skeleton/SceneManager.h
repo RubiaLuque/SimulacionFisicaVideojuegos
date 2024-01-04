@@ -28,6 +28,7 @@ private:
 
 	bool particleSys;
 	bool fire;
+
 	PxPhysics* gPhysics; 
 	PxScene* gScene;
 

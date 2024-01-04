@@ -8,13 +8,13 @@
 #include "Render/Camera.h"
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
-#include "SceneManager.h"
+#include "GameManager.h"
 
 //#include "Particle.h"
 
 #include <iostream>
 
-std::string display_text = "Particle mode ON. Solid Rigid mode OFF";
+std::string display_text = "TEST";
 
 
 using namespace physx;
@@ -33,14 +33,12 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
-SceneManager* manager;
+GameManager* manager;
 
 float timeKey = 0;
 bool keyPressed = false;
-bool solidMode = false;
 
-//partícula practica 1
-//Particle* particle; -->Descomentar para usar una sola particula en MRU
+
 
 // Initialize physics engine
 //Codigo de inicializacion
@@ -69,34 +67,7 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	//PRACTICA 5 -> SÓLIDOS RÍGIDOS
-	//Generar suelo
-	//PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({ 0,0,0 }));
-	//PxShape* shape = CreateShape(PxBoxGeometry(100, 0.1, 100));
-	//suelo->attachShape(*shape); //Se enlaza la caja con un solido rigido
-	//gScene->addActor(*suelo); //Se añade el solido rigido a la escena
-	////Pintar el suelo
-	//RenderItem* item;
-	//item = new RenderItem(shape, suelo, { 0.8, 0.8, 0.8, 1 });
-
-	//Rigid bodies dinamicos
-	//PxRigidDynamic* new_solid;
-	//new_solid = gPhysics->createRigidDynamic(PxTransform({ -70, 200, -70 }));
-	//new_solid->setLinearVelocity({ 0,5,0 });
-	//new_solid->setAngularVelocity({ 0,0,0 });
-	//PxShape* new_shape = CreateShape(PxBoxGeometry(5, 5, 5));
-	//new_solid->attachShape(*new_shape);
-	//PxRigidBodyExt::updateMassAndInertia(*new_solid, 0.15);
-	//gScene->addActor(*new_solid);
-	////Pintar el nuevo solido rigido dinamico
-	//RenderItem* dynamic_solid;
-	//dynamic_solid = new RenderItem(new_shape, new_solid, { 0.2, 0.2, 0.2, 1 });
-
-
-	//particula - PRACTICA 1
-	//particle = new Particle(PxVec3(1.0, 1.0, 1.0), PxVec3(0.0, 5.0, 0.0), PxVec3(0.0, 6.0, 0.0), 1.0, 0.998);
-
-	manager = new SceneManager(gPhysics, gScene);
+	manager = new GameManager(gPhysics, gScene);
 }
 
 
@@ -112,7 +83,6 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	//particle->update(t); --> actualiza la particula inicial
 	
 	manager->update(t);
 	if (keyPressed) {
@@ -144,8 +114,6 @@ void cleanupPhysics(bool interactive)
 
 	gFoundation->release();
 
-	//delete particle; --> para eliminar la particula inicial
-
 }
 
 // Function called when a key is pressed
@@ -157,165 +125,23 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	switch (toupper(key))
 	{
 		//case ' ':	break;
-	case '1': //casts a fireball
+	case '1': //MODE PARTICLE
 	{
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
-			manager->addProjectile(FIREBALL);
+			manager->chooseMode(key);
 			timeKey = 0;
 		}
 		break;
 	}
-	case '2': //shoots a lightgun
+	case '2': //MODE SOLID RIGID
 	{
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
-			manager->addProjectile(LIGHTGUN);
+			manager->chooseMode(key);
 			timeKey = 0;
 		}
 		break;
 	}
-	case '3': { //shoots a bullet
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
-			manager->addProjectile(GUN);
-			timeKey = 0;
-		}
-		break;
-	}
-	case '4': { //fires a cannon
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
-			manager->addProjectile(CANNON);
-			timeKey = 0;
-		}
-		break;
-	}
-	case 'F': { //fireworks
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
-			manager->addFirework();
-			timeKey = 0;
-		}
-		break;
-	}
-	case '5': {
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && !solidMode) {
-			manager->addParticleSystem(FUENTE);
-			timeKey = 0;
-		}
-		else if(!keyPressed && timeKey <= Data::MAX_TIME_KEY && solidMode){
-			manager->addSolidRigidSystem(FUENTE);
-			timeKey = 0;
-		}
-		break;
-	}
-	case '6': {
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && !solidMode) {
-			manager->addParticleSystem(LLUVIA);
-			timeKey = 0;
-		}
-		else if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && solidMode) {
-			manager->addSolidRigidSystem(LLUVIA);
-			timeKey = 0;
-		}
-		break;
-	}
-	case '7': {
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && !solidMode) {
-			manager->addParticleSystem(NIEVE);
-			timeKey = 0;
-		}
-		else if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && solidMode) {
-			manager->addSolidRigidSystem(NIEVE);
-			timeKey = 0;
-		}
-		break;
-	}
-	case '8': {
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && !solidMode) {
-			manager->addParticleSystem(NIEBLA);
-			timeKey = 0;
-		}
-		else if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && solidMode) {
-			manager->addSolidRigidSystem(NIEBLA);
-			timeKey = 0;
-		}
-		break;
-	}
-	case 'Z': {
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
-			manager->addForceToSystem(WIND);
-			timeKey = 0;
-		}
-		break;
-	}
-	case 'V': {
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
-			manager->addForceToSystem(VORTEX);
-			timeKey = 0;
-		}
-		break;
-	}
-	case 'X': {
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
-			manager->addForceToSystem(EXPLOSION);
-
-			timeKey = 0;
-		}
-		break;
-	}
-	case 'C':
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
-			manager->generateSpring();
-
-			timeKey = 0;
-		}
-		break;
-	case 'B':
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
-			manager->generateSlinky();
-
-			timeKey = 0;
-		}
-		break;
-	case 'N':
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
-			manager->generateBuoyancyWater();
-
-			timeKey = 0;
-		}
-		break;
-	case 'M':
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
-			manager->generateBuoyancyMercury();
-
-			timeKey = 0;
-		}
-		break;
-	case 'P':
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
-			manager->setK(0);
-
-			timeKey = 0;
-		}
-		break;
-	case 'O':
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
-			manager->setK(1);
-
-			timeKey = 0;
-		}
-		break;
-	case 'R':
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
-			solidMode ? solidMode = false : solidMode = true;
-			solidMode ? display_text = "Particle mode OFF. Solid Rigid mode ON" : display_text = "Particle mode ON. Solid Rigid mode OFF";
-			timeKey = 0;
-		}
-		break;
-
-	case 'Q':
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
-			auto suelo = new SolidRigid({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, { 1,1,1,1 }, 100, 1, Data::SUELO, gPhysics, gScene);
-			timeKey = 0;
-		}
-		break;
+	
 	default:
 		break;
 	}

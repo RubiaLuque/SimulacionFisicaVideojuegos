@@ -29,5 +29,14 @@ namespace Data {
 		SUELO, STATIC, DYNAMIC
 	};
 
+	//Tipo de movimiento de las dianas
+	static enum TARGET_MOV {
+		STATIC, SPRING_1, SPRING_2, CIRCLE
+	};
+
+	//Colores de las dianas
+	static enum TARGET_MODE {
+		ORANGE, BLUE, GREEN, PINK, WHITE
+	};
 }
 

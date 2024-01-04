@@ -257,10 +257,12 @@
     <ClCompile Include="BungeeForceGenerator.cpp" />
     <ClCompile Include="BuoyancyForceGenerator.cpp" />
     <ClCompile Include="callbacks.cpp" />
+    <ClCompile Include="DianaP.cpp" />
     <ClCompile Include="ExplosionForceGenerator.cpp" />
     <ClCompile Include="Firework.cpp" />
     <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="ForceRegistry.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GaussianP.cpp" />
     <ClCompile Include="GaussianParticleGenerator.cpp" />
     <ClCompile Include="GaussianSR.cpp" />
@@ -272,7 +274,6 @@
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SolidRigid.cpp" />
     <ClCompile Include="SolidRigidSystem.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
@@ -289,10 +290,12 @@
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="Data.h" />
+    <ClInclude Include="DianaP.h" />
     <ClInclude Include="ExplosionForceGenerator.h" />
     <ClInclude Include="Firework.h" />
     <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="ForceRegistry.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="GaussianP.h" />
     <ClInclude Include="GaussianParticleGenerator.h" />
     <ClInclude Include="GaussianSR.h" />
@@ -303,7 +306,6 @@
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
-    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SolidRigid.h" />
     <ClInclude Include="SolidRigidSystem.h" />
     <ClInclude Include="SpringForceGenerator.h" />
