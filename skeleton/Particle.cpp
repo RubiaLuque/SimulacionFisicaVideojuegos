@@ -12,7 +12,7 @@ Particle::Particle(Vector3 pos, Vector3 vel, double mass, double radius, double 
 	physx::PxShape* sphere = CreateShape(PxSphereGeometry(radius)); 
 	//physx::PxShape* sphere1 = CreateShape(PxSphereGeometry(0.3));
 
-	if (type == Data::FIREBALL)
+	/*if (type == Data::FIREBALL)
 		renderItem = new RenderItem(sphere, &transform, Vector4(255.0, 140.0, 0.0, 1.0));
 	else if (type == Data::LIGHTGUN)
 		renderItem = new RenderItem(sphere, &transform, Vector4(0.0, 0.0, 255.0, 1.0));
@@ -21,7 +21,7 @@ Particle::Particle(Vector3 pos, Vector3 vel, double mass, double radius, double 
 	else if (type == Data::CANNON)
 		renderItem = new RenderItem(sphere, &transform, Vector4(70, 130, 180, 1.0));
 	else if(type == Data::IDLE)
-		renderItem = new RenderItem(sphere, &transform, Vector4(139, 0, 225, 1.0));
+		renderItem = new RenderItem(sphere, &transform, Vector4(139, 0, 225, 1.0));*/
 	
 
 }

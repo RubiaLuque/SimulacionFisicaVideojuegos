@@ -24,8 +24,12 @@ private:
 	PxPhysics* gPhysics;
 	PxScene* gScene;
 
+
 public:
-	SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Vector4 color, double radius, double mass, Data::RIGIDS, PxPhysics* gPhysics, PxScene* gScene);
+	bool alive = true;
+
+	SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Vector4 color, double radius, double mass, Data::RIGIDS r, PxPhysics* gPhysics, PxScene* gScene);
+	SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Data::PROJECTILE_TYPE type, PxPhysics* gPhysics, PxScene* gScene);
 
 	virtual ~SolidRigid();
 
@@ -39,7 +43,6 @@ public:
 
 	void addForce(Vector3 f);
 
-	bool alive = true;
 	double limit_time = 0; //tiempo que lleva en pantalla
 };
 

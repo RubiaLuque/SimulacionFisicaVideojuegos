@@ -287,8 +287,16 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Display text
-	glColor4f(1.0f, 0.2f, 0.2f, 1.0f);
-	drawText(display_text, 20, glutGet(GLUT_WINDOW_WIDTH) -20);
+	glColor4f(0.0f, 0.8f, 0.4f, 1.0f);
+	//glFrontFace(glutGet(GLUT_BITMAP_TIMES_ROMAN_24));
+	
+	if (mode == 0) {
+		//(string, width, height)
+		drawText(display_text, 135, 370);
+		drawText(display_text1, 100, 300);
+		drawText(display_text2, 100, 250);
+		drawText(display_text3, 100, 200);
+	}
 
 	// Setup camera
 	glMatrixMode(GL_PROJECTION);

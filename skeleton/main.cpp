@@ -14,7 +14,10 @@
 
 #include <iostream>
 
-std::string display_text = "TEST";
+std::string display_text = "SELECT YOUR CHALLENGE!";
+std::string display_text1 = "1. LET'S PLAY EASY (Press 1)";
+std::string display_text2 = "2. MODERATE, PLEASE (Press 2)";
+std::string display_text3 = "3. WE ARE DOOMED (Press 3)";
 
 
 using namespace physx;
@@ -37,7 +40,7 @@ GameManager* manager;
 
 float timeKey = 0;
 bool keyPressed = false;
-
+int32_t mode = 0;
 
 
 // Initialize physics engine
@@ -127,16 +130,18 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		//case ' ':	break;
 	case '1': //MODE: EASY
 	{
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && mode == 0) {
 			manager->chooseMode(key);
+			mode = 1;
 			timeKey = 0;
 		}
 		break;
 	}
 	case '2': //MODE: MEDIUM
 	{
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && mode == 0) {
 			manager->chooseMode(key);
+			mode = 2;
 			timeKey = 0;
 		}
 		break;
@@ -144,12 +149,46 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	
 	case '3': //MODE: HARD
 	{
-		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && mode == 0) {
 			manager->chooseMode(key);
+			mode = 3;
 			timeKey = 0;
 		}
 		break;
 	}
+	case '6': //FIREBALL
+	{
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && mode != 0) {
+			manager->addProjectile(Data::FIREBALL);
+			timeKey = 0;
+		}
+		break;
+	}
+	case '7': //LASER
+	{
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && mode != 0) {
+			manager->addProjectile(Data::LASER);
+			timeKey = 0;
+		}
+		break;
+	}
+	case '8': //BULLET
+	{
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && mode != 0) {
+			manager->addProjectile(Data::BULLET);
+			timeKey = 0;
+		}
+		break;
+	}
+	case '9': //ARROW
+	{
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && mode != 0) {
+			manager->addProjectile(Data::ARROW);
+			timeKey = 0;
+		}
+		break;
+	}
+
 	default:
 		break;
 	}

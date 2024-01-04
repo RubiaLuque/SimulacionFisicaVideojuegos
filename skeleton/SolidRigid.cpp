@@ -19,7 +19,7 @@ SolidRigid::SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Vector4 color, d
 		this->lVel = { 0,0,0 };
 		this->aVel = { 0,0,0 };
 	}
-	else if (r == Data::STATIC) {
+	else if (r == Data::_STATIC) {
 		staticR = gPhysics->createRigidStatic(PxTransform(pos));
 		PxShape* shape = CreateShape(PxBoxGeometry(radius, radius, radius));
 		staticR->attachShape(*shape); //Se enlaza la caja con un solido rigido
@@ -40,6 +40,80 @@ SolidRigid::SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Vector4 color, d
 		//Pintar el nuevo solido rigido dinamico
 		renderItem = new RenderItem(new_shape, dynamicR, color);
 	}
+}
+
+SolidRigid::SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Data::PROJECTILE_TYPE type, PxPhysics* gPhysics, PxScene* gScene)
+{
+	this->gScene = gScene;
+	this->gPhysics = gPhysics;
+	this->pos = pos;
+	this->aVel = aVel;
+
+	dynamicR = gPhysics->createRigidDynamic(PxTransform(pos));
+
+	if (type == Data::FIREBALL) {
+		this->lVel = lVel*50;
+		this->aVel = aVel;
+
+		dynamicR->setLinearVelocity(this->lVel);
+		dynamicR->setAngularVelocity(this->aVel);
+		radius = 4.0;
+		PxShape* shape = CreateShape(PxSphereGeometry(radius));
+		dynamicR->attachShape(*shape);
+		mass = 0.3;
+		PxRigidBodyExt::updateMassAndInertia(*dynamicR, (mass));
+		gScene->addActor(*dynamicR);
+		//Pintar el nuevo solido rigido dinamico
+		renderItem = new RenderItem(shape, dynamicR, {1, 0.49, 0, 1});
+	}
+	else if (type == Data::LASER) {
+		this->lVel = lVel * 200;
+		this->aVel = aVel;
+
+		dynamicR->setLinearVelocity(this->lVel);
+		dynamicR->setAngularVelocity(this->aVel);
+		radius = 1.0;
+		PxShape* shape = CreateShape(PxSphereGeometry(radius));
+		dynamicR->attachShape(*shape);
+		mass = 0.1;
+		PxRigidBodyExt::updateMassAndInertia(*dynamicR, (mass));
+		gScene->addActor(*dynamicR);
+		//Pintar el nuevo solido rigido dinamico
+		renderItem = new RenderItem(shape, dynamicR, { 0, 0.49, 1, 1 });
+	}
+	else if (type == Data::BULLET) {
+		this->lVel = lVel * 100;
+		this->aVel = aVel;
+
+		dynamicR->setLinearVelocity(this->lVel);
+		dynamicR->setAngularVelocity(this->aVel);
+		radius = 2.0;
+		PxShape* shape = CreateShape(PxSphereGeometry(radius));
+		dynamicR->attachShape(*shape);
+		mass = 1.0;
+		PxRigidBodyExt::updateMassAndInertia(*dynamicR, (mass));
+		gScene->addActor(*dynamicR);
+		//Pintar el nuevo solido rigido dinamico
+		renderItem = new RenderItem(shape, dynamicR, { 0.1, 0.1, 0.1, 1 });
+	}
+	else if (type == Data::ARROW) {
+		this->lVel = lVel * 80;
+		this->aVel = aVel;
+
+		dynamicR->setLinearVelocity(this->lVel);
+		dynamicR->setAngularVelocity(this->aVel);
+		radius = 0.5;
+		double height = 4.0;
+		PxShape* shape = CreateShape(PxCapsuleGeometry(radius, height));
+		dynamicR->attachShape(*shape);
+		mass = 1.0;
+		PxRigidBodyExt::updateMassAndInertia(*dynamicR, (mass));
+		gScene->addActor(*dynamicR);
+		//Pintar el nuevo solido rigido dinamico
+		renderItem = new RenderItem(shape, dynamicR, { 1, 0.0, 0.0, 1 });
+	}
+
+
 }
 
 SolidRigid::~SolidRigid()

@@ -13,7 +13,7 @@ class GameManager
 {
 private:
 	//Proyectiles de solidos rigidos y de particulas
-	vector<SolidRigid*> sProjectiles;
+	vector<SolidRigid*> projectiles;
 
 	//Referencia a la camara
 	Camera* cam;
@@ -59,6 +59,6 @@ public:
 	void addFirework();
 
 	//cambia la propiedad alive de las particulas 
-	inline void setAlive(Particle* p, bool alive) { p->alive = alive; }
+	inline void setAlive(SolidRigid* p, bool alive) { p->alive = alive; }
 };
 

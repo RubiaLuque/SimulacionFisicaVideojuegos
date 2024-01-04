@@ -27,17 +27,6 @@ GameManager::~GameManager()
 	}
 	forces.clear();
 
-	//Elimina los proyectiles de solidos rigidos
-	for (int i = 0; i < sProjectiles.size(); ++i) {
-		if (sProjectiles.at(i) != nullptr) {
-			delete sProjectiles.at(i);
-			sProjectiles.at(i) = nullptr;
-
-		}
-	}
-	sProjectiles.clear();
-
-
 	//Elimina las fuerzas de los solidos rigidos
 	for (int i = 0; i < solidForces.size(); ++i) {
 		if (solidForces.at(i) != nullptr) {
@@ -50,12 +39,19 @@ GameManager::~GameManager()
 
 void GameManager::addProjectile(PROJECTILE_TYPE type)
 {
+	Vector3 vel = cam->getDir();
+	const Vector3 pos = cam->getEye();
+	Vector3 aVel = { 0,0,0 };
 
+	auto s = new SolidRigid(pos, vel, aVel, type, gPhysics, gScene);
+	projectiles.push_back(s);
 }
 
 void GameManager::chooseMode(char key)
 {
-	
+	if (key == '1') gm = EASY;
+	else if (key == '2') gm = MEDIUM;
+	else if (key == '3') gm = HARD;
 }
 
 void GameManager::setUpScene()
@@ -65,5 +61,27 @@ void GameManager::setUpScene()
 
 void GameManager::update(double t)
 {
+	//eliminar aquellas que lleven mas tiempo del necesario en pantalla
+	for (auto it = projectiles.begin(); it != projectiles.end(); it++) {
+		(*it)->limit_time += t;
+		if ((*it)->limit_time > Data::LIMIT_ON_SCREEN) {
+			//se marca como no vivo
+			setAlive(*it, false);
+		}
+	}
+
+	projectiles.erase(remove_if(projectiles.begin(), projectiles.end(),
+		[](SolidRigid* p) noexcept {
+			if (p->alive) return false;
+			else { //si no esta vivo, se elimina
+				delete p;
+				return true;
+			}
+		}), projectiles.end());
+
+	//se hace update de todas las demas
+	for (auto* solid : projectiles) {
+		solid->update(t);
+	}
 
 }
