@@ -125,7 +125,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	switch (toupper(key))
 	{
 		//case ' ':	break;
-	case '1': //MODE PARTICLE
+	case '1': //MODE: EASY
 	{
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
 			manager->chooseMode(key);
@@ -133,7 +133,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		}
 		break;
 	}
-	case '2': //MODE SOLID RIGID
+	case '2': //MODE: MEDIUM
 	{
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
 			manager->chooseMode(key);
@@ -142,6 +142,14 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	}
 	
+	case '3': //MODE: HARD
+	{
+		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY) {
+			manager->chooseMode(key);
+			timeKey = 0;
+		}
+		break;
+	}
 	default:
 		break;
 	}

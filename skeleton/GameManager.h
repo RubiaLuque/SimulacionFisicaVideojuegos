@@ -13,7 +13,6 @@ class GameManager
 {
 private:
 	//Proyectiles de solidos rigidos y de particulas
-	vector<Particle*> pProjectiles;
 	vector<SolidRigid*> sProjectiles;
 
 	//Referencia a la camara
@@ -23,8 +22,7 @@ private:
 	vector<ParticleSystem*> sys;
 	vector<ParticleSystem*> forces;
 
-	//Sistemas de solidos rigidos y de fuerzas
-	vector<SolidRigidSystem*> solidSys;
+	//Sistemas de fuerzas de solidos rigidos
 	vector<SolidRigidSystem*> solidForces;
 
 	//Sistema fireworks
@@ -45,6 +43,8 @@ public:
 
 	GameManager(PxPhysics* gPhysics, PxScene* gScene);
 	virtual ~GameManager();
+
+	void addProjectile(PROJECTILE_TYPE type);
 
 	//Pantalla de eleccion de modo
 	void chooseMode(char key);

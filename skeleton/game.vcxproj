@@ -257,7 +257,6 @@
     <ClCompile Include="BungeeForceGenerator.cpp" />
     <ClCompile Include="BuoyancyForceGenerator.cpp" />
     <ClCompile Include="callbacks.cpp" />
-    <ClCompile Include="DianaP.cpp" />
     <ClCompile Include="ExplosionForceGenerator.cpp" />
     <ClCompile Include="Firework.cpp" />
     <ClCompile Include="ForceGenerator.cpp" />
@@ -277,6 +276,7 @@
     <ClCompile Include="SolidRigid.cpp" />
     <ClCompile Include="SolidRigidSystem.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
+    <ClCompile Include="Target.cpp" />
     <ClCompile Include="UniformP.cpp" />
     <ClCompile Include="UniformParticleGenerator.cpp" />
     <ClCompile Include="UniformSR.cpp" />
@@ -290,7 +290,6 @@
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="Data.h" />
-    <ClInclude Include="DianaP.h" />
     <ClInclude Include="ExplosionForceGenerator.h" />
     <ClInclude Include="Firework.h" />
     <ClInclude Include="ForceGenerator.h" />
@@ -309,6 +308,7 @@
     <ClInclude Include="SolidRigid.h" />
     <ClInclude Include="SolidRigidSystem.h" />
     <ClInclude Include="SpringForceGenerator.h" />
+    <ClInclude Include="Target.h" />
     <ClInclude Include="UniformP.h" />
     <ClInclude Include="UniformParticleGenerator.h" />
     <ClInclude Include="UniformSR.h" />

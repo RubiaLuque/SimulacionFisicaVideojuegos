@@ -18,7 +18,7 @@ namespace Data {
 	};
 
 	static enum PROJECTILE_TYPE {
-		FIREBALL, LIGHTGUN, GUN, CANNON, IDLE
+		FIREBALL, LASER, BULLET, ARROW
 	};
 
 	static enum FORCES {
@@ -29,6 +29,10 @@ namespace Data {
 		SUELO, STATIC, DYNAMIC
 	};
 
+	static enum GAME_MODE {
+		EASY, MEDIUM, HARD
+	};
+
 	//Tipo de movimiento de las dianas
 	static enum TARGET_MOV {
 		STATIC, SPRING_1, SPRING_2, CIRCLE
@@ -36,7 +40,7 @@ namespace Data {
 
 	//Colores de las dianas
 	static enum TARGET_MODE {
-		ORANGE, BLUE, GREEN, PINK, WHITE
+		ORANGE, BLUE, BLACK, RED, WHITE
 	};
 }
 

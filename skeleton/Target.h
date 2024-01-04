@@ -1,5 +1,5 @@
 #pragma once
-#include "Particle.h"
+#include "SolidRigid.h"
 #include "Data.h"
 using namespace std;
 
@@ -12,8 +12,10 @@ private:
 	RenderItem* renderItem = nullptr;
 	double radius;
 
+	PxRigidDynamic* target;
+
 public:
-	Target(Vector3 pos, Vector3 lVel, Vector3 aVel, Data::TARGET_MODE);
+	Target(Vector3 pos, Vector3 lVel, Vector3 aVel, double radius, Data::TARGET_MODE mode);
 	virtual ~Target();
 
 	void update(double t);
