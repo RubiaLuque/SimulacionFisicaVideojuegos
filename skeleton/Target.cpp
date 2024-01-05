@@ -8,7 +8,7 @@ Target::Target(Vector3 pos, Vector3 lVel, Vector3 aVel, double radius, Data::TAR
 	this->lVel = lVel;
 	this->aVel = aVel;
 	this->radius = radius;
-	mass = 5.0;
+	mass = 1.0;
 
 	target = gPhysics->createRigidDynamic(PxTransform(pos));
 
@@ -19,6 +19,9 @@ Target::Target(Vector3 pos, Vector3 lVel, Vector3 aVel, double radius, Data::TAR
 
 	PxRigidBodyExt::updateMassAndInertia(*target, (mass));
 	gScene->addActor(*target);
+
+	//Elimina el efecto de la gravedad en las dianas
+	target->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 
 	if (mode == Data::ORANGE) {
 		renderItem = new RenderItem(shape, target, { 1.0, 0.2, 0.0, 1.0 });
@@ -37,9 +40,6 @@ Target::Target(Vector3 pos, Vector3 lVel, Vector3 aVel, double radius, Data::TAR
 	else if (mode == Data::WHITE) {
 		renderItem = new RenderItem(shape, target, { 0.9, 0.9, 0.9, 1 });
 	}
-
-	/*Vector3 antigravity = { 0, 9.8, 0 };
-	target->addForce(antigravity);*/
 }
 
 Target::~Target()
@@ -49,11 +49,6 @@ Target::~Target()
 
 void Target::update(double t) {
 
-	Vector3 antigravity = { 0,10, 0 };
-	target->addForce(antigravity);
+	
 }
 
-void Target::addForce(Vector3 f)
-{
-	target->addForce(f);
-}
