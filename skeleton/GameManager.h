@@ -26,6 +26,9 @@ private:
 	//Sistemas de fuerzas de solidos rigidos
 	vector<SolidRigidSystem*> solidForces;
 
+	//Vector de dianas
+	vector<Target*> targets;
+
 	//Sistema fireworks
 	Firework* firework;
 

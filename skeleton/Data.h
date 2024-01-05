@@ -1,7 +1,7 @@
 #pragma once
 
 namespace Data {
-	static const float MAX_TIME_KEY = 1.0;
+	static const float MAX_TIME_KEY = 0.5;
 
 	static const float LIMIT_ON_SCREEN= 10.0;
 	static const int TAM_LIST = 5;

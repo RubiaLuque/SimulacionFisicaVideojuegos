@@ -22,5 +22,7 @@ public:
 	virtual ~Target();
 
 	void update(double t);
+
+	void addForce(Vector3 f);
 };
 

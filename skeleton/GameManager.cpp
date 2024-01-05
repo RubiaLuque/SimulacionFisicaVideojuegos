@@ -35,6 +35,24 @@ GameManager::~GameManager()
 		}
 	}
 	solidForces.clear();
+
+	//Elimina los proyectiles
+	for(int i = 0; i < projectiles.size(); ++i) {
+		if (projectiles.at(i) != nullptr) {
+			delete projectiles.at(i);
+			projectiles.at(i) = nullptr;
+		}
+	}
+	projectiles.clear();
+
+	//Elimina las dianas
+	for (int i = 0; i < targets.size(); ++i) {
+		if (targets.at(i) != nullptr) {
+			delete targets.at(i);
+			targets.at(i) = nullptr;
+		}
+	}
+	targets.clear();
 }
 
 void GameManager::addProjectile(PROJECTILE_TYPE type)
@@ -65,13 +83,13 @@ void GameManager::chooseMode(char key)
 
 void GameManager::setUpScene()
 {
-	if (gm = EASY) {
+	if (gm == EASY) {
 		easyMode();
 	}
-	else if (gm = MEDIUM) {
+	else if (gm == MEDIUM) {
 		mediumMode();
 	}
-	else if (gm = HARD) {
+	else if (gm == HARD) {
 		hardMode();
 	}
 }
@@ -81,7 +99,11 @@ void GameManager::easyMode()
 	Vector3 vel = cam->getDir();
 	const Vector3 pos = cam->getEye();
 
-	//auto fire_target = new Target(pos, )
+	auto fire_target = new Target({0,20,0}, {0,0,0}, {0,0,0}, 20, Data::ORANGE, gPhysics, gScene);
+	targets.push_back(fire_target);
+
+	auto laser_target = new Target({ 20, 20, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::BLUE, gPhysics, gScene);
+	targets.push_back(laser_target);
 }
 
 void GameManager::mediumMode()
@@ -119,4 +141,8 @@ void GameManager::update(double t)
 		solid->update(t);
 	}
 
+	//Se actualizan las dianas
+	for (auto* target : targets) {
+		target->update(t);
+	}
 }
