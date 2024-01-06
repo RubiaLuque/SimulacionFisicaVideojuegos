@@ -20,6 +20,7 @@ private:
 	PxRigidDynamic* dynamicR;
 
 	Data::RIGIDS r;
+	Data::PROJECTILE_TYPE type;
 
 	PxPhysics* gPhysics;
 	PxScene* gScene;
@@ -32,6 +33,9 @@ public:
 	SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Data::PROJECTILE_TYPE type, PxPhysics* gPhysics, PxScene* gScene);
 
 	virtual ~SolidRigid();
+
+	inline PxActor* getActor() { return dynamicR; }
+	inline Data::PROJECTILE_TYPE getType() { return type; }
 
 	//Getters
 	Vector3 getVel() { return lVel; }

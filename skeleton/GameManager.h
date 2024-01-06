@@ -5,7 +5,11 @@
 #include "SolidRigidSystem.h"
 #include "Target.h"
 #include "Data.h"
-
+#include "core.hpp"
+#include "callbacks.hpp"
+#include <PxPhysicsAPI.h>
+#include "PxActor.h"
+#include <vector>
 using namespace std;
 using namespace Data;
 
@@ -64,10 +68,15 @@ public:
 	//Actualizacion de los elementos de escena y de las colisiones
 	void update(double t);
 
+	//Colisiones 
+	void onCollision(physx::PxActor* actor1, physx::PxActor* actor2);
+
 	//Crea un firework al destruir una diana o ganar el juego
 	void addFirework();
 
 	//cambia la propiedad alive de las particulas 
 	inline void setAlive(SolidRigid* p, bool alive) { p->alive = alive; }
+	inline void setAlive(Target* p, bool alive) { p->alive = alive; }
+
 };
 

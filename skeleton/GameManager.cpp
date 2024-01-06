@@ -141,8 +141,39 @@ void GameManager::update(double t)
 		solid->update(t);
 	}
 
+	targets.erase(remove_if(targets.begin(), targets.end(),
+		[](Target* p) noexcept {
+			if (p->alive) return false;
+			else { //si no esta vivo, se elimina
+				delete p;
+				return true;
+			}
+		}), targets.end());
+
 	//Se actualizan las dianas
 	for (auto* target : targets) {
 		target->update(t);
 	}
+}
+
+//Comprueba las colisiones entre dianas y projectiles
+void GameManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
+{
+
+	auto target = std::find_if(targets.begin(), targets.end(), [&](Target* t) {
+		if (t->getActor() == actor1) return true;
+		else if (t->getActor() == actor2) return true;
+		else return false;
+
+		});
+
+	
+	auto p = std::find_if(projectiles.begin(), projectiles.end(), [&](SolidRigid* s) {
+		if (s->getActor() == actor1) return true;
+		else if (s->getActor() == actor2) return true;
+		else return false;
+		});
+
+	
+	if ((*target)->getType() == (*p)->getType()) setAlive((*target), false);
 }

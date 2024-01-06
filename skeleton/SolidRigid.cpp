@@ -48,6 +48,7 @@ SolidRigid::SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Data::PROJECTILE
 	this->gPhysics = gPhysics;
 	this->pos = pos;
 	this->aVel = aVel;
+	this->type = type;
 
 	dynamicR = gPhysics->createRigidDynamic(PxTransform(pos));
 
@@ -127,7 +128,7 @@ SolidRigid::~SolidRigid()
 
 void SolidRigid::update(double t)
 {
-
+	
 }
 
 void SolidRigid::addForce(Vector3 f)

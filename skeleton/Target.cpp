@@ -8,6 +8,7 @@ Target::Target(Vector3 pos, Vector3 lVel, Vector3 aVel, double radius, Data::TAR
 	this->lVel = lVel;
 	this->aVel = aVel;
 	this->radius = radius;
+	this->type = mode;
 	mass = 1.0;
 
 	target = gPhysics->createRigidDynamic(PxTransform(pos));

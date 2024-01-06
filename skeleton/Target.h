@@ -13,6 +13,8 @@ private:
 	double radius;
 	double mass;
 
+	Data::TARGET_MODE type;
+
 	PxRigidDynamic* target;
 	PxPhysics* gPhysics; 
 	PxScene* gScene;
@@ -23,6 +25,9 @@ public:
 
 	void update(double t);
 
-	void addForce(Vector3 f);
+	inline PxActor* getActor() { return target; }
+	inline Data::TARGET_MODE getType() { return type; }
+
+	bool alive = true;
 };
 
