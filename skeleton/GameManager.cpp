@@ -160,18 +160,15 @@ void GameManager::update(double t)
 void GameManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
 
-	auto target = std::find_if(targets.begin(), targets.end(), [&](Target* t) {
-		if (t->getActor() == actor1) return true;
-		else if (t->getActor() == actor2) return true;
-		else return false;
+	auto target = std::find_if(targets.begin(), targets.end(), [actor1, actor2](Target* t) {
+		return t->getActor() == actor1 || t->getActor() == actor2;
 
 		});
 
 	
-	auto p = std::find_if(projectiles.begin(), projectiles.end(), [&](SolidRigid* s) {
-		if (s->getActor() == actor1) return true;
-		else if (s->getActor() == actor2) return true;
-		else return false;
+	auto p = std::find_if(projectiles.begin(), projectiles.end(), [actor1, actor2](SolidRigid* s) {
+		return s->getActor() == actor1 || s->getActor() == actor2;
+
 		});
 
 	
