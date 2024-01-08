@@ -199,8 +199,11 @@ void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
 	if(actor1 != nullptr && actor2 != nullptr)
 		manager->onCollision(actor1, actor2);
-	PX_UNUSED(actor1);
-	PX_UNUSED(actor2);
+	else {
+		PX_UNUSED(actor1);
+		PX_UNUSED(actor2);
+
+	}
 
 }
 
