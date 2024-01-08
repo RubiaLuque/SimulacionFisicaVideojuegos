@@ -52,6 +52,8 @@ SolidRigid::SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Data::PROJECTILE
 
 	dynamicR = gPhysics->createRigidDynamic(PxTransform(pos));
 
+	cam = GetCamera();
+
 	if (type == Data::FIREBALL) {
 		this->lVel = lVel*50;
 		this->aVel = aVel;
@@ -103,6 +105,7 @@ SolidRigid::SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Data::PROJECTILE
 
 		dynamicR->setLinearVelocity(this->lVel);
 		dynamicR->setAngularVelocity(this->aVel);
+		
 		radius = 0.5;
 		double height = 4.0;
 		PxShape* shape = CreateShape(PxCapsuleGeometry(radius, height));

@@ -7,6 +7,7 @@
 #include "SolidRigid.h"
 #include "ExplosionForceGenerator.h"
 #include "ForceRegistry.h"
+#include "Target.h"
 
 using namespace std;
 class SolidRigidSystem
@@ -15,7 +16,11 @@ private:
 	vector<ParticleGenerator<SolidRigid>*> gens;
 	vector<ForceGenerator<SolidRigid>*> forces;
 
+	vector<ForceGenerator<Target>*> forcesT;
+
 	ForceRegistry<SolidRigid>* fr = new ForceRegistry<SolidRigid>();
+	ForceRegistry<Target>* frT = new ForceRegistry<Target>();
+
 	Data::GENERATORS g;
 	Data::FORCES f = Data::NULLF;
 	ExplosionForceGenerator<SolidRigid>* e;
@@ -34,6 +39,7 @@ public:
 	void update(double t);
 
 	void generateSpring();
+	void generateSpringTargets(Target* t1, Target* t2);
 	void generateSlinky();
 	void generateBuoyancyWater();
 	void generateBuoyancyMercury();

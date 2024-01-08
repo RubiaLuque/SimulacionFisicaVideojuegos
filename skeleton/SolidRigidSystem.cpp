@@ -5,6 +5,7 @@
 #include "VortexForceGenerator.h"
 #include "AnchoredSpringForceGen.h"
 #include "BuoyancyForceGenerator.h"
+#include "BungeeForceGenerator.h"
 #include "UniformSR.h"
 #include "GaussianSR.h"
 #include <cmath>
@@ -65,7 +66,16 @@ SolidRigidSystem::~SolidRigidSystem()
 	}
 	forces.clear();
 
+	for (auto it = forcesT.begin(); it != forcesT.end(); ++it) {
+		if (*it != nullptr) {
+			delete* it;
+			*it = nullptr;
+		}
+	}
+	forcesT.clear();
+
 	delete fr;
+	delete frT;
 }
 
 void SolidRigidSystem::addForce(Data::FORCES f)
@@ -129,6 +139,7 @@ void SolidRigidSystem::update(double t)
 		}), solids.end());
 
 	fr->updateForces(t);
+	frT->updateForces(t);
 }
 
 void SolidRigidSystem::generateSpring()
@@ -167,6 +178,18 @@ void SolidRigidSystem::generateSpring()
 	forces.push_back(f5);
 	solids.push_back(p4);
 	solids.push_back(p5);
+}
+
+void SolidRigidSystem::generateSpringTargets(Target* t1, Target* t2)
+{
+	BungeeForceGenerator<Target>* f1 = new BungeeForceGenerator<Target>(1000, 300, t2);
+	BungeeForceGenerator<Target>* f2 = new BungeeForceGenerator<Target>(1000, 300, t1);
+
+	frT->addRegistry(f1, t1);
+	frT->addRegistry(f2, t2);
+
+	forcesT.push_back(f1);
+	forcesT.push_back(f2);
 }
 
 void SolidRigidSystem::generateSlinky()

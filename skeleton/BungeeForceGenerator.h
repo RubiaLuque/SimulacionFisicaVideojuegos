@@ -5,7 +5,7 @@ class BungeeForceGenerator : public SpringForceGenerator<T>
 {
 private:
 public:
-	BungeeForceGenerator(int K, int x0, Particle* other) : SpringForceGenerator<T>(K, x0, other) {};
+	BungeeForceGenerator(int K, int x0, T* other) : SpringForceGenerator<T>(K, x0, other) {};
 	virtual ~BungeeForceGenerator(){}
 
 	void updateForce(T* p, double t) {

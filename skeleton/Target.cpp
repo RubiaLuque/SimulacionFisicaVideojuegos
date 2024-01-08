@@ -54,6 +54,11 @@ Target::~Target()
 	target->release();
 }
 
+void Target::addForce(Vector3 force)
+{
+	target->addForce(force);
+}
+
 void Target::update(double t) {
 
 	

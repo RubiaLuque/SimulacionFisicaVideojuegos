@@ -36,6 +36,15 @@ GameManager::~GameManager()
 	}
 	solidForces.clear();
 
+	//Se eliminan los sistemas de solidos rigidos
+	for (int i = 0; i < solidSys.size(); ++i) {
+		if (solidSys.at(i) != nullptr) {
+			delete solidSys.at(i);
+			solidSys.at(i) = nullptr;
+		}
+	}
+	solidSys.clear();
+
 	//Elimina los proyectiles
 	for(int i = 0; i < projectiles.size(); ++i) {
 		if (projectiles.at(i) != nullptr) {
@@ -104,6 +113,17 @@ void GameManager::easyMode()
 
 	auto laser_target = new Target({ 100, 20, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::BLUE, gPhysics, gScene);
 	targets.push_back(laser_target);
+
+	auto general_target = new Target({ -100, 100, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::WHITE, gPhysics, gScene);
+	targets.push_back(general_target);
+
+	auto arrow_target = new Target({ -100, -100, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::RED, gPhysics, gScene);
+	targets.push_back(arrow_target);
+
+	auto targetSys = new SolidRigidSystem(Data::NONE, gPhysics, gScene);
+	solidSys.push_back(targetSys);
+
+	//targetSys->generateSpringTargets(general_target, arrow_target);
 }
 
 void GameManager::mediumMode()
@@ -159,6 +179,11 @@ void GameManager::update(double t)
 	for (auto* fire : fireworks) {
 		fire->update(t);
 	}
+
+	//Se actualizan los sistemas de solidos rigidos
+	for (auto sys : solidSys) {
+		sys->update(t);
+	}
 	
 }
 
@@ -178,7 +203,7 @@ void GameManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 		});
 
 	if (*target != nullptr && *p != nullptr) {
-		if ((*target)->getType() == (*p)->getType()) {
+		if ((*target)->getType() == (*p)->getType() || (*target)->getType() == Data::WHITE) {
 			//Nos guardamos el color y la posicion de la diana entes de eliminarla para despues usarlo en el firework
 			auto color = (*target)->getColor();
 			auto pos = (*target)->getPos();

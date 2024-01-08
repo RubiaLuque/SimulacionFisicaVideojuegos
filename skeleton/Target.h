@@ -23,6 +23,7 @@ private:
 public:
 	Target(Vector3 pos, Vector3 lVel, Vector3 aVel, double radius, Data::TARGET_MODE mode, PxPhysics* gPhysics, PxScene* gScene);
 	virtual ~Target();
+	void addForce(Vector3 force);
 
 	void update(double t);
 

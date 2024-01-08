@@ -13,7 +13,7 @@ Firework::Firework(Vector3 pos, Vector4 color) {
     particles = vector<Particle*>();
     elapsedTime = 0;
 
-    Vector3 vel = { 5, 20, 5 };
+    Vector3 vel = { 50, 100, 50 };
 
     auto p = new Particle(pos, vel, 1.0, color, 2.0, 0.98, Data::FIREWORK);
     DeregisterRenderItem(p->getRenderItem());
@@ -173,7 +173,7 @@ vector<Particle*> Firework::explodeWithColor(Particle* p, Vector4 color)
         auxVel.y = (velD(gen2) * 5) + 10;
         auxVel.z = (velD(gen2)) * 5;
 
-        auto p = new Particle(pos, auxVel, 1.0, { color }, radius / 2.0, 0.998,
+        auto p = new Particle(pos, auxVel, 1.0, { color }, radius, 0.998,
             Data::FIREWORK);
 
         aux.push_back(p);

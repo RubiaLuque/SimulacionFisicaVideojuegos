@@ -24,7 +24,7 @@ private:
 
 	PxPhysics* gPhysics;
 	PxScene* gScene;
-
+	Camera* cam;
 
 public:
 	bool alive = true;

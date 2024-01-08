@@ -23,7 +23,7 @@ private:
 	std::uniform_real_distribution<double> dis{0, 1};
 
 	std::mt19937 gen2;
-	std::uniform_real_distribution<double> velD{-1, 1};
+	std::uniform_real_distribution<double> velD{-1, 3};
 	std::uniform_int_distribution<int> numParticulas{15, 20};
 
 	//posicion y velocidad base de la particula inicial

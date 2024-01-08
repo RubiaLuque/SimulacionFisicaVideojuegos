@@ -33,6 +33,7 @@ private:
 	vector<Firework*> fireworks;
 
 	//Sistemas de fuerzas de solidos rigidos
+	vector<SolidRigidSystem*> solidSys;
 	vector<SolidRigidSystem*> solidForces;
 
 	//Vector de dianas
