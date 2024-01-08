@@ -9,6 +9,22 @@ Firework::Firework()
     elapsedTime = 0;
 }
 
+Firework::Firework(Vector3 pos, Vector4 color) {
+    particles = vector<Particle*>();
+    elapsedTime = 0;
+
+    Vector3 vel = { 5, 20, 5 };
+
+    auto p = new Particle(pos, vel, 1.0, color, 2.0, 0.98, Data::FIREWORK);
+    DeregisterRenderItem(p->getRenderItem());
+    colors = true;
+
+    auto aux = explodeWithColor(p, color);
+    for (int j = 0; j < aux.size(); ++j) {
+        particles.push_back(aux.at(j));
+    }
+}
+
 Firework::~Firework()
 {
 
@@ -24,8 +40,7 @@ Firework::~Firework()
 
 int Firework::update(double t)
 {
-    //mientras dure el tiempo de vida del firework
-    if (elapsedTime <= Data::FIREWORK_DEATH) {
+    if (elapsedTime <= Data::FIREWORK_DEATH && !colors) {
         elapsedTime += t;
 
         //las particulas creadas explotan si han superado su tiempo
@@ -33,7 +48,7 @@ int Firework::update(double t)
             particles.at(i)->limit_time += t;
             gr->updateForce(initP, t);
             particles.at(i)->update(t);
-            if(particles.at(i)->limit_time>=_life_time) {
+            if (particles.at(i)->limit_time >= _life_time) {
                 cout << particles.at(i)->limit_time << ' ';
                 setAlive(particles.at(i), false);
                 auto aux = explode(particles.at(i));
@@ -53,6 +68,19 @@ int Firework::update(double t)
                 }
             }), particles.end());
     }
+
+
+    else if (elapsedTime <= Data::FIREWORK_DEATH && colors) {
+        elapsedTime += t;
+
+        for (int i = 0; i < particles.size(); ++i) {
+            gr->updateForce(particles.at(i), t);
+            particles.at(i)->update(t);
+        }
+    }
+
+
+    //mientras dure el tiempo de vida del firework
     else {
         //se hace update de las particulas que queden tras finalizar el tiempo del firework
         for (int i = 0; i < particles.size(); ++i) {
@@ -78,6 +106,7 @@ int Firework::update(double t)
                 }
             }), particles.end());
     }
+
 
     return 0;
 }
@@ -126,6 +155,28 @@ vector<Particle*> Firework::explode(Particle* p)
         
         aux.push_back(p);
     }
-    //std::cout << n << ' ';
+    return aux;
+}
+
+vector<Particle*> Firework::explodeWithColor(Particle* p, Vector4 color)
+{
+    vector<Particle*> aux;
+    Vector3 pos = p->getPos();
+    double radius = p->getRadius();
+
+    int n = numParticulas(gen);
+
+    for (int i = 0; i < n; ++i) {
+        Vector3 auxVel;
+
+        auxVel.x = (velD(gen2)) * 5;
+        auxVel.y = (velD(gen2) * 5) + 10;
+        auxVel.z = (velD(gen2)) * 5;
+
+        auto p = new Particle(pos, auxVel, 1.0, { color }, radius / 2.0, 0.998,
+            Data::FIREWORK);
+
+        aux.push_back(p);
+    }
     return aux;
 }

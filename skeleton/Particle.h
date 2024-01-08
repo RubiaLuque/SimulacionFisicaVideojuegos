@@ -45,6 +45,7 @@ public:
 	double getRadius() noexcept { return radius; }
 	double getMass() noexcept { return mass; }
 	bool getWind() noexcept { return wind; }
+	inline RenderItem* getRenderItem() { return renderItem; }
 
 	//Setters
 	void setAcc(Vector3 acc) { this->acc = acc; }

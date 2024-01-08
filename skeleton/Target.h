@@ -12,6 +12,7 @@ private:
 	RenderItem* renderItem = nullptr;
 	double radius;
 	double mass;
+	Vector4 color;
 
 	Data::TARGET_MODE type;
 
@@ -25,6 +26,8 @@ public:
 
 	void update(double t);
 
+	inline Vector3 getPos() { return  pos; }
+	inline Vector4 getColor() { return color; }
 	inline PxActor* getActor() { return target; }
 	inline Data::TARGET_MODE getType() { return type; }
 

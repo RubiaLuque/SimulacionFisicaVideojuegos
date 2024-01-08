@@ -10,6 +10,8 @@
 #include <PxPhysicsAPI.h>
 #include "PxActor.h"
 #include <vector>
+#include "Firework.h"
+
 using namespace std;
 using namespace Data;
 
@@ -26,6 +28,9 @@ private:
 	//Sistemas de particulas y de fuerzas
 	vector<ParticleSystem*> sys;
 	vector<ParticleSystem*> forces;
+
+	//Vector de fireworks
+	vector<Firework*> fireworks;
 
 	//Sistemas de fuerzas de solidos rigidos
 	vector<SolidRigidSystem*> solidForces;

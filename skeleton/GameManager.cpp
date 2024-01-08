@@ -154,6 +154,12 @@ void GameManager::update(double t)
 	for (auto* target : targets) {
 		target->update(t);
 	}
+
+	//Se actualizan los fireworks
+	for (auto* fire : fireworks) {
+		fire->update(t);
+	}
+	
 }
 
 //Comprueba las colisiones entre dianas y projectiles
@@ -173,6 +179,10 @@ void GameManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 
 	if (*target != nullptr && *p != nullptr) {
 		if ((*target)->getType() == (*p)->getType()) {
+			//Nos guardamos el color y la posicion de la diana entes de eliminarla para despues usarlo en el firework
+			auto color = (*target)->getColor();
+			auto pos = (*target)->getPos();
+
 			//Se eliminan la diana y el proyectil
 			setAlive((*target), false);
 			setAlive((*p), false);
@@ -180,8 +190,9 @@ void GameManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 			//Se suma la puntuacion
 
 
-			//Se invoca a un firework
-
+			//Se invoca a un firework y se guarda en la lista para hacer update
+			auto firework = new Firework(pos, color);
+			fireworks.push_back(firework);
 		}
 
 	}

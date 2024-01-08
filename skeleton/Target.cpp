@@ -25,21 +25,26 @@ Target::Target(Vector3 pos, Vector3 lVel, Vector3 aVel, double radius, Data::TAR
 	target->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 
 	if (mode == Data::ORANGE) {
-		renderItem = new RenderItem(shape, target, { 1.0, 0.2, 0.0, 1.0 });
+		color = { 1.0, 0.2, 0.0, 1.0 };
+		renderItem = new RenderItem(shape, target, color);
 	}
 	else if (mode == Data::BLUE) {
-		renderItem = new RenderItem(shape, target, { 0, 0.49, 1, 1 });
+		color = { 0, 0.49, 1, 1 };
+		renderItem = new RenderItem(shape, target, color);
 	}
 	else if (mode == Data::BLACK) {
-		renderItem = new RenderItem(shape, target, { 0.2, 0.2, 0.2, 1 });
+		color = { 0.2, 0.2, 0.2, 1 };
+		renderItem = new RenderItem(shape, target, color);
 
 	}
 	else if (mode == Data::RED) {
-		renderItem = new RenderItem(shape, target, { 0.8, 0.0, 0.0, 1 });
+		color = { 0.8, 0.0, 0.0, 1 };
+		renderItem = new RenderItem(shape, target, color);
 
 	}
 	else if (mode == Data::WHITE) {
-		renderItem = new RenderItem(shape, target, { 0.9, 0.9, 0.9, 1 });
+		color = { 0.9, 0.9, 0.9, 1 };
+		renderItem = new RenderItem(shape, target, color);
 	}
 }
 

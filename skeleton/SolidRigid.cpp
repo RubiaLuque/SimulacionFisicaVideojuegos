@@ -119,9 +119,17 @@ SolidRigid::SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Data::PROJECTILE
 
 SolidRigid::~SolidRigid()
 {
-	if (r == Data::SUELO) suelo->release();
-	else if (r == Data::STATIC) staticR->release();
-	else if (r == Data::DYNAMIC) dynamicR->release();
+	DeregisterRenderItem(renderItem);
+	if (r == Data::SUELO) {
+		suelo->release();
+	}
+	else if (r == Data::STATIC) {
+		staticR->release();
+	}
+
+	else if (r == Data::DYNAMIC) {
+		dynamicR->release();
+	}
 
 	
 }
