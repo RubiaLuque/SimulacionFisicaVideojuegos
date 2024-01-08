@@ -102,7 +102,7 @@ void GameManager::easyMode()
 	auto fire_target = new Target({0,20,0}, {0,0,0}, {0,0,0}, 20, Data::ORANGE, gPhysics, gScene);
 	targets.push_back(fire_target);
 
-	auto laser_target = new Target({ 20, 20, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::BLUE, gPhysics, gScene);
+	auto laser_target = new Target({ 100, 20, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::BLUE, gPhysics, gScene);
 	targets.push_back(laser_target);
 }
 
@@ -172,7 +172,17 @@ void GameManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 		});
 
 	if (*target != nullptr && *p != nullptr) {
-		//if ((*target)->getType() == (*p)->getType()) setAlive((*target), false);
+		if ((*target)->getType() == (*p)->getType()) {
+			//Se eliminan la diana y el proyectil
+			setAlive((*target), false);
+			setAlive((*p), false);
+
+			//Se suma la puntuacion
+
+
+			//Se invoca a un firework
+
+		}
 
 	}
 }

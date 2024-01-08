@@ -45,6 +45,7 @@ Target::Target(Vector3 pos, Vector3 lVel, Vector3 aVel, double radius, Data::TAR
 
 Target::~Target()
 {
+	DeregisterRenderItem(renderItem);
 	target->release();
 }
 
