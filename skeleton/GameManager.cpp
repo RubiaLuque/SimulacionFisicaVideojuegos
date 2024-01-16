@@ -155,6 +155,8 @@ void GameManager::update(double t)
 			}
 		}), projectiles.end());
 
+	sFr->updateForces(t);
+
 	//se hace update de todas las demas
 	for (auto* solid : projectiles) {
 		if (windForce != nullptr) sFr->addRegistry(windForce, solid);
@@ -189,10 +191,7 @@ void GameManager::update(double t)
 	//Se actualizan los sistemas de particulas
 	for (auto s : sys) {
 		s->update(t);
-	}
-
-	
-	
+	}	
 }
 
 //Comprueba las colisiones entre dianas y projectiles
@@ -233,7 +232,7 @@ void GameManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 
 void GameManager::createWind()
 {
-	windForce = new WindForceGenerator<SolidRigid>({0,20,2});
+	windForce = new WindForceGenerator<SolidRigid>({0,600,2});
 	Vector3 pos;
 	pos.x = rand() % 50;
 	pos.y = rand() % 50;

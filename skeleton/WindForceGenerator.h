@@ -5,7 +5,7 @@ class WindForceGenerator : public ForceGenerator<T>
 {
 protected:
 	Vector3 windVel;
-	float k1 = 1, k2 = 0.05;
+	float k1 = 10, k2 = 0.5;
 	Vector3 windPos = { 0,0,0 };
 	Particle* windSphere;
 public:
