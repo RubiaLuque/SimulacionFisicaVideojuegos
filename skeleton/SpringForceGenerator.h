@@ -32,9 +32,7 @@ public:
 
 			force = aux * delta_x * K;
 
-			
-			if(aux_length > 100)
-				p->addForce(force);
+			p->addForce(force);
 		}
 	}
 

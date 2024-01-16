@@ -56,6 +56,11 @@ GameManager::~GameManager()
 		}
 	}
 	targets.clear();
+
+	delete windForce;
+	delete vortexForce;
+	delete sFr;
+	delete fr;
 }
 
 void GameManager::addProjectile(PROJECTILE_TYPE type)
@@ -123,12 +128,46 @@ void GameManager::easyMode()
 	auto fogSys = new ParticleSystem(Data::NIEBLA, gPhysics, gScene);
 	sys.push_back(fogSys);
 
-	//targetSys->generateSpringTargets(general_target, arrow_target);
+	targetSys->generateSpringTargets(general_target, arrow_target);
 }
 
 void GameManager::mediumMode()
 {
+	auto fire_target = new Target({ 100,50,0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::ORANGE, gPhysics, gScene);
+	targets.push_back(fire_target);
 
+	auto laser_target = new Target({ 80, 50, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::BLUE, gPhysics, gScene);
+	targets.push_back(laser_target);
+
+	auto general_target = new Target({ 60, 50, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::WHITE, gPhysics, gScene);
+	targets.push_back(general_target);
+
+	auto arrow_target = new Target({ 40, 50,0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::RED, gPhysics, gScene);
+	targets.push_back(arrow_target);
+
+	auto bullet_target = new Target({ 20, 50, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::BLACK, gPhysics, gScene);
+	targets.push_back(bullet_target);
+
+	auto fire_target1 = new Target({ 0,50,0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::ORANGE, gPhysics, gScene);
+	targets.push_back(fire_target);
+
+	auto laser_target1 = new Target({ 0, 50, 20 }, { 0,0,0 }, { 0,0,0 }, 20, Data::BLUE, gPhysics, gScene);
+	targets.push_back(laser_target);
+
+	auto general_target1 = new Target({ 0, 50, 30 }, { 0,0,0 }, { 0,0,0 }, 20, Data::WHITE, gPhysics, gScene);
+	targets.push_back(general_target);
+
+	auto arrow_target1 = new Target({ 0, 50, 40 }, { 0,0,0 }, { 0,0,0 }, 20, Data::RED, gPhysics, gScene);
+	targets.push_back(arrow_target);
+
+	auto bullet_target1 = new Target({ 0, 50, 50 }, { 0,0,0 }, { 0,0,0 }, 20, Data::BLACK, gPhysics, gScene);
+	targets.push_back(bullet_target);
+
+	auto targetSys = new SolidRigidSystem(Data::NONE, gPhysics, gScene);
+	solidSys.push_back(targetSys);
+
+	auto fogSys = new ParticleSystem(Data::NIEBLA, gPhysics, gScene);
+	sys.push_back(fogSys);
 }
 
 void GameManager::hardMode()
