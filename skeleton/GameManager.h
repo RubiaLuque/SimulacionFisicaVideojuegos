@@ -3,6 +3,8 @@
 #include "Particle.h"
 #include "ParticleSystem.h"
 #include "SolidRigidSystem.h"
+#include "WindForceGenerator.h"
+#include "VortexForceGenerator.h"
 #include "Target.h"
 #include "Data.h"
 #include "core.hpp"
@@ -34,7 +36,9 @@ private:
 
 	//Sistemas de fuerzas de solidos rigidos
 	vector<SolidRigidSystem*> solidSys;
-	vector<SolidRigidSystem*> solidForces;
+
+	WindForceGenerator<SolidRigid>* windForce = nullptr;
+	VortexForceGenerator<SolidRigid>* vortexForce = nullptr;
 
 	//Vector de dianas
 	vector<Target*> targets;
@@ -77,8 +81,9 @@ public:
 	//Colisiones 
 	void onCollision(physx::PxActor* actor1, physx::PxActor* actor2);
 
-	//Crea un firework al destruir una diana o ganar el juego
-	void addFirework();
+	//Creacion de fuerzas
+	void createWind();
+	
 
 	//cambia la propiedad alive de las particulas 
 	inline void setAlive(SolidRigid* p, bool alive) { p->alive = alive; }

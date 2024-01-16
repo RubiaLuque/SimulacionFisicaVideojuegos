@@ -51,7 +51,7 @@ public:
 	void setAcc(Vector3 acc) { this->acc = acc; }
 	void setVel(Vector3 vel) { this->vel = vel; }
 	void setWind(bool wind) noexcept { this->wind = wind; }
-	//void setWindForce(Vector3 windForce) { this->windForce = windForce; }
+	void setPos(Vector3 pos) { this->pos = pos; }
 
 	void update(double t);
 

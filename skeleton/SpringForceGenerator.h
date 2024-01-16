@@ -25,13 +25,16 @@ public:
 		if (p != nullptr) {
 			Vector3 aux = other->getPos() - p->getPos();
 			Vector3 force;
+			int aux_length = aux.magnitude();
 
 			const float length = aux.normalize();
 			const float delta_x = length - x0;
 
 			force = aux * delta_x * K;
 
-			p->addForce(force);
+			
+			if(aux_length > 100)
+				p->addForce(force);
 		}
 	}
 

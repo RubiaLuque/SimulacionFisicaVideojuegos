@@ -160,6 +160,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && mode != 0) {
 			manager->addProjectile(Data::FIREBALL);
+			int random = rand() % 10; //Genera numero aleatorio entre 0 y 9
+			if (random == 0) manager->createWind();
 			timeKey = 0;
 		}
 		break;

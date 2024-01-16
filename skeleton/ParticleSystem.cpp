@@ -36,7 +36,7 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g, PxPhysics* gPhysics, PxScene*
 
 	//NIEBLA
 	GaussianParticleGenerator<Particle>* niebla = new GaussianP
-		({ 0,10,0 }, { 1,1,1 }, { 50, 50, 50 }, { 1, 5, 1 }, Data::NIEBLA);
+		({ 0,100,-100 }, { 1,1,1 }, { 50, 50, 50 }, { 1, 5, 1 }, Data::NIEBLA);
 	gens.push_back(niebla);
 }
 

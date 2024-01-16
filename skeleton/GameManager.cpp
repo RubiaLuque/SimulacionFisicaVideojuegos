@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include "WindForceGenerator.h"
 
 GameManager::GameManager(PxPhysics* gPhysics, PxScene* gScene)
 {
@@ -27,14 +28,6 @@ GameManager::~GameManager()
 	}
 	forces.clear();
 
-	//Elimina las fuerzas de los solidos rigidos
-	for (int i = 0; i < solidForces.size(); ++i) {
-		if (solidForces.at(i) != nullptr) {
-			delete solidForces.at(i);
-			solidForces.at(i) = nullptr;
-		}
-	}
-	solidForces.clear();
 
 	//Se eliminan los sistemas de solidos rigidos
 	for (int i = 0; i < solidSys.size(); ++i) {
@@ -117,11 +110,17 @@ void GameManager::easyMode()
 	auto general_target = new Target({ -100, 100, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::WHITE, gPhysics, gScene);
 	targets.push_back(general_target);
 
-	auto arrow_target = new Target({ -100, -100, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::RED, gPhysics, gScene);
+	auto arrow_target = new Target({ -130, -100, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::RED, gPhysics, gScene);
 	targets.push_back(arrow_target);
+
+	auto bullet_target = new Target({ 0, 50, -100 }, { 0,0,0 }, { 0,1,0 }, 20, Data::BLACK, gPhysics, gScene);
+	targets.push_back(bullet_target);
 
 	auto targetSys = new SolidRigidSystem(Data::NONE, gPhysics, gScene);
 	solidSys.push_back(targetSys);
+
+	auto fogSys = new ParticleSystem(Data::NIEBLA, gPhysics, gScene);
+	sys.push_back(fogSys);
 
 	//targetSys->generateSpringTargets(general_target, arrow_target);
 }
@@ -158,6 +157,8 @@ void GameManager::update(double t)
 
 	//se hace update de todas las demas
 	for (auto* solid : projectiles) {
+		if (windForce != nullptr) sFr->addRegistry(windForce, solid);
+		if (vortexForce != nullptr) sFr->addRegistry(vortexForce, solid);
 		solid->update(t);
 	}
 
@@ -184,6 +185,13 @@ void GameManager::update(double t)
 	for (auto sys : solidSys) {
 		sys->update(t);
 	}
+
+	//Se actualizan los sistemas de particulas
+	for (auto s : sys) {
+		s->update(t);
+	}
+
+	
 	
 }
 
@@ -202,7 +210,7 @@ void GameManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 
 		});
 
-	if (*target != nullptr && *p != nullptr) {
+	if (target != targets.end() && p != projectiles.end()) {
 		if ((*target)->getType() == (*p)->getType() || (*target)->getType() == Data::WHITE) {
 			//Nos guardamos el color y la posicion de la diana entes de eliminarla para despues usarlo en el firework
 			auto color = (*target)->getColor();
@@ -221,4 +229,15 @@ void GameManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 		}
 
 	}
+}
+
+void GameManager::createWind()
+{
+	windForce = new WindForceGenerator<SolidRigid>({0,20,2});
+	Vector3 pos;
+	pos.x = rand() % 50;
+	pos.y = rand() % 50;
+	pos.z = rand() % 50;
+	windForce->setPos(pos);
+
 }

@@ -182,8 +182,8 @@ void SolidRigidSystem::generateSpring()
 
 void SolidRigidSystem::generateSpringTargets(Target* t1, Target* t2)
 {
-	BungeeForceGenerator<Target>* f1 = new BungeeForceGenerator<Target>(1000, 300, t2);
-	BungeeForceGenerator<Target>* f2 = new BungeeForceGenerator<Target>(1000, 300, t1);
+	BungeeForceGenerator<Target>* f1 = new BungeeForceGenerator<Target>(100, 150, t2);
+	BungeeForceGenerator<Target>* f2 = new BungeeForceGenerator<Target>(100, 150, t1);
 
 	frT->addRegistry(f1, t1);
 	frT->addRegistry(f2, t2);
