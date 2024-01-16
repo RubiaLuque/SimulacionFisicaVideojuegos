@@ -103,13 +103,28 @@ SolidRigid::SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Data::PROJECTILE
 		this->lVel = lVel * 80;
 		this->aVel = aVel;
 
+		dynamicR = gPhysics->createRigidDynamic(PxTransform(cam->getEye()));
+
+		//Quaternions para la rotacion de la capsula
+		PxQuat endq = cam->getTransform().q;
+		PxQuat startq = dynamicR->getGlobalPose().q;
+
 		dynamicR->setLinearVelocity(this->lVel);
 		dynamicR->setAngularVelocity(this->aVel);
-		
+
+
 		radius = 0.5;
 		double height = 4.0;
 		PxShape* shape = CreateShape(PxCapsuleGeometry(radius, height));
+		//Rotacion
+		PxQuat rotq = endq * startq.getConjugate();
+		PxTransform relativePose(startq * rotq);
+
+		//Posicion relativa a la camara
+		shape->setLocalPose(relativePose);
+
 		dynamicR->attachShape(*shape);
+
 		mass = 1.0;
 		PxRigidBodyExt::updateMassAndInertia(*dynamicR, (mass));
 		gScene->addActor(*dynamicR);
