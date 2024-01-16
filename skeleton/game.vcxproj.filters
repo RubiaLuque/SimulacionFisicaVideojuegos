@@ -11,7 +11,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="ForceGenerator.cpp">
       <Filter>ForceGenerators</Filter>
@@ -55,6 +54,13 @@
     </ClCompile>
     <ClCompile Include="SolidRigid.cpp" />
     <ClCompile Include="SolidRigidSystem.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GaussianP.cpp" />
+    <ClCompile Include="GaussianSR.cpp" />
+    <ClCompile Include="Target.cpp" />
+    <ClCompile Include="UniformP.cpp" />
+    <ClCompile Include="UniformSR.cpp" />
+    <ClCompile Include="Score.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -67,7 +73,6 @@
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="Particle.h" />
-    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="ForceGenerator.h">
@@ -112,6 +117,13 @@
     </ClInclude>
     <ClInclude Include="SolidRigid.h" />
     <ClInclude Include="SolidRigidSystem.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GaussianP.h" />
+    <ClInclude Include="GaussianSR.h" />
+    <ClInclude Include="Target.h" />
+    <ClInclude Include="UniformP.h" />
+    <ClInclude Include="UniformSR.h" />
+    <ClInclude Include="Score.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

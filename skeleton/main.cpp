@@ -41,7 +41,8 @@ GameManager* manager;
 float timeKey = 0;
 bool keyPressed = false;
 int32_t mode = 0;
-
+int64_t score = 0;
+string scoreText = "SCORE: ";
 
 // Initialize physics engine
 //Codigo de inicializacion
@@ -88,6 +89,8 @@ void stepPhysics(bool interactive, double t)
 	gScene->fetchResults(true);
 	
 	manager->update(t);
+	score = manager->getScore();
+
 	if (keyPressed) {
 		timeKey += t;
 		if (timeKey > Data::MAX_TIME_KEY) {
@@ -170,6 +173,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && mode != 0) {
 			manager->addProjectile(Data::LASER);
+			int random = rand() % 10; //Genera numero aleatorio entre 0 y 9
+			if (random == 0) manager->createVortex();
 			timeKey = 0;
 		}
 		break;

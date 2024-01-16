@@ -11,7 +11,7 @@ namespace Data {
 
 	static const double EXPLOSION_SPHERE_RADIUS = 40;
 	static const double windSphereRadius = 50;
-	static const double vortexSphereRadius = 100;
+	static const double vortexSphereRadius = 50;
 
 	static enum GENERATORS {
 		FUENTE, LLUVIA, NIEVE, NIEBLA, FIREWORK, NONE

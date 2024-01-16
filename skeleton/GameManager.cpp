@@ -6,6 +6,7 @@ GameManager::GameManager(PxPhysics* gPhysics, PxScene* gScene)
 	cam = GetCamera();
 	this->gPhysics = gPhysics;
 	this->gScene = gScene;
+	score = new Score();
 }
 
 GameManager::~GameManager()
@@ -137,6 +138,8 @@ void GameManager::hardMode()
 
 void GameManager::update(double t)
 {
+	_score = score->getScore();
+
 	//eliminar aquellas que lleven mas tiempo del necesario en pantalla
 	for (auto it = projectiles.begin(); it != projectiles.end(); it++) {
 		(*it)->limit_time += t;
@@ -220,7 +223,8 @@ void GameManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 			setAlive((*p), false);
 
 			//Se suma la puntuacion
-
+			score->addScore((*target)->getType());
+			_score = score->getScore();
 
 			//Se invoca a un firework y se guarda en la lista para hacer update
 			auto firework = new Firework(pos, color);
@@ -238,5 +242,14 @@ void GameManager::createWind()
 	pos.y = rand() % 50;
 	pos.z = rand() % 50;
 	windForce->setPos(pos);
+
+}
+
+void GameManager::createVortex() {
+	Vector3 pos; 
+	pos.x = rand()%100;
+	pos.y = rand() % 100;
+	pos.z = 0;
+	vortexForce = new VortexForceGenerator<SolidRigid>({0,100,0}, pos);
 
 }

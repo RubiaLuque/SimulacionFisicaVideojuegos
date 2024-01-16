@@ -52,6 +52,8 @@ extern std::string display_text1;
 extern std::string display_text2;
 extern std::string display_text3;
 extern std::int32_t mode;
+extern std::int64_t score;
+extern std::string scoreText;
 
 namespace Snippets
 {

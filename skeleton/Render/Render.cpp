@@ -249,7 +249,7 @@ void setupDefaultWindow(const char *name)
 
 	glutInit(&argc, argv);
 	
-	glutInitWindowSize(512, 512);
+	glutInitWindowSize(1080, 720);
 	glutInitDisplayMode(GLUT_RGB|GLUT_DOUBLE|GLUT_DEPTH);
 	int mainHandle = glutCreateWindow(name);
 	glutSetWindow(mainHandle);
@@ -288,14 +288,18 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 
 	// Display text
 	glColor4f(0.0f, 0.8f, 0.4f, 1.0f);
-	//glFrontFace(glutGet(GLUT_BITMAP_TIMES_ROMAN_24));
 	
 	if (mode == 0) {
-		//(string, width, height)
+		//(string, width, height) desde la esquina inferior izquierda
 		drawText(display_text, 135, 370);
 		drawText(display_text1, 100, 300);
 		drawText(display_text2, 100, 250);
 		drawText(display_text3, 100, 200);
+	}
+	else {
+		glColor4f(1.0f, 0.0f, 1.0f, 1.0f);
+		drawText(scoreText, 230, 470);
+		drawText(std::to_string(score), 260, 470);
 	}
 
 	// Setup camera

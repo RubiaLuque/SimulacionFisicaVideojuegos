@@ -13,6 +13,7 @@
 #include "PxActor.h"
 #include <vector>
 #include "Firework.h"
+#include "Score.h"
 
 using namespace std;
 using namespace Data;
@@ -57,6 +58,10 @@ private:
 	//Modo de juego
 	GAME_MODE gm;
 
+	//Puntuacion
+	Score* score;
+	int _score;
+
 public:
 
 	GameManager(PxPhysics* gPhysics, PxScene* gScene);
@@ -83,11 +88,12 @@ public:
 
 	//Creacion de fuerzas
 	void createWind();
-	
+	void createVortex();
 
 	//cambia la propiedad alive de las particulas 
 	inline void setAlive(SolidRigid* p, bool alive) { p->alive = alive; }
 	inline void setAlive(Target* p, bool alive) { p->alive = alive; }
+	inline int getScore() { return _score; }
 
 };
 
