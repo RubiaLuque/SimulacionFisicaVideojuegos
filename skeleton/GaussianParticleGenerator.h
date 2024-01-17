@@ -23,6 +23,8 @@ protected:
 	PxPhysics* gPhysics = nullptr; 
 	PxScene* gScene = nullptr;
 
+	float elapsedTime = 0;
+
 public:
 
 	GaussianParticleGenerator(Vector3 meanPos, Vector3 meanVel, Vector3 stdDevPos, Vector3 stdDevVel, 
@@ -60,23 +62,32 @@ public:
 
 	~GaussianParticleGenerator(){}
 
-	virtual list<T*> generateParticles() {
+	virtual list<T*> generateParticles(double t) {
 		GravityForceGenerator* gr = new GravityForceGenerator();
 		list<T*> list;
-		for (int i = 0; i < Data::TAM_LIST; ++i) {
-			Vector3 auxPos = meanPos;
-			auxPos.x += d(gen) * stdDevPos.x;
-			auxPos.y += d(gen) * stdDevPos.y;
-			auxPos.z += d(gen) * stdDevPos.z;
 
-			Vector3 auxVel = meanVel;
-			auxVel.x += d(gen) * stdDevVel.x;
-			auxVel.y += d(gen) * stdDevVel.y;
-			auxVel.z += d(gen) * stdDevVel.z;
+		elapsedTime += t;
+		if (elapsedTime >= Data::GENERATOR_TIME) {
+			for (int i = 0; i < Data::TAM_LIST; ++i) {
 
-			list.push_back(createParticle(auxPos, auxVel));
+				elapsedTime = 0;
+
+				Vector3 auxPos = meanPos;
+				auxPos.x += d(gen) * stdDevPos.x;
+				auxPos.y += d(gen) * stdDevPos.y;
+				auxPos.z += d(gen) * stdDevPos.z;
+
+				Vector3 auxVel = meanVel;
+				auxVel.x += d(gen) * stdDevVel.x;
+				auxVel.y += d(gen) * stdDevVel.y;
+				auxVel.z += d(gen) * stdDevVel.z;
+
+				list.push_back(createParticle(auxPos, auxVel));
+
+			}
 
 		}
+
 
 
 		return list;

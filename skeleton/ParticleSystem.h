@@ -34,7 +34,8 @@ private:
 public:
 	ParticleSystem(Data::GENERATORS gen, PxPhysics* gPhysics, PxScene* gScene);
 	void setGeneratorPos(Vector3 pos, Data::GENERATORS g);
-	void addForce(Data::FORCES f);
+	void setForcePos(Vector3 pos, Data::FORCES f);
+	void addForce(Data::FORCES f, Vector3 pos);
 	virtual ~ParticleSystem();
 	void update(double t);
 

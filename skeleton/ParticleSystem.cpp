@@ -38,24 +38,36 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g, PxPhysics* gPhysics, PxScene*
 	GaussianParticleGenerator<Particle>* niebla = new GaussianP
 		({ 0,100,-100 }, { 1,1,1 }, { 50, 50, 50 }, { 1, 5, 1 }, Data::NIEBLA);
 	gens.push_back(niebla);
+
+	forces = vector<ForceGenerator<Particle>*>(3);
 }
 
 void ParticleSystem::setGeneratorPos(Vector3 pos, Data::GENERATORS g) {
 	gens[g]->setGeneratorPos(pos);
 }
 
-void ParticleSystem::addForce(Data::FORCES f) {
+void ParticleSystem::setForcePos(Vector3 pos, Data::FORCES f) {
+	forces[f-1]->setForcePos(pos);
+}
+
+void ParticleSystem::addForce(Data::FORCES f, Vector3 pos) {
 	this->f = f;
 
-	WindForceGenerator<Particle>* w = new WindForceGenerator<Particle>({0, 20, 0});
-	w->setPos({ 0,0,-100 });
-	forces.push_back(w);
 
-	VortexForceGenerator<Particle>* v = new VortexForceGenerator<Particle>({0, 0, 0}, {0,0,0});
-	forces.push_back(v);
+	WindForceGenerator<Particle>* w = new WindForceGenerator<Particle>({ 0, 20, 0 }, pos);
+	forces[0] = w;
+
+
+
+	VortexForceGenerator<Particle>* v = new VortexForceGenerator<Particle>({ 0, 0, 0 }, pos);
+	forces[1] = v;
+
+
 
 	e = new ExplosionForceGenerator<Particle>({ 0,20,0 });
-	forces.push_back(e);
+	forces[2] = e;
+
+
 
 }
 
@@ -92,7 +104,7 @@ ParticleSystem::~ParticleSystem()
 void ParticleSystem::update(double t) {
 	if (g != Data::NONE)
 	{
-		auto aux = gens.at(g)->generateParticles();
+		auto aux = gens.at(g)->generateParticles(t);
 
 
 		for (auto it = aux.begin(); it != aux.end(); ++it) {

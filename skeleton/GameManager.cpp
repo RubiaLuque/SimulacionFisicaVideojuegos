@@ -62,7 +62,6 @@ GameManager::~GameManager()
 	delete vortexForce;
 	delete sFr;
 	delete fr;
-	delete endSystem;
 }
 
 void GameManager::addProjectile(PROJECTILE_TYPE type)
@@ -129,6 +128,9 @@ void GameManager::easyMode()
 
 	auto fogSys = new ParticleSystem(Data::NIEBLA, gPhysics, gScene);
 	sys.push_back(fogSys);
+	fogSys->setGeneratorPos({ 0,50,-70 }, Data::NIEBLA);
+
+	fogSys->addForce(Data::WIND, {0,50,-70});
 
 }
 
@@ -175,6 +177,8 @@ void GameManager::mediumMode()
 	auto snowSys = new ParticleSystem(Data::NIEVE, gPhysics, gScene);
 	snowSys->setGeneratorPos({ 20,80,0 }, Data::NIEVE);
 	sys.push_back(snowSys);
+
+	snowSys->addForce(Data::VORTEX, { 20,50,0 });
 }
 
 void GameManager::hardMode()
@@ -355,25 +359,6 @@ void GameManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 	}
 }
 
-void GameManager::createWind()
-{
-	windForce = new WindForceGenerator<SolidRigid>({0,600,2});
-	Vector3 pos;
-	pos.x = rand() % 50;
-	pos.y = rand() % 50;
-	pos.z = rand() % 50;
-	windForce->setPos(pos);
-
-}
-
-void GameManager::createVortex() {
-	Vector3 pos; 
-	pos.x = rand()%100;
-	pos.y = rand() % 100;
-	pos.z = 0;
-	vortexForce = new VortexForceGenerator<SolidRigid>({0,100,0}, pos);
-
-}
 
 void GameManager::endGame()
 {

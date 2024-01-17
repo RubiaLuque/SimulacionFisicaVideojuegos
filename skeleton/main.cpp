@@ -164,9 +164,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && mode != 0) {
 			manager->addProjectile(Data::FIREBALL);
-			int random = rand() % 10; //Genera numero aleatorio entre 0 y 9
-			if(mode == 1 && random == 0)
-				manager->createWind();
 			timeKey = 0;
 		}
 		break;
@@ -175,9 +172,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && mode != 0) {
 			manager->addProjectile(Data::LASER);
-			int random = rand() % 10; //Genera numero aleatorio entre 0 y 9
-			if(mode == 2 && random == 0)
-				manager->createVortex();
 			timeKey = 0;
 		}
 		break;
@@ -186,10 +180,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && mode != 0) {
 			manager->addProjectile(Data::BULLET);
-			int random = rand() % 5;
-			if (mode == 3 && random == 0) {
-				manager->createVortex();
-			}
 			timeKey = 0;
 		}
 		break;

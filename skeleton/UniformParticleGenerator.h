@@ -64,7 +64,7 @@ public:
 		//return new T(auxPos, auxVel, 1.0, 0.988, g);
 	
 
-	list<T*> generateParticles() {
+	list<T*> generateParticles(double t) {
 		GravityForceGenerator* gr = new GravityForceGenerator();
 
 		list<T*> list;

@@ -82,7 +82,7 @@ void SolidRigidSystem::addForce(Data::FORCES f)
 {
 	this->f = f;
 
-	WindForceGenerator<SolidRigid>* w = new WindForceGenerator<SolidRigid>({ 0, 20, 0 });
+	WindForceGenerator<SolidRigid>* w = new WindForceGenerator<SolidRigid>({ 0, 20, 0 },{0,0,0});
 	forces.push_back(w);
 
 	VortexForceGenerator<SolidRigid>* v = new VortexForceGenerator<SolidRigid>({ 0, 0, 0 }, { 0,0,0 });
@@ -96,7 +96,7 @@ void SolidRigidSystem::update(double t)
 {
 	if (g != Data::NONE)
 	{
-		auto aux = gens.at(g)->generateParticles();
+		auto aux = gens.at(g)->generateParticles(t);
 
 
 		for (auto it = aux.begin(); it != aux.end(); ++it) {
