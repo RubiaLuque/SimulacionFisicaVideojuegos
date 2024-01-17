@@ -16,7 +16,7 @@ public:
 
 	virtual void setForcePos(Vector3 pos) override { forcePos = pos; windSphere->setPos(forcePos); }
 
-	virtual ~WindForceGenerator(){}
+	virtual ~WindForceGenerator() { delete windSphere; }
 
 	void updateForce(T* p, double t) {
 		if (p != nullptr && (p->getPos() - forcePos).magnitude() <= Data::windSphereRadius) {

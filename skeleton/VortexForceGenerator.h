@@ -17,7 +17,7 @@ public:
 
 	virtual void setForcePos(Vector3 pos) override { forcePos = pos; vortexSphere->setPos(pos); }
 
-	virtual ~VortexForceGenerator() {};
+	virtual ~VortexForceGenerator() { delete vortexSphere; };
 
 	void updateForce(T* p, double t) {
 		if (p != nullptr && (forcePos - p->getPos()).magnitude() <= Data::vortexSphereRadius) {
