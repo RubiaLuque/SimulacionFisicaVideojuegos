@@ -22,7 +22,7 @@ public:
 	}
 
 	void updateForce(T* p, double t) {
-		if (p != nullptr) {
+		if (p != nullptr && other!=nullptr) {
 			Vector3 aux = other->getPos() - p->getPos();
 			Vector3 force;
 			int aux_length = aux.magnitude();

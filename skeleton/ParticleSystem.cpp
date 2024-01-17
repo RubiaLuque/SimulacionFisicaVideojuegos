@@ -238,11 +238,11 @@ void ParticleSystem::generateSlinky() {
 	particles.push_back(p4);
 	particles.push_back(p5);
 
-	fr->addRegistry(gr, p1);
+	/*fr->addRegistry(gr, p1);
 	fr->addRegistry(gr, p2);
 	fr->addRegistry(gr, p3);
 	fr->addRegistry(gr, p4);
-	fr->addRegistry(gr, p5);
+	fr->addRegistry(gr, p5);*/
 
 }
 

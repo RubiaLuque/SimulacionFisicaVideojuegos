@@ -296,10 +296,17 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 		drawText(display_text2, 100, 250);
 		drawText(display_text3, 100, 200);
 	}
+	else if(mode == 4){
+		glColor4f(1.0f, 0.0f, 1.0f, 1.0f);
+		drawText(end_text, 200, 370);
+		drawText(scoreText, 200, 320);
+		drawText(std::to_string(score), 240, 320);
+	}
 	else {
 		glColor4f(1.0f, 0.0f, 1.0f, 1.0f);
 		drawText(scoreText, 230, 470);
 		drawText(std::to_string(score), 260, 470);
+
 	}
 
 	// Setup camera

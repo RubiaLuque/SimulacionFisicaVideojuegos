@@ -62,6 +62,7 @@ GameManager::~GameManager()
 	delete vortexForce;
 	delete sFr;
 	delete fr;
+	delete endSystem;
 }
 
 void GameManager::addProjectile(PROJECTILE_TYPE type)
@@ -128,8 +129,6 @@ void GameManager::easyMode()
 
 	auto fogSys = new ParticleSystem(Data::NIEBLA, gPhysics, gScene);
 	sys.push_back(fogSys);
-
-	targetSys->generateSpringTargets(general_target, arrow_target);
 
 }
 
@@ -248,6 +247,14 @@ void GameManager::hardMode()
 void GameManager::update(double t)
 {
 	_score = score->getScore();
+	if (mode != 0) {
+		endGame();
+		if (end) {
+			mode = 4;
+			endSystem->update(t);
+			//return;
+		}
+	}
 
 	//eliminar aquellas que lleven mas tiempo del necesario en pantalla
 	for (auto it = projectiles.begin(); it != projectiles.end(); it++) {
@@ -277,14 +284,17 @@ void GameManager::update(double t)
 
 	sFr->updateForces(t);
 
-	targets.erase(remove_if(targets.begin(), targets.end(),
-		[](Target* p) noexcept {
-			if (p->alive) return false;
-			else { //si no esta vivo, se elimina
-				delete p;
-				return true;
-			}
-		}), targets.end());
+	if (targets.size() > 0) {
+		targets.erase(remove_if(targets.begin(), targets.end(),
+			[](Target* p) noexcept {
+				if (p->alive) return false;
+				else { //si no esta vivo, se elimina
+					delete p;
+					return true;
+				}
+			}), targets.end());
+
+	}
 
 	//Se actualizan las dianas
 	for (auto* target : targets) {
@@ -304,7 +314,8 @@ void GameManager::update(double t)
 	//Se actualizan los sistemas de particulas
 	for (auto s : sys) {
 		s->update(t);
-	}	
+	}
+
 }
 
 //Comprueba las colisiones entre dianas y projectiles
@@ -362,4 +373,68 @@ void GameManager::createVortex() {
 	pos.z = 0;
 	vortexForce = new VortexForceGenerator<SolidRigid>({0,100,0}, pos);
 
+}
+
+void GameManager::endGame()
+{
+	if (targets.size() == 0 && !check) {
+		end = true;
+		deleteElements();
+		endSystem = new ParticleSystem(Data::NONE, gPhysics, gScene);
+		endSystem->generateSlinky();
+		check = true;
+		
+	}
+}
+
+void GameManager::deleteElements()
+{
+	//Elimina el sistema de particulas
+	for (int i = 0; i < sys.size(); ++i) {
+		if (sys.at(i) != nullptr) {
+			delete sys.at(i);
+			sys.at(i) = nullptr;
+		}
+	}
+	sys.clear();
+
+	//Elimina las fuerzas de particulas
+	for (int i = 0; i < forces.size(); ++i) {
+		if (forces.at(i) != nullptr) {
+			delete forces.at(i);
+			forces.at(i) = nullptr;
+		}
+	}
+	forces.clear();
+
+
+	//Se eliminan los sistemas de solidos rigidos
+	for (int i = 0; i < solidSys.size(); ++i) {
+		if (solidSys.at(i) != nullptr) {
+			delete solidSys.at(i);
+			solidSys.at(i) = nullptr;
+		}
+	}
+	solidSys.clear();
+
+	//Elimina los proyectiles
+	for (int i = 0; i < projectiles.size(); ++i) {
+		if (projectiles.at(i) != nullptr) {
+			delete projectiles.at(i);
+			projectiles.at(i) = nullptr;
+		}
+	}
+	projectiles.clear();
+
+	//Elimina los fireworks
+	for (int i = 0; i < fireworks.size(); ++i) {
+		if (fireworks.at(i) != nullptr) {
+			delete fireworks.at(i);
+			fireworks.at(i) = nullptr;
+		}
+	}
+	fireworks.clear();
+
+	delete windForce;
+	delete vortexForce;
 }

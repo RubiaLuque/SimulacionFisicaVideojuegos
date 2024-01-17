@@ -18,7 +18,7 @@ std::string display_text = "SELECT YOUR CHALLENGE!";
 std::string display_text1 = "1. LET'S PLAY EASY (Press 1)";
 std::string display_text2 = "2. MODERATE, PLEASE (Press 2)";
 std::string display_text3 = "3. WE ARE DOOMED (Press 3)";
-
+std::string end_text = "FINISH!!";
 
 using namespace physx;
 
@@ -90,6 +90,7 @@ void stepPhysics(bool interactive, double t)
 	
 	manager->update(t);
 	score = manager->getScore();
+	(manager->getEnd()) ? mode = 4 : mode;
 
 	if (keyPressed) {
 		timeKey += t;
@@ -164,7 +165,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && mode != 0) {
 			manager->addProjectile(Data::FIREBALL);
 			int random = rand() % 10; //Genera numero aleatorio entre 0 y 9
-			if (random == 0) manager->createWind();
+			if(mode == 1 && random == 0)
+				manager->createWind();
 			timeKey = 0;
 		}
 		break;
@@ -174,7 +176,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && mode != 0) {
 			manager->addProjectile(Data::LASER);
 			int random = rand() % 10; //Genera numero aleatorio entre 0 y 9
-			if (random == 0) manager->createVortex();
+			if(mode == 2 && random == 0)
+				manager->createVortex();
 			timeKey = 0;
 		}
 		break;
@@ -183,6 +186,10 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		if (!keyPressed && timeKey <= Data::MAX_TIME_KEY && mode != 0) {
 			manager->addProjectile(Data::BULLET);
+			int random = rand() % 5;
+			if (mode == 3 && random == 0) {
+				manager->createVortex();
+			}
 			timeKey = 0;
 		}
 		break;

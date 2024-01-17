@@ -62,6 +62,11 @@ private:
 	Score* score;
 	int _score;
 
+	//Fin de juego
+	bool end = false;
+	ParticleSystem* endSystem;
+	bool check = false;
+
 public:
 
 	GameManager(PxPhysics* gPhysics, PxScene* gScene);
@@ -94,6 +99,11 @@ public:
 	inline void setAlive(SolidRigid* p, bool alive) { p->alive = alive; }
 	inline void setAlive(Target* p, bool alive) { p->alive = alive; }
 	inline int getScore() { return _score; }
+	inline bool getEnd() { return end; }
+
+	//Fin del juego
+	void endGame();
+	void deleteElements();
 
 };
 
