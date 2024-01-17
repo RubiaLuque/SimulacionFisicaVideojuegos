@@ -30,6 +30,8 @@ public:
 	inline Vector3 getPos() { return  pos; }
 	inline Vector4 getColor() { return color; }
 	inline PxActor* getActor() { return target; }
+	inline PxRigidActor* getRigidActor() { return target; }
+	inline PxTransform getTransform() { return target->getGlobalPose(); }
 	inline Data::TARGET_MODE getType() { return type; }
 
 	bool alive = true;

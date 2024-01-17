@@ -40,6 +40,10 @@ ParticleSystem::ParticleSystem(Data::GENERATORS g, PxPhysics* gPhysics, PxScene*
 	gens.push_back(niebla);
 }
 
+void ParticleSystem::setGeneratorPos(Vector3 pos, Data::GENERATORS g) {
+	gens[g]->setGeneratorPos(pos);
+}
+
 void ParticleSystem::addForce(Data::FORCES f) {
 	this->f = f;
 

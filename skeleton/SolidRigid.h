@@ -35,7 +35,10 @@ public:
 	virtual ~SolidRigid();
 
 	inline PxActor* getActor() { return dynamicR; }
+	inline PxRigidActor* getRigidActor() { return staticR; }
+	inline PxTransform getTransform() { return staticR->getGlobalPose(); }
 	inline Data::PROJECTILE_TYPE getType() { return type; }
+	inline void setVisible(bool v) { staticR->setActorFlag(PxActorFlag::eVISUALIZATION, v); }
 
 	//Getters
 	Vector3 getVel() { return lVel; }

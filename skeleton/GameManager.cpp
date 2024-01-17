@@ -170,11 +170,78 @@ void GameManager::mediumMode()
 	//targetSys->generateSpringTargets()
 
 	auto fogSys = new ParticleSystem(Data::NIEBLA, gPhysics, gScene);
+	fogSys->setGeneratorPos({ 0,50,0 }, Data::NIEBLA);
 	sys.push_back(fogSys);
+
+	auto snowSys = new ParticleSystem(Data::NIEVE, gPhysics, gScene);
+	snowSys->setGeneratorPos({ 20,80,0 }, Data::NIEVE);
+	sys.push_back(snowSys);
 }
 
 void GameManager::hardMode()
 {
+	Vector3 pos = { 5,5,5 };
+	auto staticR = new SolidRigid(pos, { 0,0,0 }, { 0,0,0 }, { 0.1, 0.1, 0.1, 0.0 }, 0.5, 1, Data::_STATIC, gPhysics, gScene);
+
+	for (int i = 0; i <5; ++i) {
+		float a = i * 3.0f *PxPi / 5.0f;
+
+		float x = pos.x + std::cos(a);
+		float y = pos.y +30+ std::sin(a) + i*20;
+		float z = pos.z + 30 +i*20;
+
+		int random = rand() % 4;
+		Data::TARGET_MODE mode = (Data::TARGET_MODE)random;
+		auto target = new Target({ x,y,z }, { 0,0,0 }, { 0,0,0 }, 10, mode, gPhysics, gScene);
+		targets.push_back(target);
+
+		PxRevoluteJoint* joint = PxRevoluteJointCreate(*gPhysics, staticR->getRigidActor(), 
+			staticR->getTransform(), target->getRigidActor(), target->getTransform());
+		joint->setDriveVelocity(1.0f); 
+		joint->setRevoluteJointFlag(PxRevoluteJointFlag::eDRIVE_ENABLED, true);
+
+	}
+
+	Vector3 pos1 = { 0,50,0 };
+	auto staticR1 = new SolidRigid(pos, { 0,0,0 }, { 0,0,0 }, { 0.1, 0.1, 0.1, 0.0 }, 0.5, 1, Data::_STATIC, gPhysics, gScene);
+	int random = rand() % 4;
+	float x1 = pos1.x + 30;
+	float y1 = pos1.y + 30;
+	float z1 = pos1.z + 30;
+	Data::TARGET_MODE mode1 = (Data::TARGET_MODE)random;
+	auto target1 = new Target({ x1,y1,z1 }, { 0,0,0 }, { 0,0,0 }, 10, mode1, gPhysics, gScene);
+	targets.push_back(target1);
+
+	PxRevoluteJoint* joint1 = PxRevoluteJointCreate(*gPhysics, staticR1->getRigidActor(),
+		staticR1->getTransform(), target1->getRigidActor(), target1->getTransform());
+	joint1->setDriveVelocity(2.0f);
+	joint1->setRevoluteJointFlag(PxRevoluteJointFlag::eDRIVE_ENABLED, true);
+
+	Vector3 pos2 = { 40,5,5 };
+	auto staticR2 = new SolidRigid(pos2, { 0,0,0 }, { 0,0,0 }, { 0.1, 0.1, 0.1, 0.0 }, 0.5, 1, Data::_STATIC, gPhysics, gScene);
+
+	for (int i = 0; i < 3; ++i) {
+		float a = i * 3.0f * PxPi / 3.0f;
+
+		float x2 = pos2.x + std::cos(a);
+		float y2 = pos2.y + 30 + std::sin(a) + i * 30;
+		float z2 = pos2.z + 30 + i * 20;
+
+		int random2 = rand() % 5;
+		Data::TARGET_MODE mode2 = (Data::TARGET_MODE)random2;
+		auto target2 = new Target({ x2,y2,z2 }, { 0,0,0 }, { 0,0,0 }, 10, mode2, gPhysics, gScene);
+		targets.push_back(target2);
+
+		PxRevoluteJoint* joint2 = PxRevoluteJointCreate(*gPhysics, staticR2->getRigidActor(),
+			staticR2->getTransform(), target2->getRigidActor(), target2->getTransform());
+		joint2->setDriveVelocity(4.0f);
+		joint2->setRevoluteJointFlag(PxRevoluteJointFlag::eDRIVE_ENABLED, true);
+
+	}
+
+	auto fogSys = new ParticleSystem(Data::NIEBLA, gPhysics, gScene);
+	fogSys->setGeneratorPos({ 0,50,0 }, Data::NIEBLA);
+	sys.push_back(fogSys);
 
 }
 
