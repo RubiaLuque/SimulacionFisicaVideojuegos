@@ -7,6 +7,7 @@ GameManager::GameManager(PxPhysics* gPhysics, PxScene* gScene)
 	this->gPhysics = gPhysics;
 	this->gScene = gScene;
 	score = new Score();
+	sFr = new ForceRegistry<SolidRigid>();
 }
 
 GameManager::~GameManager()
@@ -129,39 +130,40 @@ void GameManager::easyMode()
 	sys.push_back(fogSys);
 
 	targetSys->generateSpringTargets(general_target, arrow_target);
+
 }
 
 void GameManager::mediumMode()
 {
-	auto fire_target = new Target({ 100,30,0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::ORANGE, gPhysics, gScene);
+	auto fire_target = new Target({ 100,30,0 }, { 0,0,0 }, { 0,1,0 }, 20, Data::ORANGE, gPhysics, gScene);
 	targets.push_back(fire_target);
 
-	auto laser_target = new Target({ 80, -30, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::BLUE, gPhysics, gScene);
+	auto laser_target = new Target({ 80, -30, 0 }, { 0,0,0 }, { 0,1,0 }, 20, Data::BLUE, gPhysics, gScene);
 	targets.push_back(laser_target);
 
-	auto general_target = new Target({ 60, 30, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::WHITE, gPhysics, gScene);
+	auto general_target = new Target({ 60, 30, 0 }, { 0,0,0 }, { 0,1,0 }, 20, Data::WHITE, gPhysics, gScene);
 	targets.push_back(general_target);
 
-	auto arrow_target = new Target({ 40, -30,0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::RED, gPhysics, gScene);
+	auto arrow_target = new Target({ 40, -30,0 }, { 0,0,0 }, { 0,1,0 }, 20, Data::RED, gPhysics, gScene);
 	targets.push_back(arrow_target);
 
-	auto bullet_target = new Target({ 20, 30, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::BLACK, gPhysics, gScene);
+	auto bullet_target = new Target({ 20, 30, 0 }, { 0,0,0 }, { 0,1,0 }, 20, Data::BLACK, gPhysics, gScene);
 	targets.push_back(bullet_target);
 
-	auto fire_target1 = new Target({ 0,-30,0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::ORANGE, gPhysics, gScene);
-	targets.push_back(fire_target);
+	auto fire_target1 = new Target({ 0,-30,0 }, { 0,0,0 }, { 0,1,0 }, 20, Data::ORANGE, gPhysics, gScene);
+	targets.push_back(fire_target1);
 
-	auto laser_target1 = new Target({ -20, 30, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::BLUE, gPhysics, gScene);
-	targets.push_back(laser_target);
+	auto laser_target1 = new Target({ -20, 30, 0 }, { 0,0,0 }, { 0,1,0 }, 20, Data::BLUE, gPhysics, gScene);
+	targets.push_back(laser_target1);
 
-	auto general_target1 = new Target({ -40, -30, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::WHITE, gPhysics, gScene);
-	targets.push_back(general_target);
+	auto general_target1 = new Target({ -40, -30, 0 }, { 0,0,0 }, { 0,1,0 }, 20, Data::WHITE, gPhysics, gScene);
+	targets.push_back(general_target1);
 
-	auto arrow_target1 = new Target({ -60, 30, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::RED, gPhysics, gScene);
-	targets.push_back(arrow_target);
+	auto arrow_target1 = new Target({ -60, 30, 0 }, { 0,0,0 }, { 0,1,0 }, 20, Data::RED, gPhysics, gScene);
+	targets.push_back(arrow_target1);
 
-	auto bullet_target1 = new Target({ -80, -30, 0 }, { 0,0,0 }, { 0,0,0 }, 20, Data::BLACK, gPhysics, gScene);
-	targets.push_back(bullet_target);
+	auto bullet_target1 = new Target({ -80, -30, 0 }, { 0,0,0 }, { 0,1,0 }, 20, Data::BLACK, gPhysics, gScene);
+	targets.push_back(bullet_target1);
 
 	auto targetSys = new SolidRigidSystem(Data::NONE, gPhysics, gScene);
 	solidSys.push_back(targetSys);
@@ -198,7 +200,6 @@ void GameManager::update(double t)
 			}
 		}), projectiles.end());
 
-	sFr->updateForces(t);
 
 	//se hace update de todas las demas
 	for (auto* solid : projectiles) {
@@ -206,6 +207,8 @@ void GameManager::update(double t)
 		if (vortexForce != nullptr) sFr->addRegistry(vortexForce, solid);
 		solid->update(t);
 	}
+
+	sFr->updateForces(t);
 
 	targets.erase(remove_if(targets.begin(), targets.end(),
 		[](Target* p) noexcept {

@@ -19,11 +19,11 @@ public:
 	virtual ~WindForceGenerator(){}
 
 	void updateForce(T* p, double t) {
-		if (p != nullptr && p->getPos().x <= windPos.x + Data::windSphereRadius && 
-			p->getPos().y <= windPos.y + Data::windSphereRadius && p->getPos().z <= windPos.z + Data::windSphereRadius) {
+		if (p != nullptr && (p->getPos() - windPos).magnitude() <= Data::windSphereRadius) {
 
-			p->addForce(k1 * (windVel - p->getVel()) +
-				k2 * (windVel - p->getVel()).magnitude() * (windVel - p->getVel()));
+			Vector3 vel = windVel - p->getVel();
+
+			p->addForce(k1 * (vel) + k2 * (vel).magnitude() * (vel));
 		}
 	}
 

@@ -44,6 +44,7 @@ void ParticleSystem::addForce(Data::FORCES f) {
 	this->f = f;
 
 	WindForceGenerator<Particle>* w = new WindForceGenerator<Particle>({0, 20, 0});
+	w->setPos({ 0,0,-100 });
 	forces.push_back(w);
 
 	VortexForceGenerator<Particle>* v = new VortexForceGenerator<Particle>({0, 0, 0}, {0,0,0});

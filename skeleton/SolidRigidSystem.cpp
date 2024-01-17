@@ -182,8 +182,8 @@ void SolidRigidSystem::generateSpring()
 
 void SolidRigidSystem::generateSpringTargets(Target* t1, Target* t2)
 {
-	SpringForceGenerator<Target>* f1 = new SpringForceGenerator<Target>(100, 200, t2);
-	SpringForceGenerator<Target>* f2 = new SpringForceGenerator<Target>(100, 200, t1);
+	SpringForceGenerator<Target>* f1 = new SpringForceGenerator<Target>(50, 200, t2);
+	SpringForceGenerator<Target>* f2 = new SpringForceGenerator<Target>(50, 200, t1);
 
 	frT->addRegistry(f1, t1);
 	frT->addRegistry(f2, t2);

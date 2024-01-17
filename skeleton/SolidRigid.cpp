@@ -49,6 +49,7 @@ SolidRigid::SolidRigid(Vector3 pos, Vector3 lVel, Vector3 aVel, Data::PROJECTILE
 	this->pos = pos;
 	this->aVel = aVel;
 	this->type = type;
+	r = Data::DYNAMIC;
 
 	dynamicR = gPhysics->createRigidDynamic(PxTransform(pos));
 

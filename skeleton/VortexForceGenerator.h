@@ -16,8 +16,9 @@ public:
 	}
 
 	virtual ~VortexForceGenerator() {};
+
 	void updateForce(T* p, double t) {
-		if (p != nullptr && ((p)->getPos()).magnitude() <= Data::vortexSphereRadius) {
+		if (p != nullptr && (vortexPos - p->getPos()).magnitude() <= Data::vortexSphereRadius) {
 
 			this->windVel = K * Vector3(-(p->getPos().z - this->vortexPos.z),
 				100 - (p->getPos().y - this->vortexPos.y), p->getPos().x - this->vortexPos.x);
